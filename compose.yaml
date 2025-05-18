@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mysql
+    restart: always
+    env_file:
+        - .env
+    ports:
+        - "3306:3306"
+    volumes:
+        - ./about_db/teste.sql:/docker-entrypoint-initdb.d/init.sql

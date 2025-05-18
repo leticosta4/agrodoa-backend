@@ -35,3 +35,4 @@ build/
 
 ### secrets ###
 config.env
+.env
