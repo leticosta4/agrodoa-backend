@@ -56,9 +56,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`usuario` (
   `conta_idconta` INT(5) NOT NULL,
-  `cpf_ou_cnpj` INT(14) NOT NULL,
+  `cpf_ou_cnpj` BIGINT NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
-  `telefone` INT(11) NOT NULL,
+  `telefone` BIGINT NOT NULL,
   `email_contato` VARCHAR(60) NOT NULL,
   `cidade_idcidade` INT(5) NOT NULL,
   `tipo_idtipo` INT(5) NOT NULL,
@@ -144,8 +144,8 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `idcausa` INT(5) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   `descricao` TEXT(150) NOT NULL,
-  `meta_inicial` DECIMAL(6,2) NOT NULL,
-  `meta_final` DECIMAL(6,2) NOT NULL,
+  `meta_inicial` DECIMAL(7,2) NOT NULL,
+  `meta_final` DECIMAL(7,2) NOT NULL,
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
   PRIMARY KEY (`idcausa`),
@@ -271,13 +271,13 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`negociacao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
-  `compra_idcompra` INT(5) NOT NULL,
+  `negociacao_idnegociacao` INT(5) NOT NULL,
   `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
   `relacaoo_beneficiario_anuncio_idanuncio` INT(5) NOT NULL,
   `relacao_beneficiario_usuario_conta_idconta` INT(5) NOT NULL,
-  PRIMARY KEY (`compra_idcompra`),
-  UNIQUE INDEX `compra_idcompra_UNIQUE` (`compra_idcompra` ASC) VISIBLE,
+  PRIMARY KEY (`negociacao_idnegociacao`),
+  UNIQUE INDEX `negociacao_idnegociacao_UNIQUE` (`negociacao_idnegociacao` ASC) VISIBLE,
   INDEX `fk_compra_negociacao1_idx` (`relacaoo_beneficiario_anuncio_idanuncio` ASC, `relacao_beneficiario_usuario_conta_idconta` ASC) VISIBLE,
   CONSTRAINT `fk_compra_negociacao1`
     FOREIGN KEY (`relacaoo_beneficiario_anuncio_idanuncio` , `relacao_beneficiario_usuario_conta_idconta`)
