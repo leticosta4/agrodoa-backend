@@ -56,9 +56,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`usuario` (
   `conta_idconta` INT(5) NOT NULL,
-  `cpf_ou_cnpj` BIGINT NOT NULL,
+  `cpf_ou_cnpj` VARCHAR(70) NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
-  `telefone` BIGINT NOT NULL,
+  `telefone` VARCHAR(70) NOT NULL,
   `email_contato` VARCHAR(60) NOT NULL,
   `cidade_idcidade` INT(5) NOT NULL,
   `tipo_idtipo` INT(5) NOT NULL,
