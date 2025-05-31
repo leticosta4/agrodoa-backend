@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `meta` DECIMAL(7,2) NOT NULL,
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
+  `status_causa` VARCHAR(1) NOT NULL,
   PRIMARY KEY (`idcausa`),
   UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -171,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`denuncia` (
   `motivo_idmotivo` INT(5) NOT NULL,
   `denunciante_usuario_conta_idconta` INT(5) NOT NULL,
   `denunciado_usuario_conta_idconta` INT(5) NOT NULL,
+  `status_denuncia` VARCHAR(1) NOT NULL,
   PRIMARY KEY (`iddenuncia`),
   UNIQUE INDEX `iddenuncia_UNIQUE` (`iddenuncia` ASC) VISIBLE,
   INDEX `fk_denuncia_motivo1_idx` (`motivo_idmotivo` ASC) VISIBLE,
