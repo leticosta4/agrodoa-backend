@@ -148,6 +148,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
   `status_causa` VARCHAR(1) NOT NULL,
+  `valor_arrecadado` DECIMAL(7,2) NULL,
   PRIMARY KEY (`idcausa`),
   UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE)
 ENGINE = InnoDB;

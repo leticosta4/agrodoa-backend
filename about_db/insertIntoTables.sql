@@ -105,7 +105,7 @@ INSERT INTO `labweb_project`.`negociacao`
 (3, 10.50, 1, 8, 4);  -- Negociação 3: Compra de feijão (anúncio 8) por Sophia >>> 1 unidade x R$10.50 (preço do produto 8)
 
 INSERT INTO `labweb_project`.`causa` 
-(`idcausa`, `nome`, `descricao`, `meta`, `prazo`, `nome_arquivo_foto`, `status_causa`) VALUES
+(`idcausa`, `nome`, `descricao`, `meta`, `prazo`, `nome_arquivo_foto`, `status_causa`, `valor_arrecadado`) VALUES --precisa ou não colocar o NULL em cada item?
 (1, 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', 5000.00, '2024-12-20', 'natal_sem_fome.jpg', 'C'),
 (2, 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', 3000.00, '2025-07-31', 'kit_escolar.jpg', 'A'),
 (3, 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', 10000.00, '2024-11-30', 'sos_enchentes.jpg', 'C'),
