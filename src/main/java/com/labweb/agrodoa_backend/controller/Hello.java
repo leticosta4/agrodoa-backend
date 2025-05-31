@@ -1,4 +1,4 @@
-package com.labweb.controller;
+package com.labweb.agrodoa_backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 
