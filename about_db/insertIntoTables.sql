@@ -59,7 +59,7 @@ INSERT INTO `labweb_project`.`produto` (`idproduto`, `nome`, `quantidade`, `data
 
 INSERT INTO `labweb_project`.`anuncio` (
   `idanuncio`, `titulo`, `nome_arquivo_foto`, `data_expiracao`, `status`, `tipo_anuncio`, 
-  `entrega_pelo_fornecedor`, `cidade_idcidade`, `produto_idproduto`, `anunciante_conta_idconta`
+  `entrega_pelo_fornecedor`, `cidade_idcidade`, `produto_idproduto`, `id_anunciante`
 ) VALUES
 (1, 'Arroz Integral Tio João - Promoção', 'arroz_tiojoao.jpg', '2025-06-30', 'A', 'V', 1, 1, 1, 7),
 (2, 'Feijão Kicaldo - Qualidade Garantida', 'feijao_kicaldo.jpg', '2024-07-15', 'E', 'V', 0, 1, 2, 7),
@@ -98,7 +98,7 @@ INSERT INTO `labweb_project`.`relacao_beneficiario`
 (9, 10, 'I');  -- Kaik interessado na doação de óleo
 
 INSERT INTO `labweb_project`.`negociacao` 
-(`negociacao_idnegociacao`, `valor_pago`, `quantidade`, `relacaoo_beneficiario_anuncio_idanuncio`, `relacao_beneficiario_usuario_conta_idconta`) VALUES
+(`negociacao_idnegociacao`, `valor_pago`, `quantidade`, `id_anuncio`, `id_beneficiario`) VALUES
 
 (1, NULL, 5, 3, 10),  -- Negociação 1: Doação de óleo (anúncio 3) para Rafael >>> Doação não tem valor_pago
 (2, 23.20, 4, 4, 5),  -- Negociação 2: Compra de arroz (anúncio 4) por Brunna >>> 4 unidades x R$5.80 (preço do produto 4)

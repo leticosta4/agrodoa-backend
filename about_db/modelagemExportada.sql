@@ -132,12 +132,12 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
   `entrega_pelo_fornecedor` INT(1) NOT NULL,
   `cidade_idcidade` INT(5) NOT NULL,
   `produto_idproduto` INT(5) NOT NULL,
-  `anunciante_conta_idconta` INT(5) NOT NULL,
+  `id_anunciante` INT(5) NOT NULL,
   PRIMARY KEY (`idanuncio`),
   UNIQUE INDEX `idanuncio_UNIQUE` (`idanuncio` ASC) VISIBLE,
   INDEX `fk_anuncio_cidade1_idx` (`cidade_idcidade` ASC) VISIBLE,
   INDEX `fk_anuncio_produto1_idx` (`produto_idproduto` ASC) VISIBLE,
-  INDEX `fk_anuncio_usuario1_idx` (`anunciante_conta_idconta` ASC) VISIBLE,
+  INDEX `fk_anuncio_usuario1_idx` (`id_anunciante` ASC) VISIBLE,
   CONSTRAINT `fk_anuncio_cidade1`
     FOREIGN KEY (`cidade_idcidade`)
     REFERENCES `labweb_project`.`cidade` (`idcidade`)
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_anuncio_usuario1`
-    FOREIGN KEY (`anunciante_conta_idconta`)
+    FOREIGN KEY (`id_anunciante`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -190,26 +190,26 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`denuncia` (
   `iddenuncia` INT(5) NOT NULL,
   `motivo_idmotivo` INT(5) NOT NULL,
-  `denunciante_usuario_conta_idconta` INT(5) NOT NULL,
-  `denunciado_usuario_conta_idconta` INT(5) NOT NULL,
+  `id_denunciante` INT(5) NOT NULL,
+  `id_denunciado` INT(5) NOT NULL,
   `status_denuncia` VARCHAR(1) NOT NULL,
   PRIMARY KEY (`iddenuncia`),
   UNIQUE INDEX `iddenuncia_UNIQUE` (`iddenuncia` ASC) VISIBLE,
   INDEX `fk_denuncia_motivo1_idx` (`motivo_idmotivo` ASC) VISIBLE,
-  INDEX `fk_denuncia_usuario1_idx` (`denunciante_usuario_conta_idconta` ASC) VISIBLE,
-  INDEX `fk_denuncia_usuario2_idx` (`denunciado_usuario_conta_idconta` ASC) VISIBLE,
+  INDEX `fk_denuncia_usuario1_idx` (`id_denunciante` ASC) VISIBLE,
+  INDEX `fk_denuncia_usuario2_idx` (`id_denunciado` ASC) VISIBLE,
   CONSTRAINT `fk_denuncia_motivo1`
     FOREIGN KEY (`motivo_idmotivo`)
     REFERENCES `labweb_project`.`motivo` (`idmotivo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_denuncia_usuario1`
-    FOREIGN KEY (`denunciante_usuario_conta_idconta`)
+    FOREIGN KEY (`id_denunciante`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_denuncia_usuario2`
-    FOREIGN KEY (`denunciado_usuario_conta_idconta`)
+    FOREIGN KEY (`id_denunciado`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -223,19 +223,19 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`avaliacao` (
   `idavaliacao` INT(5) NOT NULL,
   `nota` INT(1) NOT NULL,
   `comentario` VARCHAR(100) NULL,
-  `avaliador_usuario_conta_idconta` INT(5) NOT NULL,
-  `avaliado_usuario_conta_idconta1` INT(5) NOT NULL,
+  `id_avaliador` INT(5) NOT NULL,
+  `id_avaliado` INT(5) NOT NULL,
   PRIMARY KEY (`idavaliacao`),
   UNIQUE INDEX `idavaliacao_UNIQUE` (`idavaliacao` ASC) VISIBLE,
-  INDEX `fk_avaliacao_usuario1_idx` (`avaliador_usuario_conta_idconta` ASC) VISIBLE,
-  INDEX `fk_avaliacao_usuario2_idx` (`avaliado_usuario_conta_idconta1` ASC) VISIBLE,
+  INDEX `fk_avaliacao_usuario1_idx` (`id_avaliador` ASC) VISIBLE,
+  INDEX `fk_avaliacao_usuario2_idx` (`id_avaliado` ASC) VISIBLE,
   CONSTRAINT `fk_avaliacao_usuario1`
-    FOREIGN KEY (`avaliador_usuario_conta_idconta`)
+    FOREIGN KEY (`id_avaliador`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_avaliacao_usuario2`
-    FOREIGN KEY (`avaliado_usuario_conta_idconta1`)
+    FOREIGN KEY (`id_avaliado`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -296,13 +296,13 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
   `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
   `status_negociacao` VARCHAR(1) NOT NULL,
-  `relacaoo_beneficiario_anuncio_idanuncio` INT(5) NOT NULL,
-  `relacao_beneficiario_usuario_conta_idconta` INT(5) NOT NULL,
+  `id_anuncio` INT(5) NOT NULL,
+  `id_beneficiario` INT(5) NOT NULL,
   PRIMARY KEY (`negociacao_idnegociacao`),
   UNIQUE INDEX `negociacao_idnegociacao_UNIQUE` (`negociacao_idnegociacao` ASC) VISIBLE,
-  INDEX `fk_compra_negociacao1_idx` (`relacaoo_beneficiario_anuncio_idanuncio` ASC, `relacao_beneficiario_usuario_conta_idconta` ASC) VISIBLE,
+  INDEX `fk_compra_negociacao1_idx` (`id_anuncio` ASC, `id_beneficiario` ASC) VISIBLE,
   CONSTRAINT `fk_compra_negociacao1`
-    FOREIGN KEY (`relacaoo_beneficiario_anuncio_idanuncio` , `relacao_beneficiario_usuario_conta_idconta`)
+    FOREIGN KEY (`id_anuncio` , `id_beneficiario`)
     REFERENCES `labweb_project`.`relacao_beneficiario` (`anuncio_idanuncio` , `usuario_conta_idconta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
