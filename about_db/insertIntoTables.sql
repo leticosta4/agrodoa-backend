@@ -58,7 +58,7 @@ INSERT INTO `labweb_project`.`produto` (`idproduto`, `nome`, `quantidade`, `data
 (9, 'Óleo de Milho Salada 900ml', 25, '2024-09-25', NULL);
 
 INSERT INTO `labweb_project`.`anuncio` (
-  `idanuncio`, `titulo`, `nome_arquivo_foto`, `data_expiracao`, `status`, `acao`, 
+  `idanuncio`, `titulo`, `nome_arquivo_foto`, `data_expiracao`, `status`, `tipo_anuncio`, 
   `entrega_pelo_fornecedor`, `cidade_idcidade`, `produto_idproduto`, `anunciante_conta_idconta`
 ) VALUES
 (1, 'Arroz Integral Tio João - Promoção', 'arroz_tiojoao.jpg', '2025-06-30', 'A', 'V', 1, 1, 1, 7),
