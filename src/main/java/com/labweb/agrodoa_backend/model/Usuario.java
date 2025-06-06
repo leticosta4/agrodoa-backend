@@ -13,7 +13,7 @@ public class Usuario extends Conta{
     String cpfOuCnpj;
     String nomeArquivoFoto;
     String telefone;
-    int ehVoluntario; //talvez virar boolean
+    int ehVoluntario; //talvez virar boolean?
     
     @ManyToOne
     @JoinColumn(name = "tipo_idtipo", referencedColumnName = "idtipo") //nomes exatamente como no banco
@@ -24,5 +24,5 @@ public class Usuario extends Conta{
     //lista de anuncios em negociacao (independente do tipo de user)
     //lista de anuncios salvos (se for beneficiario)
     //lista de anuncios postados (se for fornecedor)
-    //opcional: listas de denuncias e de avaliações 
+    //opcional: listas de denuncias, de avaliações e de causas
 }
