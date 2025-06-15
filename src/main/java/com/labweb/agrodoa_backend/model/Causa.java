@@ -7,9 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "causa")
+@Getter
+@Setter
 public class Causa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,43 +35,6 @@ public class Causa {
         this.meta = meta;
         this.prazo = prazo;
         this.nomeArquivoFoto = nomeArquivoFoto;
-        this.valorArrecadado = valorArrecadado;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    public double getMeta() {
-        return meta;
-    }
-    public void setMeta(double meta) {
-        this.meta = meta;
-    }
-    public LocalDateTime getPrazo() {
-        return prazo;
-    }
-    public void setPrazo(LocalDateTime prazo) {
-        this.prazo = prazo;
-    }
-    public String getNomeArquivoFoto() {
-        return nomeArquivoFoto;
-    }
-    public void setNomeArquivoFoto(String nomeArquivoFoto) {
-        this.nomeArquivoFoto = nomeArquivoFoto;
-    }
-    public double getValorArrecadado() {
-        return valorArrecadado;
-    }
-    public void setValorArrecadado(double valorArrecadado) {
         this.valorArrecadado = valorArrecadado;
     }
 }

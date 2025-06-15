@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
   `titulo` VARCHAR(60) NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NOT NULL,
   `data_expiracao` DATE NOT NULL,
-  `status` VARCHAR(1) NOT NULL,
+  `status` VARCHAR(1) NOT NULL, --ativo, expirado ou finalizado 
   `tipo_anuncio` VARCHAR(1) NOT NULL,
   `entrega_pelo_fornecedor` INT(1) NOT NULL,
   `cidade_idcidade` INT(5) NOT NULL,
@@ -252,7 +252,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`relacao_beneficiario` (
   `anuncio_idanuncio` INT(5) NOT NULL,
   `usuario_conta_idconta` INT(5) NOT NULL,
-  `tipo_relacao_interessado` VARCHAR(1) NOT NULL,
+  `tipo_relacao_interessado` VARCHAR(1) NOT NULL, -- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio) ou N para negociando
   PRIMARY KEY (`anuncio_idanuncio`, `usuario_conta_idconta`),
   INDEX `fk_anuncio_has_usuario_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
   INDEX `fk_anuncio_has_usuario_anuncio1_idx` (`anuncio_idanuncio` ASC) VISIBLE,

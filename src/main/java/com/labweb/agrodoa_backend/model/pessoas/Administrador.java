@@ -3,10 +3,14 @@ package com.labweb.agrodoa_backend.model.pessoas;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter; 
 
 @Entity
 @Table(name = "administrador")
 @PrimaryKeyJoinColumn(name = "conta_idconta") // mapeia PK+FK >> exato nome da coluna no banco
+@Getter
+@Setter
 public class Administrador extends Conta{
     private String github;
     private String linkedin;
