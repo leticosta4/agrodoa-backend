@@ -1,9 +1,11 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.model.relacoes.DoacaoCausa;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Avaliacao;
 
@@ -41,14 +43,15 @@ public abstract class Usuario extends Conta{
     @JoinColumn(name = "cidade_idcidade", referencedColumnName = "idcidade")
     private Cidade cidade;
 
+    //ver o momento da inicialização dessas 3 listas abaixo
     @OneToMany(mappedBy = "denunciado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Denuncia> denuncias;   //ver o momento da inicialização
+    private List<Denuncia> denuncias;
 
     @OneToMany(mappedBy = "avaliado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Avaliacao> avaliacoes; //ver o momento da inicialização
+    private List<Avaliacao> avaliacoes; 
 
-    //adicionar ainda:
-    //opcional: lista de causas
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DoacaoCausa> doacoesCausas;
 
     public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade) {
         super(nome, email, senha);

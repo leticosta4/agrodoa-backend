@@ -3,7 +3,6 @@ package com.labweb.agrodoa_backend.model.relacoes;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -33,7 +32,6 @@ public class RelacaoBeneficiario {
     @JoinColumn(name = "usuario_conta_idconta")
     private Beneficiario beneficiario;
 
-    @Column(name = "tipo_relacao_interessado")
     private String tipoRelacao;
 
     public RelacaoBeneficiario(Anuncio anuncio, Beneficiario beneficiario, String tipoRelacao) {
