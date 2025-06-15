@@ -10,12 +10,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "avaliacao")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Avaliacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +32,6 @@ public class Avaliacao {
     @ManyToOne
     @JoinColumn(name = "conta_idconta")
     private Usuario avaliado;
-
-    public Avaliacao(){}
 
     public Avaliacao(int nota, String comentario, Usuario avaliador, Usuario avaliado){
         this.nota = nota;

@@ -3,15 +3,15 @@ package com.labweb.agrodoa_backend.model.relacoes;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.yaml.snakeyaml.tokens.Token.ID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Embeddable
 public class IdRelacaoBeneficiario implements Serializable{ //revisar se precisa mesmo disso
     @Column(name = "anuncio_idanuncio")
@@ -19,8 +19,6 @@ public class IdRelacaoBeneficiario implements Serializable{ //revisar se precisa
 
     @Column(name = "usuario_conta_idconta")
     private Long beneficiarioId;
-
-    public IdRelacaoBeneficiario() {}
 
     public IdRelacaoBeneficiario(Long anuncioId, Long beneficiarioId) {
         this.anuncioId = anuncioId;

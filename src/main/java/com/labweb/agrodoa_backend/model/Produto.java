@@ -8,12 +8,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "produto")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +24,6 @@ public class Produto {
     private int quantidade;
     private LocalDateTime dataValidade;
     private double precoUnidade;
-
-    public Produto(){}
     
     public Produto(String nome, int quantidade, LocalDateTime dataValidade, double precoUnidade) {
         this.nome = nome;

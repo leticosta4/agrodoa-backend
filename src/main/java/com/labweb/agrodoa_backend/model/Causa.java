@@ -8,12 +8,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "causa")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Causa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +27,7 @@ public class Causa {
     private String nomeArquivoFoto;
     private double valorArrecadado;
     //ver ainda como colocar o enum para status (concluida ou aberta)
-    
-    public Causa(){}
-    
+   
     public Causa(String nome, String descricao, double meta, LocalDateTime prazo, String nomeArquivoFoto,
             double valorArrecadado) {
         this.nome = nome;

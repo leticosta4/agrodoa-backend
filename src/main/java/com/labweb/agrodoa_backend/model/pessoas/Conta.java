@@ -9,12 +9,14 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 //ver ainda como modelar de acordo com o factory method
 
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "conta")
 @Inheritance(strategy = InheritanceType.JOINED) //cria uma tabela para cada classe, com JOIN nas consultas, e faz as tables/classes filhas herdarem o mesmo id
@@ -26,8 +28,6 @@ public abstract class Conta {
     private String nome;
     private String email;
     private String senha;
-
-    public Conta(){} //contrutor padrao JPA
 
     public Conta(String nome, String email, String senha){
         this.nome = nome;

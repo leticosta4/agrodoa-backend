@@ -8,12 +8,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "cidade")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Cidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +25,6 @@ public class Cidade {
     @ManyToOne
     @JoinColumn(name = "estado_idestado", nullable = false)  // FK na tabela cidade
     private Estado estado;
-
-    public Cidade(){}
 
     public Cidade(String nome, Estado estado) {
         this.nome = nome;

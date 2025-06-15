@@ -1,11 +1,9 @@
 package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 import com.labweb.agrodoa_backend.model.pessoas.Fornecedor;
 import com.labweb.agrodoa_backend.model.relacoes.Negociacao;
 
@@ -20,12 +18,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "anuncio")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Anuncio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,8 +51,6 @@ public class Anuncio {
 
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Negociacao> negociacoes;
-
-    public Anuncio(){}
 
     public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor, Cidade cidade, Fornecedor anunciante, Produto produto) {
         this.titulo = titulo;

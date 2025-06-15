@@ -18,6 +18,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "usuario")
@@ -25,6 +26,7 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "conta_idconta") // mapeia PK+FK >> exato nome da coluna no banco
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class Usuario extends Conta{
     String cpfOuCnpj;
     String nomeArquivoFoto;
@@ -47,8 +49,6 @@ public abstract class Usuario extends Conta{
 
     //adicionar ainda:
     //opcional: lista de causas
-
-    public Usuario(){}
 
     public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade) {
         super(nome, email, senha);

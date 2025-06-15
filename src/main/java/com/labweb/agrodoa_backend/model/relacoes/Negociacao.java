@@ -11,12 +11,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "negociacao")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Negociacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,13 @@ public class Negociacao {
     @ManyToOne
     @JoinColumn(name = "usuario_conta_idconta")
     private Beneficiario beneficiado;
+
+    public Negociacao(float valorPago, int quantidade, Anuncio anuncio, Beneficiario beneficiado){
+        this.valorPago = valorPago;
+        this.quantidade = quantidade;
+        this.anuncio = anuncio;
+        this.beneficiado = beneficiado;
+    }
 
 }
     

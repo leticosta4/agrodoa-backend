@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
-import com.labweb.agrodoa_backend.model.Motivo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,12 +10,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "denuncia")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Denuncia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +35,6 @@ public class Denuncia {
     @ManyToOne
     @JoinColumn(name = "conta_idconta")
     private Usuario denunciado;
+
+    
 }

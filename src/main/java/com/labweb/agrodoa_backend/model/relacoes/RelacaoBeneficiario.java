@@ -11,10 +11,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "relacao_beneficiario")
 public class RelacaoBeneficiario {
@@ -22,7 +24,7 @@ public class RelacaoBeneficiario {
     private IdRelacaoBeneficiario idRelacao; //dois valores por causa da classe  IdRelacaoBeneficiario (revisar)
 
     @ManyToOne
-    @MapsId("anuncioId")
+    @MapsId("anuncioId") // MapsId para "ligar" a FK da classe principal com a @EmbeddedId
     @JoinColumn(name = "anuncio_idanuncio")
     private Anuncio anuncio;
 
@@ -33,8 +35,6 @@ public class RelacaoBeneficiario {
 
     @Column(name = "tipo_relacao_interessado")
     private String tipoRelacao;
-
-    public RelacaoBeneficiario() {}
 
     public RelacaoBeneficiario(Anuncio anuncio, Beneficiario beneficiario, String tipoRelacao) {
         this.anuncio = anuncio;

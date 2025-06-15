@@ -14,6 +14,9 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Entity
 @DiscriminatorValue("BENEFICIARIO")
 @PrimaryKeyJoinColumn(name = "conta_idconta")
@@ -34,9 +37,6 @@ public class Beneficiario extends Usuario{
             .toList();
     }
     */
-
-
-    public Beneficiario(){}
 
     public Beneficiario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade){
         super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, ehVoluntario, tipoUsuario, cidade);
