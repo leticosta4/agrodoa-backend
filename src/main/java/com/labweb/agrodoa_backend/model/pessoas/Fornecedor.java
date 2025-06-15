@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 
+import com.labweb.agrodoa_backend.model.*;
+
 @Entity
 public class Fornecedor extends Usuario{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

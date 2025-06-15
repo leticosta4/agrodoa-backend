@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,23 +25,26 @@ public class Anuncio {
     private int entregaPeloFornecedor; //talvez mudar para boolean
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private Usuario anunciante; //ver como fazer essa restrição do tipo >> comando SQL
+    @JoinColumn(name = "id_anunciante")
+    private Usuario anunciante; //restrição do tipo >> comando SQL
+
+    @OneToOne
+    @JoinColumn(name = "produto_idproduto")
+    private Produto produto; 
 
     //ver ainda como colocar:
     //os enums para status (expirado, finalizado ou ativo) e o tipo de anuncio (AÇÃO no banco: venda ou anúncio) --representando como letras no banco, adicionar o status N de negociando
     //a chave da cidade e estado (local)
-    //a chave de anunciante 
-    //a chave de produto
 
     public Anuncio(){}
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor, Usuario anunciante) {
+    public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor, Usuario anunciante, Produto produto) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.dataExpiracao = dataExpiracao;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
         this.anunciante = anunciante;
+        this.produto = produto;
     }
 
     public long getIdAnuncio() {

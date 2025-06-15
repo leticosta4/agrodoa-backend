@@ -116,8 +116,8 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
   `id_anunciante` INT(5) NOT NULL,
   PRIMARY KEY (`idanuncio`),
   UNIQUE INDEX `idanuncio_UNIQUE` (`idanuncio` ASC) VISIBLE,
+  UNIQUE INDEX `produto_idproduto_UNIQUE` (`produto_idproduto` ASC) VISIBLE,
   INDEX `fk_anuncio_cidade1_idx` (`cidade_idcidade` ASC) VISIBLE,
-  INDEX `fk_anuncio_produto1_idx` (`produto_idproduto` ASC) VISIBLE,
   INDEX `fk_anuncio_usuario1_idx` (`id_anunciante` ASC) VISIBLE,
   CONSTRAINT `fk_anuncio_cidade1`
     FOREIGN KEY (`cidade_idcidade`)
