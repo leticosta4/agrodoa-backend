@@ -2,6 +2,8 @@ package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDateTime;
 
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,21 +25,22 @@ public class Anuncio {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private Usuario anunciante; //ver como fazer essa restrição do tipo 
+    private Usuario anunciante; //ver como fazer essa restrição do tipo >> comando SQL
 
     //ver ainda como colocar:
-    //os enums para status (expirado, finalizado ou ativo) e o tipo de anuncio (AÇÃO no banco: venda ou anúncio) --representando como letras no banco
+    //os enums para status (expirado, finalizado ou ativo) e o tipo de anuncio (AÇÃO no banco: venda ou anúncio) --representando como letras no banco, adicionar o status N de negociando
     //a chave da cidade e estado (local)
     //a chave de anunciante 
     //a chave de produto
 
     public Anuncio(){}
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor) {
+    public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor, Usuario anunciante) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.dataExpiracao = dataExpiracao;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
+        this.anunciante = anunciante;
     }
 
     public long getIdAnuncio() {

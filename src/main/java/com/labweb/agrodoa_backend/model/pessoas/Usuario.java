@@ -1,4 +1,6 @@
-package com.labweb.agrodoa_backend.model;
+package com.labweb.agrodoa_backend.model.pessoas;
+
+import com.labweb.agrodoa_backend.model.Tipo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -9,7 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "usuario")
 @PrimaryKeyJoinColumn(name = "conta_idconta") // mapeia PK+FK >> exato nome da coluna no banco
-public class Usuario extends Conta{
+public abstract class Usuario extends Conta{
     String cpfOuCnpj;
     String nomeArquivoFoto;
     String telefone;
@@ -23,6 +25,16 @@ public class Usuario extends Conta{
     //chave que indica a cidade e o estado (local)
     //lista de anuncios em negociacao (independente do tipo de user)
     //lista de anuncios salvos (se for beneficiario)
-    //lista de anuncios postados (se for fornecedor)
     //opcional: listas de denuncias, de avaliações e de causas
+
+    public Usuario(){}
+
+    public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario) {
+        super(nome, email, senha);
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.nomeArquivoFoto = nomeArquivoFoto;
+        this.telefone = telefone;
+        this.ehVoluntario = ehVoluntario;
+        this.tipoUsuario = tipoUsuario;
+    }
 }

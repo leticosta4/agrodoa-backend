@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.model;
+package com.labweb.agrodoa_backend.model.pessoas;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;

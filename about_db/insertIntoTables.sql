@@ -57,7 +57,7 @@ INSERT INTO `labweb_project`.`produto` (`idproduto`, `nome`, `quantidade`, `data
 (8, 'Feijão Preto Kero Coco 1kg', 70, '2025-08-05', 10.50),          
 (9, 'Óleo de Milho Salada 900ml', 25, '2024-09-25', NULL);
 
-INSERT INTO `labweb_project`.`anuncio` (
+INSERT INTO `labweb_project`.`anuncio` (  --ativo, expirado e finalizado 
   `idanuncio`, `titulo`, `nome_arquivo_foto`, `data_expiracao`, `status`, `tipo_anuncio`, 
   `entrega_pelo_fornecedor`, `cidade_idcidade`, `produto_idproduto`, `id_anunciante`
 ) VALUES
