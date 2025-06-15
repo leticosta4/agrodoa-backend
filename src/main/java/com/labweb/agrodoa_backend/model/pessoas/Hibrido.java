@@ -18,7 +18,7 @@ import com.labweb.agrodoa_backend.model.local.Cidade;
 @Entity
 @DiscriminatorValue("HIBRIDO")
 @PrimaryKeyJoinColumn(name = "conta_idconta")
-public class Hibrido extends Usuario{
+public class Hibrido extends Usuario{  //melhorar isso ainda
     @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Anuncio> listaAnunciosPostados = new ArrayList<>();
 

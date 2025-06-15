@@ -19,7 +19,7 @@ import lombok.Setter;
 @Table(name = "relacao_beneficiario")
 public class RelacaoBeneficiario {
     @EmbeddedId
-    private IdRelacaoBeneficiario idRelacao;
+    private IdRelacaoBeneficiario idRelacao; //dois valores por causa da classe  IdRelacaoBeneficiario (revisar)
 
     @ManyToOne
     @MapsId("anuncioId")

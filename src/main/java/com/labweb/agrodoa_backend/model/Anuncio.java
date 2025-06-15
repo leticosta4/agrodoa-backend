@@ -34,7 +34,8 @@ public class Anuncio {
     private String nomeArquivoFoto;
     private LocalDateTime dataExpiracao;
     private int entregaPeloFornecedor; //talvez mudar para boolean
-    //um atributo de preço total
+    //enum de status (expirado, finalizado ou ativo)
+    //enum de tipo (AÇÃO no banco: venda ou anúncio)
 
     @ManyToOne
     @JoinColumn(name = "cidade_idcidade", referencedColumnName = "idcidade")
@@ -45,15 +46,11 @@ public class Anuncio {
     private Fornecedor anunciante; //restrição do tipo >> comando SQL
 
     @OneToOne
-    @JoinColumn(name = "produto_idproduto")
+    @JoinColumn(name = "produto_idproduto", referencedColumnName = "idcidade")
     private Produto produto; 
 
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Negociacao> negociacoes;
-
-    //ver ainda como colocar:
-    //os enums para status (expirado, finalizado ou ativo) e o tipo de anuncio (AÇÃO no banco: venda ou anúncio) --representando como letras no banco, adicionar o status N de negociando
-    //lista de usuarios negociando
 
     public Anuncio(){}
 

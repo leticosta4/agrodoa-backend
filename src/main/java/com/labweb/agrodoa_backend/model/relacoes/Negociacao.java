@@ -22,15 +22,13 @@ public class Negociacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idNegociacao;
     private float valorPago;
-    private int quantidade; //?
+    private int quantidade;
     //adicionar o statusNegociacao como enum...  
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "anuncio_idanuncio")
     private Anuncio anuncio;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "usuario_conta_idconta")
     private Beneficiario beneficiado;

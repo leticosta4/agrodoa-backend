@@ -74,7 +74,7 @@ INSERT INTO `labweb_project`.`anuncio` (  --ativo, expirado e finalizado
 INSERT INTO `labweb_project`.`requisicao` (idrequisicao, usuario_conta_idconta, tipo_anterior) VALUES
 (1, 10, 1)
 
--- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio) ou N para negociando
+-- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio)
 --para anuncios expirados
 INSERT INTO `labweb_project`.`relacao_beneficiario` 
 (`anuncio_idanuncio`, `usuario_conta_idconta`, `tipo_relacao_interessado`) VALUES

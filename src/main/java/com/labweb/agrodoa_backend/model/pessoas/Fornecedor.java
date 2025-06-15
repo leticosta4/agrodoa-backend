@@ -21,8 +21,6 @@ public class Fornecedor extends Usuario{
 
     public Fornecedor(){}
 
-    //talvez fazer um construtor sem a lista de anuncios para ficar mais facil na busca e envio p o front
-
     public Fornecedor(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade){
         super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, ehVoluntario, tipoUsuario, cidade);
     }
