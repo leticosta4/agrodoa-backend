@@ -1,6 +1,5 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;

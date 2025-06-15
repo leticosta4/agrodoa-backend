@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.model.relacoes;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 
