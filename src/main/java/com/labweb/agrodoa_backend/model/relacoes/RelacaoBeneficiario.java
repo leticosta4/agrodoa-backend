@@ -1,10 +1,14 @@
 package com.labweb.agrodoa_backend.model.relacoes;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
+import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -32,9 +36,10 @@ public class RelacaoBeneficiario {
     @JoinColumn(name = "usuario_conta_idconta")
     private Beneficiario beneficiario;
 
-    private String tipoRelacao;
+    @Enumerated(EnumType.STRING)
+    private TipoRelacaoBenef tipoRelacao;
 
-    public RelacaoBeneficiario(Anuncio anuncio, Beneficiario beneficiario, String tipoRelacao) {
+    public RelacaoBeneficiario(Anuncio anuncio, Beneficiario beneficiario, TipoRelacaoBenef tipoRelacao) {
         this.anuncio = anuncio;
         this.beneficiario = beneficiario;
         this.tipoRelacao = tipoRelacao;

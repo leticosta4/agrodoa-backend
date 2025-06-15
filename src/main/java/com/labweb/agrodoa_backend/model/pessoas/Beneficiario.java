@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.relacoes.Negociacao;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.Entity;
@@ -21,18 +20,21 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("BENEFICIARIO")
 @PrimaryKeyJoinColumn(name = "conta_idconta")
 public class Beneficiario extends Usuario{
-    @OneToMany(mappedBy = "beneficiado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Negociacao> anunciosEmNegociacao;
-
     @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>();
-
 
     /*na hora de filtrar fa\er algo tipo:
 
     public List<Anuncio> getAnunciosSalvos() {
         return relacoes.stream()
             .filter(r -> "I".equals(r.getTipoRelacao()))
+            .map(RelacaoBeneficiario::getAnuncio)
+            .toList();
+    }
+        
+    public List<Anuncio> getAnunciosEmNegociacao() {
+        return relacoes.stream()
+            .filter(r -> "N".equals(r.getTipoRelacao()))
             .map(RelacaoBeneficiario::getAnuncio)
             .toList();
     }

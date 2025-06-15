@@ -2,7 +2,11 @@ package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDateTime;
 
+import com.labweb.agrodoa_backend.model.enums.StatusCausa;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +30,9 @@ public class Causa {
     private LocalDateTime prazo;
     private String nomeArquivoFoto;
     private double valorArrecadado;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCausa status;
     //ver ainda como colocar o enum para status (concluida ou aberta)
    
     public Causa(String nome, String descricao, double meta, LocalDateTime prazo, String nomeArquivoFoto,
@@ -36,5 +43,6 @@ public class Causa {
         this.prazo = prazo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.valorArrecadado = valorArrecadado;
+        this.status = StatusCausa.ABERTA; //valor padrao
     }
 }
