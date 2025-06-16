@@ -111,3 +111,5 @@ INSERT INTO `labweb_project`.`causa`
 (3, 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', 10000.00, '2024-11-30', 'sos_enchentes.jpg', 'C'),
 (4, 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', 15000.00, '2025-08-15', 'inclusao_digital.jpg', 'A'),
 (5, 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', 8000.00, '2024-09-30', 'feira_agro.jpg', 'C');
+
+--fazer inserts da tabela motivo

@@ -33,7 +33,6 @@ public class Causa {
 
     @Enumerated(EnumType.STRING)
     private StatusCausa status;
-    //ver ainda como colocar o enum para status (concluida ou aberta)
    
     public Causa(String nome, String descricao, double meta, LocalDateTime prazo, String nomeArquivoFoto,
             double valorArrecadado) {
