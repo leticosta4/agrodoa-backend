@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.model;
 import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
 import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,14 +30,15 @@ public class Negociacao { //nossa negociacao confirmada fechada já com algum be
     private int quantidade;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status_negociacao")
     private StatusNegociacao status;
 
     @ManyToOne
-    @JoinColumn(name = "anuncio_idanuncio")
+    @JoinColumn(name = "idanuncio")
     private Anuncio anuncio;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_conta_idconta")
+    @JoinColumn(name = "id_beneficario")  //apagar ainda ao usuario_conta_idconta
     private Beneficiario beneficiado;
 
     public Negociacao(double valorPago, int quantidade, Anuncio anuncio, Beneficiario beneficiado){

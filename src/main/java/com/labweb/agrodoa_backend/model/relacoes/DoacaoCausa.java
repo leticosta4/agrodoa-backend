@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.model.relacoes;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.model.Causa;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -32,6 +33,7 @@ public class DoacaoCausa {
     @JoinColumn(name = "causa_idcausa")
     private Causa causa;
 
+    @Column(name = "valor_doado")
     private float valorDoado;
 
     public DoacaoCausa(Usuario usuario, Causa causa, float valorDoado){

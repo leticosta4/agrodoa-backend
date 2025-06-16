@@ -10,6 +10,7 @@ import com.labweb.agrodoa_backend.model.pessoas.Fornecedor;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,12 +35,21 @@ public class Anuncio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAnuncio;
+    
+    @Column(name = "titulo")
     private String titulo;
+
+    @Column(name = "nome_arquivo_foto")
     private String nomeArquivoFoto;
+
+    @Column(name = "data_expiracao")
     private LocalDateTime dataExpiracao;
+
+    @Column(name = "entrega_pelo_fornecedor")
     private int entregaPeloFornecedor; //talvez mudar para boolean
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private StatusAnuncio status; //para criar/atribuir StatusAnuncio.ATIVO ; 
     /*
      para criar/atribuir StatusAnuncio.ATIVO ; 
@@ -58,6 +68,7 @@ public class Anuncio {
     */
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_anuncio")
     private TipoAnuncio tipo;
 
     @ManyToOne
@@ -89,12 +100,13 @@ public class Anuncio {
     public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Fornecedor anunciante, Produto produto) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
-        this.dataExpiracao = dataExpiracao;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
         this.tipo = tipo;
         this.cidade = cidade;
         this.anunciante = anunciante;
         this.produto = produto;
-        this.status = StatusAnuncio.ATIVO; //valor padrao
+        //valores padrao
+        this.status = StatusAnuncio.ATIVO; 
+        this.dataExpiracao = this.produto.getDataValidade();
     }
 }

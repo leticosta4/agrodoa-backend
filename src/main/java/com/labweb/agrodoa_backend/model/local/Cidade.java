@@ -1,5 +1,6 @@
 package com.labweb.agrodoa_backend.model.local;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,8 @@ public class Cidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCidade;
+
+    @Column(name = "nome")
     private String nome;
 
     @ManyToOne

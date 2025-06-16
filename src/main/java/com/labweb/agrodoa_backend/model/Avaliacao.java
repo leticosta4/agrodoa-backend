@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.model;
 
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,11 @@ public class Avaliacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAvaliacao;
+
+    @Column(name = "nota")
     private int nota;
+
+    @Column(name = "comentario")
     private String comentario;
     
     @ManyToOne
