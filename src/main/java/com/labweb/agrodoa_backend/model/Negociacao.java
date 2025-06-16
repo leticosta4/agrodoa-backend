@@ -1,7 +1,6 @@
-package com.labweb.agrodoa_backend.model.relacoes;
+package com.labweb.agrodoa_backend.model;
 
-import com.labweb.agrodoa_backend.model.Anuncio;
-import com.labweb.agrodoa_backend.model.enums.StatusPagamento;
+import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
 import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Pagamento {
+public class Negociacao { //nossa negociacao confirmada fechada já com algum beneficiario => venda ou doação, por isso esse nome em vez de pagamento
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPagamento;
@@ -30,7 +29,7 @@ public class Pagamento {
     private int quantidade;
 
     @Enumerated(EnumType.STRING)
-    private StatusPagamento status;
+    private StatusNegociacao status;
 
     @ManyToOne
     @JoinColumn(name = "anuncio_idanuncio")
@@ -40,13 +39,13 @@ public class Pagamento {
     @JoinColumn(name = "usuario_conta_idconta")
     private Beneficiario beneficiado;
 
-    public Pagamento(double valorPago, int quantidade, Anuncio anuncio, Beneficiario beneficiado){
+    public Negociacao(double valorPago, int quantidade, Anuncio anuncio, Beneficiario beneficiado){
         this.anuncio = anuncio;
         this.beneficiado = beneficiado;
         //valores padrão
         this.valorPago = this.anuncio.getProduto().getPrecoUnidade();
         this.quantidade = 1;
-        this.status = StatusPagamento.AGUARDANDO_PAGAMENTO;
+        this.status = StatusNegociacao.AGUARDANDO;
     }
 }
     
