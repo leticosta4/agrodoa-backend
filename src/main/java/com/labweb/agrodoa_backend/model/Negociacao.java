@@ -38,7 +38,7 @@ public class Negociacao { //nossa negociacao confirmada fechada já com algum be
     private Anuncio anuncio;
 
     @ManyToOne
-    @JoinColumn(name = "id_beneficario")  //apagar ainda ao usuario_conta_idconta
+    @JoinColumn(name = "id_beneficario")  //apagar ainda o usuario_conta_idconta
     private Beneficiario beneficiado;
 
     public Negociacao(double valorPago, int quantidade, Anuncio anuncio, Beneficiario beneficiado){
