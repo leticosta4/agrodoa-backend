@@ -74,28 +74,28 @@ INSERT INTO `labweb_project`.`anuncio` (  --ativo, expirado e finalizado
 INSERT INTO `labweb_project`.`requisicao` (idrequisicao, usuario_conta_idconta, tipo_anterior) VALUES
 (1, 10, 1)
 
--- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio)
+-- o tipo da relação pode ser Negociando ou Salvou
 --para anuncios expirados
 INSERT INTO `labweb_project`.`relacao_beneficiario` 
 (`anuncio_idanuncio`, `usuario_conta_idconta`, `tipo_relacao_interessado`) VALUES
-(2, 6, 'I'),  -- Kaik interessado no feijão
-(7, 10, 'I'); -- Rafael interessado no arroz importado
+(2, 6, 'S'),  -- Kaik interessado no feijão
+(7, 10, 'S'); -- Rafael interessado no arroz importado
 
 --para anuncios finalizados
 INSERT INTO `labweb_project`.`relacao_beneficiario` 
 (`anuncio_idanuncio`, `usuario_conta_idconta`, `tipo_relacao_interessado`) VALUES
-(3, 10, 'A'), -- Rafael aprovado na doação de óleo
-(4, 5, 'A'),  -- Brunna aprovada no arroz
-(8, 4, 'A');  -- Sophia aprovada no feijão preto
+(3, 10, 'N'), -- Rafael aprovado na doação de óleo
+(4, 5, 'N'),  -- Brunna aprovada no arroz
+(8, 4, 'N');  -- Sophia aprovada no feijão preto
 
 --para anuncios ativos
 INSERT INTO `labweb_project`.`relacao_beneficiario` 
 (`anuncio_idanuncio`, `usuario_conta_idconta`, `tipo_relacao_interessado`) VALUES
-(1, 4, 'I'),  -- Sophia interessada no arroz
-(1, 5, 'I'),  -- Brunna também interessada
-(5, 4, 'I'),  -- Sophia interessada no feijão
-(5, 6, 'I'),  -- Kaik também interessado
-(9, 10, 'I');  -- Kaik interessado na doação de óleo
+(1, 4, 'S'),  -- Sophia interessada no arroz
+(1, 5, 'S'),  -- Brunna também interessada
+(5, 4, 'S'),  -- Sophia interessada no feijão
+(5, 6, 'S'),  -- Kaik também interessado
+(9, 10, 'S');  -- Kaik interessado na doação de óleo
 
 INSERT INTO `labweb_project`.`negociacao` 
 (`negociacao_idnegociacao`, `valor_pago`, `quantidade`, `id_anuncio`, `id_beneficiario`) VALUES
