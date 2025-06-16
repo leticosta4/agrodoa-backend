@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idProduto;
+    private Long idProduto;
     private String nome;
     private int quantidade;
     private LocalDateTime dataValidade;

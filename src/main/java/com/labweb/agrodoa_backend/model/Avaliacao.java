@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Avaliacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idAvaliacao;
+    private Long idAvaliacao;
     private int nota;
     private String comentario;
     

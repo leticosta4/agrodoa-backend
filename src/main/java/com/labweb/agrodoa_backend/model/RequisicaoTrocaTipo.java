@@ -21,7 +21,7 @@ import lombok.Setter;
 public class RequisicaoTrocaTipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idRequisicaoTrocaTipo; 
+    private Long idRequisicaoTrocaTipo; 
 
     @ManyToOne
     @JoinColumn(name = "conta_idconta")

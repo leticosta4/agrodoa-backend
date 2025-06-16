@@ -33,7 +33,7 @@ import lombok.Setter;
 public class Anuncio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idAnuncio;
+    private Long idAnuncio;
     private String titulo;
     private String nomeArquivoFoto;
     private LocalDateTime dataExpiracao;

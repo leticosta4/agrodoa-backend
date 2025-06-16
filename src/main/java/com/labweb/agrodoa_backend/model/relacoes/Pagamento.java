@@ -25,7 +25,7 @@ import lombok.Setter;
 public class Pagamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idPagamento;
+    private Long idPagamento;
     private double valorPago;
     private int quantidade;
 

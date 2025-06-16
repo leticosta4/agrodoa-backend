@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Denuncia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idDenuncia;
+    private Long idDenuncia;
     //adicionar o enum do status da denuncia
 
     @ManyToOne

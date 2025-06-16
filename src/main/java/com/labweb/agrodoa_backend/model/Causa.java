@@ -23,7 +23,7 @@ import lombok.Setter;
 public class Causa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCausa;
+    private Long idCausa;
     private String nome;
     private String descricao;
     private double meta;
