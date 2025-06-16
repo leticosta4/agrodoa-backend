@@ -57,9 +57,9 @@ INSERT INTO `labweb_project`.`produto` (`idproduto`, `nome`, `quantidade`, `data
 (8, 'Feijão Preto Kero Coco 1kg', 70, '2025-08-05', 10.50),          
 (9, 'Óleo de Milho Salada 900ml', 25, '2024-09-25', NULL);
 
-INSERT INTO `labweb_project`.`anuncio` (
-  `idanuncio`, `titulo`, `nome_arquivo_foto`, `data_expiracao`, `status`, `acao`, 
-  `entrega_pelo_fornecedor`, `cidade_idcidade`, `produto_idproduto`, `anunciante_conta_idconta`
+INSERT INTO `labweb_project`.`anuncio` (  --ativo, expirado e finalizado 
+  `idanuncio`, `titulo`, `nome_arquivo_foto`, `data_expiracao`, `status`, `tipo_anuncio`, 
+  `entrega_pelo_fornecedor`, `cidade_idcidade`, `produto_idproduto`, `id_anunciante`
 ) VALUES
 (1, 'Arroz Integral Tio João - Promoção', 'arroz_tiojoao.jpg', '2025-06-30', 'A', 'V', 1, 1, 1, 7),
 (2, 'Feijão Kicaldo - Qualidade Garantida', 'feijao_kicaldo.jpg', '2024-07-15', 'E', 'V', 0, 1, 2, 7),
@@ -74,7 +74,7 @@ INSERT INTO `labweb_project`.`anuncio` (
 INSERT INTO `labweb_project`.`requisicao` (idrequisicao, usuario_conta_idconta, tipo_anterior) VALUES
 (1, 10, 1)
 
--- I é interessado e A é aprovado
+-- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio)
 --para anuncios expirados
 INSERT INTO `labweb_project`.`relacao_beneficiario` 
 (`anuncio_idanuncio`, `usuario_conta_idconta`, `tipo_relacao_interessado`) VALUES
@@ -98,14 +98,14 @@ INSERT INTO `labweb_project`.`relacao_beneficiario`
 (9, 10, 'I');  -- Kaik interessado na doação de óleo
 
 INSERT INTO `labweb_project`.`negociacao` 
-(`negociacao_idnegociacao`, `valor_pago`, `quantidade`, `relacaoo_beneficiario_anuncio_idanuncio`, `relacao_beneficiario_usuario_conta_idconta`) VALUES
+(`negociacao_idnegociacao`, `valor_pago`, `quantidade`, `id_anuncio`, `id_beneficiario`) VALUES
 
 (1, NULL, 5, 3, 10),  -- Negociação 1: Doação de óleo (anúncio 3) para Rafael >>> Doação não tem valor_pago
 (2, 23.20, 4, 4, 5),  -- Negociação 2: Compra de arroz (anúncio 4) por Brunna >>> 4 unidades x R$5.80 (preço do produto 4)
 (3, 10.50, 1, 8, 4);  -- Negociação 3: Compra de feijão (anúncio 8) por Sophia >>> 1 unidade x R$10.50 (preço do produto 8)
 
 INSERT INTO `labweb_project`.`causa` 
-(`idcausa`, `nome`, `descricao`, `meta`, `prazo`, `nome_arquivo_foto`, `status_causa`) VALUES
+(`idcausa`, `nome`, `descricao`, `meta`, `prazo`, `nome_arquivo_foto`, `status_causa`, `valor_arrecadado`) VALUES --precisa ou não colocar o NULL em cada item?
 (1, 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', 5000.00, '2024-12-20', 'natal_sem_fome.jpg', 'C'),
 (2, 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', 3000.00, '2025-07-31', 'kit_escolar.jpg', 'A'),
 (3, 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', 10000.00, '2024-11-30', 'sos_enchentes.jpg', 'C'),
