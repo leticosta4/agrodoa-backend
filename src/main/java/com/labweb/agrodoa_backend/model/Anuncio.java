@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
@@ -67,10 +66,10 @@ public class Anuncio {
 
     @ManyToOne
     @JoinColumn(name = "id_anunciante")
-    private Fornecedor anunciante; //restrição do tipo >> comando SQL
+    private Fornecedor anunciante; //restrição do tipo >> comando SQL - talvez tenha que mudar depois pq tem o hibrido tb
 
     @OneToOne
-    @JoinColumn(name = "produto_idproduto", referencedColumnName = "idcidade")
+    @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
     private Produto produto; 
 
     //lista de beneficiarios?

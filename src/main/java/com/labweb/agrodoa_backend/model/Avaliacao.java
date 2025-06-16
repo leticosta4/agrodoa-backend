@@ -26,11 +26,11 @@ public class Avaliacao {
     private String comentario;
     
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "id_avaliador", referencedColumnName = "conta_idconta")
     private Usuario avaliador;
 
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "id_avaliado", referencedColumnName = "conta_idconta")
     private Usuario avaliado;
 
     public Avaliacao(int nota, String comentario, Usuario avaliador, Usuario avaliado){

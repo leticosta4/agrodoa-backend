@@ -31,9 +31,9 @@ public class RelacaoBeneficiario {
     private Anuncio anuncio;
 
     @ManyToOne
-    @MapsId("conta_idconta")
+    @MapsId("beneficiarioId")
     @JoinColumn(name = "usuario_conta_idconta")
-    private Beneficiario beneficiario;
+    private Beneficiario beneficiario;  //depois rever pq isso vai mudar p hibrido
 
     @Enumerated(EnumType.STRING)
     private TipoRelacaoBenef tipoRelacao;

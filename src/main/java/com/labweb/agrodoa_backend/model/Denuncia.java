@@ -29,11 +29,11 @@ public class Denuncia {
     private Motivo motivo; 
 
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "id_denunciante", referencedColumnName = "conta_idconta")
     private Usuario denunciante;
 
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "id_denunciado", referencedColumnName = "conta_idconta")
     private Usuario denunciado;
 
     

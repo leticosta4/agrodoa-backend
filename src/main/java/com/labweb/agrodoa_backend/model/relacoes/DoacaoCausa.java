@@ -23,12 +23,12 @@ public class DoacaoCausa {
     private IdDoacaoCausa id = new IdDoacaoCausa();
     
     @ManyToOne
-    @MapsId("conta_idconta")
+    @MapsId("usuarioId")
     @JoinColumn(name = "usuario_conta_idconta")
     private Usuario usuario;
 
     @ManyToOne
-    @MapsId("id_causa")
+    @MapsId("causaId")
     @JoinColumn(name = "causa_idcausa")
     private Causa causa;
 
