@@ -1,12 +1,25 @@
 package com.labweb.agrodoa_backend.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.ArrayList;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.relacoes.IdRelacaoBeneficiario;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 public interface RelacaoBeneficiarioRepository extends JpaRepository<RelacaoBeneficiario, IdRelacaoBeneficiario> {
-    //as relacoes de anuncio que vao depender de filtros pelo tipo da relacao
-    //S para salvos 
-    //N para em negociacao
+    boolean existsByIdRelacao(IdRelacaoBeneficiario idRelacao);
+
+    @Query(value = "SELECT anuncio_idanuncio FROM relacao_beneficiario WHERE usuario_conta_idconta = :beneficiarioId AND tipo_relacao_interessado = :tipoRelacao;",
+       nativeQuery = true)
+    ArrayList <Long> findAllByIdBeneficiarioAndTipoRelacao(Long beneficiarioId, TipoRelacaoBenef tipoRelacao);  //lista salvos por user
+    
+    @Query(value = "SELECT usuario_conta_idconta FROM relacao_beneficiario WHERE anuncio_idanuncio = :anuncioId AND tipo_relacao_interessado = :tipoRelacao;",
+       nativeQuery = true)
+    ArrayList <Long> findAllByIdAnuncioAndTipoRelacao(Long anuncioId, TipoRelacaoBenef tipoRelacao);  //lista de negociantes por anuncio
+    
+    //ver aqui como vai associar o item do enum a um caracter 'S' ou 'N'
+    //ainda precisa testar
 }

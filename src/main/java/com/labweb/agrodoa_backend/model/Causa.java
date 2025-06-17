@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 
@@ -36,7 +36,7 @@ public class Causa {
     private double meta;
 
     @Column(name = "prazo")
-    private LocalDateTime prazo;
+    private LocalDate prazo;
 
     @Column(name = "nome_arquivo_foto")
     private String nomeArquivoFoto;
@@ -48,7 +48,7 @@ public class Causa {
     @Column(name = "status_causa")
     private StatusCausa status;
    
-    public Causa(String nome, String descricao, double meta, LocalDateTime prazo, String nomeArquivoFoto,
+    public Causa(String nome, String descricao, double meta, LocalDate prazo, String nomeArquivoFoto,
             double valorArrecadado) {
         this.nome = nome;
         this.descricao = descricao;

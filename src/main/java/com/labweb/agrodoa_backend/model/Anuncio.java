@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
@@ -43,7 +43,7 @@ public class Anuncio {
     private String nomeArquivoFoto;
 
     @Column(name = "data_expiracao")
-    private LocalDateTime dataExpiracao;
+    private LocalDate dataExpiracao;
 
     @Column(name = "entrega_pelo_fornecedor")
     private int entregaPeloFornecedor; //talvez mudar para boolean
@@ -97,7 +97,7 @@ public class Anuncio {
     }
     */
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDateTime dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Fornecedor anunciante, Produto produto) {
+    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Fornecedor anunciante, Produto produto) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.entregaPeloFornecedor = entregaPeloFornecedor;

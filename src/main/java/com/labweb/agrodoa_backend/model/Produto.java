@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,12 +29,12 @@ public class Produto {
     private int quantidade;
 
     @Column(name = "data_validade")
-    private LocalDateTime dataValidade;
+    private LocalDate dataValidade;
 
     @Column(name = "preco_unidade")
     private double precoUnidade;
     
-    public Produto(String nome, int quantidade, LocalDateTime dataValidade, double precoUnidade) {
+    public Produto(String nome, int quantidade, LocalDate dataValidade, double precoUnidade) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.dataValidade = dataValidade;
