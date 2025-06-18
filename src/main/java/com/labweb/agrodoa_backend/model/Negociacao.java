@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
 import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
-import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.Column;
