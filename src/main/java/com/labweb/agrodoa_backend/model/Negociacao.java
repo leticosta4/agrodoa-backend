@@ -1,7 +1,7 @@
 package com.labweb.agrodoa_backend.model;
 
 import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
-import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
+import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -34,18 +35,16 @@ public class Negociacao { //nossa negociacao confirmada fechada já com algum be
     private StatusNegociacao status;
 
     @ManyToOne
-    @JoinColumn(name = "idanuncio")
-    private Anuncio anuncio;
+    @JoinColumns({
+        @JoinColumn(name = "id_anuncio", referencedColumnName = "anuncio_idanuncio"),
+        @JoinColumn(name = "id_beneficiario", referencedColumnName = "usuario_conta_idconta")
+    })
+    private RelacaoBeneficiario relacao;
 
-    @ManyToOne
-    @JoinColumn(name = "id_beneficario")  //apagar ainda o usuario_conta_idconta
-    private Beneficiario beneficiado;
-
-    public Negociacao(double valorPago, int quantidade, Anuncio anuncio, Beneficiario beneficiado){
-        this.anuncio = anuncio;
-        this.beneficiado = beneficiado;
+    public Negociacao(double valorPago, int quantidade, RelacaoBeneficiario relacao){
+        this.relacao = relacao;
         //valores padrão
-        this.valorPago = this.anuncio.getProduto().getPrecoUnidade();
+        this.valorPago = this.relacao.getAnuncio().getProduto().getPrecoUnidade();
         this.quantidade = 1;
         this.status = StatusNegociacao.AGUARDANDO;
     }
