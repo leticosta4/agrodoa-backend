@@ -21,7 +21,7 @@ import lombok.Setter;
 @Table(name = "usuario_has_causa")
 public class DoacaoCausa {
     @EmbeddedId
-    private IdDoacaoCausa id = new IdDoacaoCausa();
+    private IdDoacaoCausa idDoacao = new IdDoacaoCausa();
     
     @ManyToOne
     @MapsId("usuarioId")

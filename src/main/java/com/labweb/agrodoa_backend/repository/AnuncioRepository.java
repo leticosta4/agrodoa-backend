@@ -11,10 +11,9 @@ import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.projection.AnuncioProjection;
 
 public interface AnuncioRepository extends JpaRepository<Anuncio, Long>{
-    boolean existsByAnuncioId(Long anuncioId);
+    boolean existsByIdAnuncio(Long idAnuncio);
     ArrayList <AnuncioProjection> findAllBy();
-    ArrayList <AnuncioProjection> findAllByAnuncianteId(Long anuncianteId);   //todos os anúncios de um anunciante
-    AnuncioProjection findByAnuncioId(Long anuncioId);  //usado no acesso a um unico anuncio, para finalizar ou desativar
+    AnuncioProjection findByIdAnuncio(Long idAnuncio);  //usado no acesso a um unico anuncio, para finalizar ou desativar
 
     @Query(value = "SELECT * FROM anuncio WHERE tipo_anuncio = :tipoAnuncio;", nativeQuery = true) //ver aqui como vai associar o item do enum a um caracter 'V' ou 'D'
     ArrayList<AnuncioProjection> findByTipoAnuncio(TipoAnuncio tipoAnuncio); //venda ou doação
