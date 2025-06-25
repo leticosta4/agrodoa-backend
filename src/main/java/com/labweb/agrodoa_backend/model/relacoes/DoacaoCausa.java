@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.model.relacoes;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.model.Causa;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -20,18 +21,19 @@ import lombok.Setter;
 @Table(name = "usuario_has_causa")
 public class DoacaoCausa {
     @EmbeddedId
-    private IdDoacaoCausa id = new IdDoacaoCausa();
+    private IdDoacaoCausa idDoacao = new IdDoacaoCausa();
     
     @ManyToOne
-    @MapsId("conta_idconta")
+    @MapsId("usuarioId")
     @JoinColumn(name = "usuario_conta_idconta")
     private Usuario usuario;
 
     @ManyToOne
-    @MapsId("id_causa")
+    @MapsId("causaId")
     @JoinColumn(name = "causa_idcausa")
     private Causa causa;
 
+    @Column(name = "valor_doado")
     private float valorDoado;
 
     public DoacaoCausa(Usuario usuario, Causa causa, float valorDoado){

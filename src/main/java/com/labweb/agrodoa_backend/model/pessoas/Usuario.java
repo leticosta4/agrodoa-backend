@@ -9,6 +9,7 @@ import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Avaliacao;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -29,19 +30,26 @@ import lombok.NoArgsConstructor;
 @Setter
 @NoArgsConstructor
 public abstract class Usuario extends Conta{
+    @Column(name = "cpf_ou_cnpj")
     String cpfOuCnpj;
+
+    @Column(name = "nome_arquivo_foto")
     String nomeArquivoFoto;
+
+    @Column(name = "telefone")
     String telefone;
-    int ehVoluntario; //talvez virar boolean?
-    
-    @ManyToOne
-    @JoinColumn(name = "tipo_idtipo", referencedColumnName = "idtipo") //nomes exatamente como no banco
-    private Tipo tipoUsuario;
 
     @ManyToOne
     @JoinColumn(name = "cidade_idcidade", referencedColumnName = "idcidade")
     private Cidade cidade;
 
+    @ManyToOne
+    @JoinColumn(name = "tipo_idtipo", referencedColumnName = "idtipo") //nomes exatamente como no banco
+    private Tipo tipoUsuario;
+
+    @Column(name = "voluntario")
+    int ehVoluntario; //talvez virar boolean?
+    
     //ver o momento da inicialização dessas 3 listas abaixo
     @OneToMany(mappedBy = "denunciado", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Denuncia> denuncias;
@@ -52,13 +60,13 @@ public abstract class Usuario extends Conta{
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DoacaoCausa> doacoesCausas;
 
-    public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade) {
+    public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Cidade cidade, Tipo tipoUsuario, int ehVoluntario) {
         super(nome, email, senha);
         this.cpfOuCnpj = cpfOuCnpj;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.telefone = telefone;
-        this.ehVoluntario = ehVoluntario;
-        this.tipoUsuario = tipoUsuario;
         this.cidade = cidade;
+        this.tipoUsuario = tipoUsuario;
+        this.ehVoluntario = ehVoluntario;
     }
 }

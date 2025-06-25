@@ -1,4 +1,5 @@
 package com.labweb.agrodoa_backend.model;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,9 @@ import lombok.Setter;
 public class Motivo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idMotivo;
+    private Long idMotivo;
+
+    @Column(name = "nome")
     private String nome;
 
     public Motivo(String nome){

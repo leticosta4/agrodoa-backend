@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.model;
 
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,16 +22,20 @@ import lombok.Setter;
 public class Avaliacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idAvaliacao;
+    private Long idAvaliacao;
+
+    @Column(name = "nota")
     private int nota;
+
+    @Column(name = "comentario")
     private String comentario;
     
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "id_avaliador", referencedColumnName = "conta_idconta")
     private Usuario avaliador;
 
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "id_avaliado", referencedColumnName = "conta_idconta")
     private Usuario avaliado;
 
     public Avaliacao(int nota, String comentario, Usuario avaliador, Usuario avaliado){

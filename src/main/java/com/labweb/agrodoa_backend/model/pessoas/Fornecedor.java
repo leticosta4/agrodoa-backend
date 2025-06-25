@@ -21,7 +21,7 @@ public class Fornecedor extends Usuario{
     private List<Anuncio> listaAnunciosPostados = new ArrayList<>();
 
     public Fornecedor(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade){
-        super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, ehVoluntario, tipoUsuario, cidade);
+        super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, cidade, tipoUsuario, ehVoluntario);
     }
 
 }

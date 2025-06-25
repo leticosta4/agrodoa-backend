@@ -1,9 +1,15 @@
 package com.labweb.agrodoa_backend.repository;
 
-import com.labweb.agrodoa_backend.model.Denuncia;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.ArrayList;
 
-public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.labweb.agrodoa_backend.model.Denuncia;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+
+public interface DenunciaRepository extends JpaRepository<Denuncia, Long>{
+    boolean existsByIdDenuncia(Long idDenuncia);
+    ArrayList <Denuncia> findAll();
+    ArrayList <Denuncia> findAllByDenunciado(Usuario denunciado);  
+    Denuncia findByIdDenunciaAndDenunciado(Long idDenuncia, Usuario denunciado);  //para o adm decidir algo sobre ela
 }

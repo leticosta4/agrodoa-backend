@@ -4,6 +4,7 @@ import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,11 +32,12 @@ public class RelacaoBeneficiario {
     private Anuncio anuncio;
 
     @ManyToOne
-    @MapsId("conta_idconta")
+    @MapsId("beneficiarioId")
     @JoinColumn(name = "usuario_conta_idconta")
-    private Beneficiario beneficiario;
+    private Beneficiario beneficiario;  //depois rever pq isso vai mudar p hibrido
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_relacao_interessado")
     private TipoRelacaoBenef tipoRelacao;
 
     public RelacaoBeneficiario(Anuncio anuncio, Beneficiario beneficiario, TipoRelacaoBenef tipoRelacao) {

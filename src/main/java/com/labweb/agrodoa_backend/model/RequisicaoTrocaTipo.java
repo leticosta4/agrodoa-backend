@@ -21,14 +21,14 @@ import lombok.Setter;
 public class RequisicaoTrocaTipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idRequisicaoTrocaTipo; 
+    private Long idRequisicaoTrocaTipo; 
 
     @ManyToOne
-    @JoinColumn(name = "conta_idconta")
+    @JoinColumn(name = "usuario_conta_idconta")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo")
+    @JoinColumn(name = "tipo_anterior")
     private Tipo tipoAnterior; //para o banco guardar só esse
     //private Tipo novoTipoDesejado; //pensar se precisa mesmo
 
