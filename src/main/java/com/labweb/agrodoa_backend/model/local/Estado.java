@@ -31,5 +31,4 @@ public class Estado {
     public Estado(String nome) {
         this.nome = nome;
     }
-
 }
