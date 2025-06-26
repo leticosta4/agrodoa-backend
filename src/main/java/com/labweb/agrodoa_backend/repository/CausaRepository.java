@@ -17,7 +17,10 @@ public interface CausaRepository extends JpaRepository<Causa, Long>{
     ArrayList<Causa> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar talvez
 
     @Query(value = "SELECT * FROM causa WHERE meta < :meta AND status_causa = 'A';", nativeQuery = true)
-    ArrayList<Causa> findByMeta(Double meta); //maior que ou menor que?
+    ArrayList<Causa> findByMetaMenorQue(Double meta); 
+
+    @Query(value = "SELECT * FROM causa WHERE meta > :meta AND status_causa = 'A';", nativeQuery = true)
+    ArrayList<Causa> findByMetaMaiorQue(Double meta);
 
     @Query(value = "SELECT * FROM causa WHERE status_causa = 'C';", nativeQuery = true)
     ArrayList<Causa> findAllBystatus(); //causas concluidas (caso sirva)

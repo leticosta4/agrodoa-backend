@@ -7,9 +7,9 @@ import com.labweb.agrodoa_backend.model.pessoas.Administrador;
 import java.util.ArrayList;
 
 public interface AdmRepository extends JpaRepository<Administrador, Long>{
-    // boolean existsByContaId(Long administradorId);
-    // ArrayList <Administrador> findAll();  //para o sobre
-    // void removeByContaId(Long administradorId);
+    boolean existsById(Long administradorId);
+    ArrayList <Administrador> findAll();  //para o sobre
+    void removeById(Long administradorId);
 
-    //ver como remodelar pq não temos o atributo contaId nem administradorId na classe Adm >> deve acontecer o mesmo para os tipos de usuario
+    //colocando só o Id em vez de AdministradorId ou ContaId pq o spring reconhece Id como padrão e no nosso caso é algo herdado
 }

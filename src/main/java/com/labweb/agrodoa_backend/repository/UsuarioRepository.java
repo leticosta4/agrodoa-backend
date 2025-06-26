@@ -1,19 +1,17 @@
 package com.labweb.agrodoa_backend.repository;
 
-public interface UsuarioRepository {
-   /**
-    * 
-    //provavelmente criar uma projection
+import java.util.ArrayList;
 
-    * ver bem essa logica por causa da classe Relacaobeneficiario
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    * get usuarios - adm (findAll)
-      get negociantes de um anuncio
-      get um unico usuario
-      
+import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.model.projection.UsuarioProjection;
 
-      * outros sem ser get:
-      banr usuario ppor id - verificar as 3 denuncias
-      apagar usuario (caso ele apague sua conta ou algo assim)
-     */ 
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+  boolean existsByIdAndTipoUsuario(Long id, Tipo tipoUsuario);
+  ArrayList <UsuarioProjection> findAllBy();  //para consulta pelo usuario
+  UsuarioProjection findUsuarioById(Long usuarioId);  //dependendo do tipo que for ele puxa listas específicas la dentro do service
+  void removeById(Long usuarioId);
 }
