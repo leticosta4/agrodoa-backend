@@ -1,9 +1,10 @@
 package com.labweb.agrodoa_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,17 +25,30 @@ public class Causa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCausa;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "descricao")
     private String descricao;
+
+    @Column(name = "meta")
     private double meta;
-    private LocalDateTime prazo;
+
+    @Column(name = "prazo")
+    private LocalDate prazo;
+
+    @Column(name = "nome_arquivo_foto")
     private String nomeArquivoFoto;
+
+    @Column(name = "valor_arrecadado")
     private double valorArrecadado;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status_causa")
     private StatusCausa status;
    
-    public Causa(String nome, String descricao, double meta, LocalDateTime prazo, String nomeArquivoFoto,
+    public Causa(String nome, String descricao, double meta, LocalDate prazo, String nomeArquivoFoto,
             double valorArrecadado) {
         this.nome = nome;
         this.descricao = descricao;
