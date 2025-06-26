@@ -4,7 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Negociacao;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
+import com.labweb.agrodoa_backend.repository.UsuarioRepository;
+import com.labweb.agrodoa_backend.service.anuncioObserver.NegociacaoIniciada;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class AnuncioService {
@@ -51,7 +58,7 @@ public class AnuncioService {
 
     //     // 4. PUBLICAR O EVENTO (Notificar os Observers)
     //     // O trabalho principal do service termina aqui. O resto é com os listeners.
-    //     NegociacaoIniciadaEvent event = new NegociacaoIniciadaEvent(this, anuncio, interessado);
+    //     NegociacaoIniciada = new NegociacaoIniciada(this, anuncio, interessado);
     //     eventPublisher.publishEvent(event);
     //     System.out.println("Evento NegociacaoIniciadaEvent publicado!");
 
@@ -62,5 +69,5 @@ public class AnuncioService {
     //     contato.setTelefone(fornecedor.getTelefone());
 
     //     return contato;
-    // }
+    //}
 }
