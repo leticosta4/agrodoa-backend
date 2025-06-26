@@ -40,4 +40,8 @@ public abstract class Conta {
         this.email = email;
         this.senha = senha;
     }
+
+    public Long getId() {
+        return idConta;
+    }
 }
