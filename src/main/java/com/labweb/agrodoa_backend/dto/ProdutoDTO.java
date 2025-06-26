@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 
 @Getter //é bom colocar o setter tb?
-public class ProdutoDTO {
+public class ProdutoDTO { //precisa de um atributo id?
     @NotBlank(message = "O nome do produto é obrigatório!")
     private String nome;
 
