@@ -3,17 +3,16 @@
 
 sla = [ 
     {
-        "tabela_base": "estado",
-        "tabela_com_chave": "cidade",
-        "chave": "estado_idestado",
-        "chave_referenciada": "idestado",
-        "fk": "fk_cidade_estado1"
+        "tabela_base": "produto",
+        "tabela_com_chave": "anuncio",
+        "chave": "produto_idproduto",
+        "chave_referenciada": "idproduto",
+        "fk": "fk_anuncio_produto1"
     }
 ]
 
 for item in sla:
     prefixo_tabela_base = item['tabela_base'][:3].upper()
-    prefixo_tabela_com_chave = item['tabela_com_chave'][:3].upper()
     
     #apagar FK
     print(f"ALTER TABLE {item['tabela_com_chave']} DROP FOREIGN KEY {item['fk']};\n") #apagar chave 
@@ -23,8 +22,9 @@ for item in sla:
     print(f"ALTER TABLE {item['tabela_com_chave']} MODIFY COLUMN {item['chave']} VARCHAR(7);\n")
     
     #alterar conteudo ja inserido
-    print(f"UPDATE {item['tabela_base']} SET {item['chave_referenciada']} = CONCAT('{prefixo_tabela_base}', LPAD({item['chave_referenciada']}, 4, '0');")
-    print(f"UPDATE {item['tabela_com_chave']} SET {item['chave']} = CONCAT('{prefixo_tabela_com_chave}', LPAD({item['chave']}, 4, '0');\n")
+    print(f"UPDATE {item['tabela_base']} SET {item['chave_referenciada']} = CONCAT('{prefixo_tabela_base}', LPAD({item['chave_referenciada']}, 4, '0'));")
+    print(f"UPDATE {item['tabela_com_chave']} SET {item['chave']} = CONCAT('{prefixo_tabela_base}', LPAD({item['chave']}, 4, '0'));\n")
     
     #recriar FK
     print(f"ALTER TABLE {item['tabela_com_chave']} ADD CONSTRAINT {item['fk']} FOREIGN KEY ({item['chave']}) REFERENCES {item['tabela_base']}({item['chave_referenciada']});\n")
+    print("========================================================================================================================================\n\n")

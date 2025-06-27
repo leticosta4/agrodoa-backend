@@ -36,7 +36,7 @@ ALTER TABLE requisicao MODIFY COLUMN idrequisicao VARCHAR(7);
 update requisicao set idrequisicao = CONCAT('REQ', LPAD(idrequisicao, 4, '0')); -- esse LPAD é preenchimento à esquerda 
 update negociacao set negociacao_idnegociacao = CONCAT('NEG', LPAD(negociacao_idnegociacao, 4, '0'));
 
---falta mts c FK (JA FIZ estado e cidade)
+--falta mts c FK
 -- para ver o nome da FK usar: show create {nome_da_tabela}
 -- 1. apagar a chave estrangeira
 -- 2. alterar tipos das colunas primeiro na tabela referenciada depois na que faz referencia
