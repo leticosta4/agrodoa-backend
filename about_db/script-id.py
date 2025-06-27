@@ -1,19 +1,20 @@
 #adicionar resto das relacoes que faltam nesse dict
 #(e tirar o de estado-cidade)
 
-sla = [ 
+sla = [
     {
-        "tabela_base": "produto",
-        "tabela_com_chave": "anuncio",
-        "chave": "produto_idproduto",
-        "chave_referenciada": "idproduto",
-        "fk": "fk_anuncio_produto1"
-    }
+        "tabela_base": "conta",
+        "tabela_com_chave": "usuario",
+        "chave": "conta_idconta",
+        "chave_referenciada": "idconta",
+        "fk": "fk_usuario_conta1"
+    },
 ]
 
 for item in sla:
     prefixo_tabela_base = item['tabela_base'][:3].upper()
-    
+    if prefixo_tabela_base == 'USU' or 'ADM': prefixo_tabela_base = 'CON'
+
     #apagar FK
     print(f"ALTER TABLE {item['tabela_com_chave']} DROP FOREIGN KEY {item['fk']};\n") #apagar chave 
     
