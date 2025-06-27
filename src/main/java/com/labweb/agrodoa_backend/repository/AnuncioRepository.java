@@ -8,21 +8,21 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
-import com.labweb.agrodoa_backend.model.projection.AnuncioProjection;
+import com.labweb.agrodoa_backend.dto.AnuncioDTO;
 
 public interface AnuncioRepository extends JpaRepository<Anuncio, Long>{
     boolean existsByIdAnuncio(Long idAnuncio);
-    ArrayList <AnuncioProjection> findAllBy();
-    AnuncioProjection findByIdAnuncio(Long idAnuncio);  //usado no acesso a um unico anuncio, para finalizar ou desativar
+    ArrayList <AnuncioDTO> findAllBy();
+    AnuncioDTO findByIdAnuncio(Long idAnuncio);  //usado no acesso a um unico anuncio, para finalizar ou desativar
 
     @Query(value = "SELECT * FROM anuncio WHERE tipo_anuncio = :tipoAnuncio;", nativeQuery = true) //ver aqui como vai associar o item do enum a um caracter 'V' ou 'D'
-    ArrayList<AnuncioProjection> findByTipoAnuncio(TipoAnuncio tipoAnuncio); //venda ou doação
+    ArrayList<AnuncioDTO> findByTipoAnuncio(TipoAnuncio tipoAnuncio); //venda ou doação
 
     @Query(value = "SELECT * FROM anuncio WHERE LOWER(titulo) LIKE CONCAT('%', :pesquisa, '%');", nativeQuery = true)
-    ArrayList<AnuncioProjection> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar
+    ArrayList<AnuncioDTO> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar
 
     @Query(value = "SELECT * FROM anuncio WHERE data_expiracao = :dataExpiracao;", nativeQuery = true)
-    ArrayList<AnuncioProjection> findByDataExpiracao(LocalDate dataExpiracao);
+    ArrayList<AnuncioDTO> findByDataExpiracao(LocalDate dataExpiracao);
 
 
     /*

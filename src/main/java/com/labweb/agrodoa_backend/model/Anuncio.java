@@ -52,8 +52,6 @@ public class Anuncio {
     @Column(name = "status")
     private StatusAnuncio status; //para criar/atribuir StatusAnuncio.ATIVO ; 
     /*
-     para criar/atribuir StatusAnuncio.ATIVO ; 
-
      Anuncio anuncio = anuncioRepository.findById(1L).orElseThrow();
     System.out.println(anuncio.getStatus()); // Saída: ATIVO
 
@@ -106,7 +104,7 @@ public class Anuncio {
         this.anunciante = anunciante;
         this.produto = produto;
         //valores padrao
-        this.status = StatusAnuncio.ATIVO; 
+        this.status = StatusAnuncio.ATIVO; //ver como fazer associação com letra para armazenar no banco
         this.dataExpiracao = this.produto.getDataValidade();
     }
 }

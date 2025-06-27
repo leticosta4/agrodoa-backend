@@ -12,10 +12,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
-
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @DiscriminatorValue("BENEFICIARIO")
 @PrimaryKeyJoinColumn(name = "conta_idconta")
