@@ -14,11 +14,11 @@ public interface RelacaoBeneficiarioRepository extends JpaRepository<RelacaoBene
 
     @Query(value = "SELECT anuncio_idanuncio FROM relacao_beneficiario WHERE usuario_conta_idconta = :beneficiarioId AND tipo_relacao_interessado = :tipoRelacao;",
        nativeQuery = true)
-    ArrayList <Long> findAllByIdBeneficiarioAndTipoRelacao(Long beneficiarioId, TipoRelacaoBenef tipoRelacao);  //lista salvos por user
+    ArrayList <String> findAllByIdBeneficiarioAndTipoRelacao(String beneficiarioId, TipoRelacaoBenef tipoRelacao);  //lista salvos por user
     
     @Query(value = "SELECT usuario_conta_idconta FROM relacao_beneficiario WHERE anuncio_idanuncio = :anuncioId AND tipo_relacao_interessado = :tipoRelacao;",
        nativeQuery = true)
-    ArrayList <Long> findAllByIdAnuncioAndTipoRelacao(Long anuncioId, TipoRelacaoBenef tipoRelacao);  //lista de negociantes por anuncio
+    ArrayList <String> findAllByIdAnuncioAndTipoRelacao(String anuncioId, TipoRelacaoBenef tipoRelacao);  //lista de negociantes por anuncio
     
     //ver aqui como vai associar o item do enum a um caracter 'S' ou 'N'
     //ainda precisa testar

@@ -13,10 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Embeddable
 public class IdRelacaoBeneficiario implements Serializable{ //revisar se precisa mesmo disso
-    private Long anuncioId;
-    private Long beneficiarioId;
+    private String anuncioId;
+    private String beneficiarioId;
 
-    public IdRelacaoBeneficiario(Long anuncioId, Long beneficiarioId) {
+    public IdRelacaoBeneficiario(String anuncioId, String beneficiarioId) {
         this.anuncioId = anuncioId;
         this.beneficiarioId = beneficiarioId;
     }

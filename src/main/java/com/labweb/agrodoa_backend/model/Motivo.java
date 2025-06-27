@@ -17,7 +17,7 @@ import lombok.Setter;
 public class Motivo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMotivo;
+    private String idMotivo;
 
     @Column(name = "nome")
     private String nome;
