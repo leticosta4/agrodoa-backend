@@ -12,8 +12,12 @@ import com.labweb.agrodoa_backend.model.pessoas.Fornecedor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class AnuncioDTO {
     @NotBlank(message = "O título do produto é obrigatório!")
     private String titulo;

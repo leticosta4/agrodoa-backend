@@ -4,8 +4,12 @@ import com.labweb.agrodoa_backend.model.pessoas.Administrador;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class AdministradorDTO {
     //fazendo esse mais de teste ja que não posso fazer de conta (abstrata)
     @NotBlank(message = "O campo nome é obrigatório!")
