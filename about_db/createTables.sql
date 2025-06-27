@@ -2,7 +2,7 @@
 -- Table `labweb_project`.`conta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`conta` (
-  `idconta` INT(5) NOT NULL,
+  `idconta` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   `senha` VARCHAR(60) NOT NULL,
   `email` VARCHAR(60) NOT NULL,
@@ -14,11 +14,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `labweb_project`.`estado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `labweb_project`.`estado` (
-  `idestado` INT(5) NOT NULL,
-  `nome` VARCHAR(60) NOT NULL,
-  PRIMARY KEY (`idestado`),
-  UNIQUE INDEX `idestado_UNIQUE` (`idestado` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `labweb_project`.`tipo` (
+  `idtipo` VARCHAR(7) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idtipo`),
+  UNIQUE INDEX `idtipo_UNIQUE` (`idtipo` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -26,9 +26,9 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`cidade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`cidade` (
-  `idcidade` INT(5) NOT NULL,
+  `idcidade` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
-  `estado_idestado` INT(5) NOT NULL,
+  `estado_idestado` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idcidade`),
   UNIQUE INDEX `idcidade_UNIQUE` (`idcidade` ASC) VISIBLE,
   INDEX `fk_cidade_estado1_idx` (`estado_idestado` ASC) VISIBLE,
@@ -55,13 +55,12 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`usuario` (
-  `conta_idconta` INT(5) NOT NULL,
+  `conta_idconta` VARCHAR(7) NOT NULL,
   `cpf_ou_cnpj` VARCHAR(70) NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
   `telefone` VARCHAR(70) NOT NULL,
-  `email_contato` VARCHAR(60) NOT NULL,
-  `cidade_idcidade` INT(5) NOT NULL,
-  `tipo_idtipo` INT(5) NOT NULL,
+  `cidade_idcidade` VARCHAR(7) NOT NULL,
+  `tipo_idtipo` VARCHAR(7) NOT NULL,
   `voluntario` INT(1) NOT NULL,
   PRIMARY KEY (`conta_idconta`),
   UNIQUE INDEX `conta_idconta_UNIQUE` (`conta_idconta` ASC) VISIBLE,
@@ -90,7 +89,7 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`produto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`produto` (
-  `idproduto` INT(5) NOT NULL,
+  `idproduto` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   `quantidade` INT(3) NOT NULL,
   `data_validade` DATE NOT NULL,
@@ -104,34 +103,34 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`anuncio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
-  `idanuncio` INT(5) NOT NULL,
+  `idanuncio` VARCHAR(7) NOT NULL,
   `titulo` VARCHAR(60) NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NOT NULL,
   `data_expiracao` DATE NOT NULL,
-  `status` VARCHAR(1) NOT NULL, --ativo, expirado ou finalizado 
+  `status` VARCHAR(1) NOT NULL,
   `tipo_anuncio` VARCHAR(1) NOT NULL,
   `entrega_pelo_fornecedor` INT(1) NOT NULL,
-  `cidade_idcidade` INT(5) NOT NULL,
-  `produto_idproduto` INT(5) NOT NULL,
-  `id_anunciante` INT(5) NOT NULL,
+  `cidade_idcidade` VARCHAR(7) NOT NULL,
+  `id_anunciante` VARCHAR(7) NOT NULL,
+  `produto_idproduto` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idanuncio`),
   UNIQUE INDEX `idanuncio_UNIQUE` (`idanuncio` ASC) VISIBLE,
-  UNIQUE INDEX `produto_idproduto_UNIQUE` (`produto_idproduto` ASC) VISIBLE,
   INDEX `fk_anuncio_cidade1_idx` (`cidade_idcidade` ASC) VISIBLE,
   INDEX `fk_anuncio_usuario1_idx` (`id_anunciante` ASC) VISIBLE,
+  INDEX `fk_anuncio_produto1_idx` (`produto_idproduto` ASC) VISIBLE,
   CONSTRAINT `fk_anuncio_cidade1`
     FOREIGN KEY (`cidade_idcidade`)
     REFERENCES `labweb_project`.`cidade` (`idcidade`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_anuncio_produto1`
-    FOREIGN KEY (`produto_idproduto`)
-    REFERENCES `labweb_project`.`produto` (`idproduto`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_anuncio_usuario1`
     FOREIGN KEY (`id_anunciante`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_anuncio_produto1`
+    FOREIGN KEY (`produto_idproduto`)
+    REFERENCES `labweb_project`.`produto` (`idproduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -141,7 +140,7 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`causa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
-  `idcausa` INT(5) NOT NULL,
+  `idcausa` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   `descricao` TEXT(150) NOT NULL,
   `meta` DECIMAL(7,2) NOT NULL,
@@ -158,7 +157,7 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`motivo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`motivo` (
-  `idmotivo` INT(5) NOT NULL,
+  `idmotivo` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`idmotivo`),
   UNIQUE INDEX `idmotivo_UNIQUE` (`idmotivo` ASC) VISIBLE)
@@ -169,10 +168,10 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`denuncia`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`denuncia` (
-  `iddenuncia` INT(5) NOT NULL,
-  `motivo_idmotivo` INT(5) NOT NULL,
-  `id_denunciante` INT(5) NOT NULL,
-  `id_denunciado` INT(5) NOT NULL,
+  `iddenuncia` VARCHAR(7) NOT NULL,
+  `motivo_idmotivo` VARCHAR(7) NOT NULL,
+  `id_denunciante` VARCHAR(7) NOT NULL,
+  `id_denunciado` VARCHAR(7) NOT NULL,
   `status_denuncia` VARCHAR(1) NOT NULL,
   PRIMARY KEY (`iddenuncia`),
   UNIQUE INDEX `iddenuncia_UNIQUE` (`iddenuncia` ASC) VISIBLE,
@@ -201,11 +200,11 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`avaliacao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`avaliacao` (
-  `idavaliacao` INT(5) NOT NULL,
+  `idavaliacao` VARCHAR(7) NOT NULL,
   `nota` INT(1) NOT NULL,
   `comentario` VARCHAR(100) NULL,
-  `id_avaliador` INT(5) NOT NULL,
-  `id_avaliado` INT(5) NOT NULL,
+  `id_avaliador` VARCHAR(7) NOT NULL,
+  `id_avaliado` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idavaliacao`),
   UNIQUE INDEX `idavaliacao_UNIQUE` (`idavaliacao` ASC) VISIBLE,
   INDEX `fk_avaliacao_usuario1_idx` (`id_avaliador` ASC) VISIBLE,
@@ -227,9 +226,9 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`usuario_has_causa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`usuario_has_causa` (
-  `usuario_conta_idconta` INT(5) NOT NULL,
-  `causa_idcausa` INT(5) NOT NULL,
-  `valor_doado` DECIMAL(5,2) NOT NULL,
+  `usuario_conta_idconta` VARCHAR(7) NOT NULL,
+  `causa_idcausa` VARCHAR(7) NOT NULL,
+  `valor_doado` DECIMAL(7,2) NOT NULL,
   PRIMARY KEY (`usuario_conta_idconta`, `causa_idcausa`),
   INDEX `fk_usuario_has_causa_causa1_idx` (`causa_idcausa` ASC) VISIBLE,
   INDEX `fk_usuario_has_causa_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
@@ -250,8 +249,8 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`relacao_beneficiario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`relacao_beneficiario` (
-  `anuncio_idanuncio` INT(5) NOT NULL,
-  `usuario_conta_idconta` INT(5) NOT NULL,
+  `anuncio_idanuncio` VARCHAR(7) NOT NULL,
+  `usuario_conta_idconta` VARCHAR(7) NOT NULL,
   `tipo_relacao_interessado` VARCHAR(1) NOT NULL, -- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio)
   PRIMARY KEY (`anuncio_idanuncio`, `usuario_conta_idconta`),
   INDEX `fk_anuncio_has_usuario_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
@@ -273,14 +272,14 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`negociacao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
-  `negociacao_idnegociacao` INT(5) NOT NULL,
+  `negociacao_idnegociacao` VARCHAR(7) NOT NULL,
   `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
   `status_negociacao` VARCHAR(1) NOT NULL,
   `id_anuncio` INT(5) NOT NULL,
   `id_beneficiario` INT(5) NOT NULL,
   PRIMARY KEY (`negociacao_idnegociacao`),
-  UNIQUE INDEX `negociacao_idnegociacao_UNIQUE` (`negociacao_idnegociacao` ASC) VISIBLE,
+  UNIQUE INDEX `compra_idcompra_UNIQUE` (`negociacao_idnegociacao` ASC) VISIBLE,
   INDEX `fk_compra_negociacao1_idx` (`id_anuncio` ASC, `id_beneficiario` ASC) VISIBLE,
   CONSTRAINT `fk_compra_negociacao1`
     FOREIGN KEY (`id_anuncio` , `id_beneficiario`)
@@ -294,9 +293,9 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`requisicao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`requisicao` (
-  `idrequisicao` INT(5) NOT NULL,
-  `usuario_conta_idconta` INT(5) NOT NULL,
-  `tipo_anterior` INT(5) NOT NULL,
+   `idrequisicao` VARCHAR(7) NOT NULL,
+  `usuario_conta_idconta` VARCHAR(7) NOT NULL,
+  `tipo_anterior` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idrequisicao`),
   UNIQUE INDEX `idrequisicao_UNIQUE` (`idrequisicao` ASC) VISIBLE,
   INDEX `fk_requisicao_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
@@ -318,7 +317,7 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`administrador`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`administrador` (
-  `conta_idconta` INT(5) NOT NULL,
+  `conta_idconta` VARCHAR(7) NOT NULL,
   `github` VARCHAR(45) NOT NULL,
   `linkedin` VARCHAR(45) NOT NULL,
   INDEX `fk_table1_conta1_idx` (`conta_idconta` ASC) VISIBLE,

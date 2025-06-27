@@ -3,17 +3,26 @@
 
 sla = [
     {
-        "tabela_base": "conta",
+        "tabela_base": "tipo",
         "tabela_com_chave": "usuario",
-        "chave": "conta_idconta",
-        "chave_referenciada": "idconta",
-        "fk": "fk_usuario_conta1"
+        "chave": "tipo_idtipo",
+        "chave_referenciada": "idtipo",
+        "fk": "fk_usuario_tipo1"
     },
+    {
+        "tabela_base": "tipo",
+        "tabela_com_chave": "requisicao",
+        "chave": "tipo_anterior",
+        "chave_referenciada": "idtipo",
+        "fk": "fk_requisicao_tipo1"
+    },
+    
 ]
 
 for item in sla:
     prefixo_tabela_base = item['tabela_base'][:3].upper()
-    if prefixo_tabela_base == 'USU' or 'ADM': prefixo_tabela_base = 'CON'
+    if prefixo_tabela_base == 'USU' or prefixo_tabela_base == 'ADM':
+        prefixo_tabela_base = 'CON'
 
     #apagar FK
     print(f"ALTER TABLE {item['tabela_com_chave']} DROP FOREIGN KEY {item['fk']};\n") #apagar chave 
