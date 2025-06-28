@@ -23,7 +23,7 @@ import lombok.Setter;
 public abstract class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //para indicar que o banco de dados deve gerar o valor da PK
-    @Column(name = "idConta")
+    @Column(name = "idconta")
     private String idConta;
 
     @Column(name = "nome")

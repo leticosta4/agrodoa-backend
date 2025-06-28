@@ -10,8 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AdministradorDTO {
-    //fazendo esse mais de teste ja que não posso fazer de conta (abstrata)
+public class AdministradorDTO { //talvez nem seja necessário
     @NotBlank(message = "O campo nome é obrigatório!")
     private String nome;
 
