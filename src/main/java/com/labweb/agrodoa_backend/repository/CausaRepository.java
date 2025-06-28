@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.labweb.agrodoa_backend.model.Causa;
 
-public interface CausaRepository extends JpaRepository<Causa, Long>{
-    boolean existsByIdCausa(Long idCausa);
-    Causa findByIdCausa(Long idCausa); //p ver causa específica e finalizar a causa
+public interface CausaRepository extends JpaRepository<Causa, String>{
+    boolean existsByIdCausa(String idCausa);
+    Causa findByIdCausa(String idCausa); //p ver causa específica e finalizar a causa
     ArrayList <Causa> findAll();
-    ArrayList <Causa> findAllByIdCausa(Long idCausa);
+    ArrayList <Causa> findAllByIdCausa(String idCausa);
 
     @Query(value = "SELECT * FROM causa WHERE LOWER(nome) LIKE CONCAT('%', :pesquisa, '%') AND status_causa = 'A';", nativeQuery = true)
     ArrayList<Causa> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar talvez

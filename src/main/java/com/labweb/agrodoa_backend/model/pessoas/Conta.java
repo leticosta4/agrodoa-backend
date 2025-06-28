@@ -24,7 +24,7 @@ public abstract class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //para indicar que o banco de dados deve gerar o valor da PK
     @Column(name = "idConta")
-    private Long idConta;
+    private String idConta;
 
     @Column(name = "nome")
     private String nome;
@@ -39,9 +39,5 @@ public abstract class Conta {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-    }
-
-    public Long getId() {
-        return idConta;
     }
 }

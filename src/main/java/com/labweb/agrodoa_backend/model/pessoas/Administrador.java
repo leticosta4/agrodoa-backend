@@ -22,20 +22,4 @@ public class Administrador extends Conta{
         this.github = github;
         this.linkedin = linkedin;
     }
-
-    public String getGithub() {
-        return github;
-    }
-
-    public void setGithub(String github) {
-        this.github = github;
-    }
-
-    public String getLinkedin() {
-        return linkedin;
-    }
-
-    public void setLinkedin(String linkedin) {
-        this.linkedin = linkedin;
-    }
 }

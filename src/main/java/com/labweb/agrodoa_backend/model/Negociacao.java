@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Negociacao { //nossa negociacao confirmada fechada já com algum beneficiario => venda ou doação, por isso esse nome em vez de pagamento
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPagamento;
+    private String idPagamento;
     private double valorPago;
     private int quantidade;
 

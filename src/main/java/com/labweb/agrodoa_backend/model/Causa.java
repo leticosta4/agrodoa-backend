@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Causa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCausa;
+    private String idCausa;
 
     @Column(name = "nome")
     private String nome;
