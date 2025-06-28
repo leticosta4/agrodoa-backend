@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.repository;
+package com.labweb.agrodoa_backend.repository.pessoas;
 
 import java.util.ArrayList;
 
