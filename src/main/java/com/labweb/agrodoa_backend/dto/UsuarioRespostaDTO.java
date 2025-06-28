@@ -19,7 +19,6 @@ public class UsuarioRespostaDTO {
     String nomeArquivoFoto;
     private Cidade cidade;
     private Tipo tipoUsuario;
-    int ehVoluntario; //talvez virar boolean?
 
     public UsuarioRespostaDTO(Usuario user){
         if (user.getTipoUsuario() == null || user.getTipoUsuario().getNome() == null) {
@@ -47,7 +46,6 @@ public class UsuarioRespostaDTO {
         this.cpfOuCnpj = user.getCpfOuCnpj();
         this.nomeArquivoFoto = user.getNomeArquivoFoto();
         this.telefone = user.getTelefone();
-        this.ehVoluntario = user.getEhVoluntario();
         this.tipoUsuario = user.getTipoUsuario();
         this.cidade = user.getCidade();
     }

@@ -5,6 +5,8 @@
 ALTER TABLE anuncio
 ADD UNIQUE INDEX produto_idproduto_UNIQUE (produto_idproduto);
 
+ALTER TABLE usuario DROP COLUMN voluntario;
+
 
 -- para mudar as letras do tipo relação beneficiário
 update relacao_beneficiario set tipo_relacao_interessado =

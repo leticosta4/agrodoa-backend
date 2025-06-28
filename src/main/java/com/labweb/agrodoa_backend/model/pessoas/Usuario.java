@@ -46,9 +46,6 @@ public abstract class Usuario extends Conta{
     @ManyToOne
     @JoinColumn(name = "tipo_idtipo", referencedColumnName = "idtipo") //nomes exatamente como no banco
     private Tipo tipoUsuario;
-
-    @Column(name = "voluntario")
-    int ehVoluntario; //talvez virar boolean?
     
     //ver o momento da inicialização dessas 3 listas abaixo
     @OneToMany(mappedBy = "denunciado", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -60,13 +57,12 @@ public abstract class Usuario extends Conta{
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DoacaoCausa> doacoesCausas;
 
-    public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Cidade cidade, Tipo tipoUsuario, int ehVoluntario) {
+    public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Cidade cidade, Tipo tipoUsuario) {
         super(nome, email, senha);
         this.cpfOuCnpj = cpfOuCnpj;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.telefone = telefone;
         this.cidade = cidade;
         this.tipoUsuario = tipoUsuario;
-        this.ehVoluntario = ehVoluntario;
     }
 }

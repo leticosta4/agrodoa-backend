@@ -34,7 +34,6 @@ public class UsuarioDTO {
     String nomeArquivoFoto;
     private Cidade cidade;
     private Tipo tipoUsuario;
-    int ehVoluntario; //talvez virar boolean?
 
     public Usuario transformaParaObjeto(){ 
         if (this.tipoUsuario == null || this.tipoUsuario.getNome() == null) {
@@ -43,11 +42,11 @@ public class UsuarioDTO {
 
         switch (this.tipoUsuario.getNome().toLowerCase()) {
             case "fornecedor":
-                return new Fornecedor(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, ehVoluntario, tipoUsuario, cidade);
+                return new Fornecedor(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, tipoUsuario, cidade);
             case "beneficiario":
-                return new Beneficiario(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, ehVoluntario, tipoUsuario, cidade);
+                return new Beneficiario(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, tipoUsuario, cidade);
             case "hibrido":
-                return new Hibrido(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, ehVoluntario, tipoUsuario, cidade);
+                return new Hibrido(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, tipoUsuario, cidade);
             default:
                 throw new IllegalArgumentException("Tipo inválido: " + this.tipoUsuario.getNome());
         }
