@@ -29,8 +29,7 @@ public class RequisicaoTrocaTipo {
 
     @ManyToOne
     @JoinColumn(name = "tipo_anterior")
-    private Tipo tipoAnterior; //para o banco guardar só esse
-    //private Tipo novoTipoDesejado; //pensar se precisa mesmo
+    private Tipo tipoAnterior;
 
     public RequisicaoTrocaTipo(Usuario usuario){
         this.usuario = usuario;

@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -14,6 +13,7 @@ import lombok.Setter;
 
 import com.labweb.agrodoa_backend.model.*;
 import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.model.pessoas.comportamento.PublicaAnuncios;
 
 @NoArgsConstructor
 @Getter
@@ -21,12 +21,16 @@ import com.labweb.agrodoa_backend.model.local.Cidade;
 @Entity
 @DiscriminatorValue("FORNECEDOR")
 @PrimaryKeyJoinColumn(name = "conta_idconta")
-public class Fornecedor extends Usuario{
+public class Fornecedor extends Usuario implements PublicaAnuncios{ 
     @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Anuncio> listaAnunciosPostados = new ArrayList<>();
+    private ArrayList<Anuncio> listaAnunciosPostados = new ArrayList<>();
 
     public Fornecedor(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade){
         super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, cidade, tipoUsuario, ehVoluntario);
     }
 
+    @Override
+    public ArrayList<Anuncio> getAnunciosPostados() {
+        return this.listaAnunciosPostados;    
+    }
 }

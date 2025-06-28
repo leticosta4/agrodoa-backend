@@ -2,7 +2,7 @@ package com.labweb.agrodoa_backend.model.relacoes;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
-import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -34,13 +34,13 @@ public class RelacaoBeneficiario {
     @ManyToOne
     @MapsId("beneficiarioId")
     @JoinColumn(name = "usuario_conta_idconta")
-    private Beneficiario beneficiario;  //depois rever pq isso vai mudar p hibrido
+    private Usuario beneficiario;  //pode ser beneficiario ou hibrido >> a verificação do comportamento deve ser feita no service com a interface RecebeAnuncios
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_relacao_interessado")
     private TipoRelacaoBenef tipoRelacao;
 
-    public RelacaoBeneficiario(Anuncio anuncio, Beneficiario beneficiario, TipoRelacaoBenef tipoRelacao) {
+    public RelacaoBeneficiario(Anuncio anuncio, Usuario beneficiario, TipoRelacaoBenef tipoRelacao) {
         this.anuncio = anuncio;
         this.beneficiario = beneficiario;
         this.tipoRelacao = tipoRelacao;
