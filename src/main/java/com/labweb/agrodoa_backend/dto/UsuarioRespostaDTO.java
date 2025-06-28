@@ -25,16 +25,14 @@ public class UsuarioRespostaDTO {
             throw new IllegalArgumentException("Tipo de usuário não informado.");
         }
 
+        atribuiValoresComuns(user);
         switch (this.getTipoUsuario().getNome().toLowerCase()) {
             case "fornecedor":
-                atribuiValoresComuns(user);
-                //lista de anuncios postados 
+                //lista de anuncios postados?
             case "beneficiario":
-                atribuiValoresComuns(user);
-                //lista de relacoes com anuncio
+                //lista de relacoes com anuncio?
             case "hibrido":
-                atribuiValoresComuns(user);
-                //lista de anuncios postados e de relacoes com anuncio
+                //lista de anuncios postados e de relacoes com anuncio?
             default:
                 throw new IllegalArgumentException("Tipo inválido: " + this.tipoUsuario.getNome());
         }

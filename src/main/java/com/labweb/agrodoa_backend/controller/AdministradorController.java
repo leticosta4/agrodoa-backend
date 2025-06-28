@@ -11,7 +11,6 @@ import com.labweb.agrodoa_backend.dto.AdministradorRespostaDTO;
 import com.labweb.agrodoa_backend.service.pessoas.AdministradorService;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -20,7 +19,7 @@ public class AdministradorController {
     private AdministradorService admService;
 
     @GetMapping({"/administradores"}) //dps expandir p /{idConta}/administradores tb
-    public ResponseEntity<ArrayList<AdministradorRespostaDTO>> exibirAdms(@PathVariable(required = false) String userId) { 
+    public ResponseEntity<ArrayList<AdministradorRespostaDTO>> exibirAdms() { 
         ArrayList<AdministradorRespostaDTO> listaAdmins = admService.listarTodos();
         return ResponseEntity.ok(listaAdmins);
     }
