@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labweb.agrodoa_backend.dto.AdministradorRespostaDTO;
-import com.labweb.agrodoa_backend.service.AdministradorService;
+import com.labweb.agrodoa_backend.service.pessoas.AdministradorService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
