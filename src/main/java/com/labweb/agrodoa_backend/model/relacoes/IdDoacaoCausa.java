@@ -13,10 +13,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class IdDoacaoCausa implements Serializable{  //revisar se precisa fazer assim mesm
-    private Long usuarioId;
-    private Long causaId;
+    private String usuarioId;
+    private String causaId;
 
-    public IdDoacaoCausa(Long usuarioId, Long causaId) {
+    public IdDoacaoCausa(String usuarioId, String causaId) {
         this.usuarioId = usuarioId;
         this.causaId = causaId;
     }

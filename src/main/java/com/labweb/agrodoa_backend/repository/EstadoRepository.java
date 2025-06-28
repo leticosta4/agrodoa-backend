@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.labweb.agrodoa_backend.model.local.Estado;
 
-public interface EstadoRepository extends JpaRepository<Estado, Long>{
-    boolean existsByIdEstado(Long idEstado); //ver se precisa mesmo
+public interface EstadoRepository extends JpaRepository<Estado, String>{
+    boolean existsByIdEstado(String idEstado); //ver se precisa mesmo
     ArrayList <Estado> findAllBy();
-    void removeByIdEstado(Long idEstado);
+    void removeByIdEstado(String idEstado);
 }

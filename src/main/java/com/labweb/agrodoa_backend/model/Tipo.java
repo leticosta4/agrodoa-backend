@@ -18,7 +18,7 @@ import lombok.Setter;
 public class Tipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //para indicar que o banco de dados deve gerar o valor da PK
-    private Long idTipo;
+    private String idTipo;
 
     @JoinColumn(name = "nome")
     private String nome;
