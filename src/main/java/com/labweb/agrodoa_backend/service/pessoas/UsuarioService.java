@@ -17,8 +17,19 @@ public class UsuarioService { //acho que não pode ser abstrata (deve dar alguns
     @Autowired
     private UsuarioRepository userRepo;
 
-    public ArrayList<UsuarioRespostaDTO> listarTodos(){ //mais um teste
+    public ArrayList<UsuarioRespostaDTO> listarTodos(){
         ArrayList<Usuario> users = userRepo.findAll();
+        ArrayList<UsuarioRespostaDTO> usersResposta = new ArrayList<>();
+
+        for(Usuario user: users){
+            usersResposta.add(new UsuarioRespostaDTO(user));
+        }
+
+        return usersResposta;
+    }
+
+    public ArrayList<UsuarioRespostaDTO> listarTodosPorTipo(String tipo){
+        ArrayList<Usuario> users = userRepo.findAllByTipoUsuario_NomeIgnoreCase(tipo);
         ArrayList<UsuarioRespostaDTO> usersResposta = new ArrayList<>();
 
         for(Usuario user: users){

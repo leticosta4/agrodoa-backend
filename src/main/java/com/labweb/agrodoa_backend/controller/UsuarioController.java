@@ -11,6 +11,7 @@ import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.service.pessoas.UsuarioService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -19,9 +20,14 @@ public class UsuarioController {
     private UsuarioService userService;
 
     @GetMapping({"/usuarios"})
-    public ResponseEntity<ArrayList<UsuarioRespostaDTO>> exibirUsers() { 
-        ArrayList<UsuarioRespostaDTO> listaUsers = userService.listarTodos();
+    public ResponseEntity<ArrayList<UsuarioRespostaDTO>> exibirUsers(@RequestParam(required = false) String tipo) { 
+        ArrayList<UsuarioRespostaDTO> listaUsers;
+
+        if(tipo != null){
+            listaUsers = userService.listarTodosPorTipo(tipo); 
+        } else {
+            listaUsers = userService.listarTodos();
+        }
         return ResponseEntity.ok(listaUsers);
-    }
-    
+    }    
 }

@@ -14,6 +14,15 @@ update relacao_beneficiario set tipo_relacao_interessado =
     when tipo_relacao_interessado = 'A' then 'N'
     else tipo_relacao_interessado end;
 
+
+-- caso um item da tabela conta esteja duplicado (no meu banco tinha esse ai de baixo):
+UPDATE conta
+SET nome = 'AlimentosSaudaveis',
+    senha = 'alimentos123',
+    email = 'alimentos.saudaveis@gmail.com'
+WHERE idconta = 'CON0009';
+
+
 --varias tabelas devem precisar dropar alguas colunas extras que foram criadas caso o projeto já tenha rodado
 -- automaticamente pelo hibernate quando compilei o projeto (erro na modelagel)
 -- o comando basicamente é:
