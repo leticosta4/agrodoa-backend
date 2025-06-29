@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
@@ -32,9 +33,19 @@ public class UsuarioController {
         return ResponseEntity.ok(listaUsers);
     }    
 
-    @GetMapping({"/usuarios/{userId}"})
-    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String userId) { 
+    @GetMapping({"/{userId}"})
+    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String userId) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
         UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(userId);
         return ResponseEntity.ok(usuario);
     }    
+
+    @DeleteMapping({"/{userId}/apagar_conta"})
+    public ResponseEntity<Void> apagarContaUser(@PathVariable String userId) {
+        userService.apagarPerfilUser(userId);
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content
+    } 
+    
+    //editar
+    //cadastrar
+
 }
