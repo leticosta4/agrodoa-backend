@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Usuario extends Conta{
+public class Usuario extends Conta{
     @Column(name = "cpf_ou_cnpj")
     String cpfOuCnpj;
 

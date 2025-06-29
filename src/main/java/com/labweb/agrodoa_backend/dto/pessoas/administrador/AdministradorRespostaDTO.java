@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.dto;
+package com.labweb.agrodoa_backend.dto.pessoas.administrador;
 
 import com.labweb.agrodoa_backend.model.pessoas.Administrador;
 

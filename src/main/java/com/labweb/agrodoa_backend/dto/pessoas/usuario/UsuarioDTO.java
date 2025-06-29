@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.dto;
+package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;

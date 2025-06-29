@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
-import com.labweb.agrodoa_backend.dto.AnuncioDTO;
 
 public interface AnuncioRepository extends JpaRepository<Anuncio, String>{
     boolean existsByIdAnuncio(String idAnuncio);

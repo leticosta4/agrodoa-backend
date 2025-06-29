@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.dto;
+package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
@@ -21,24 +21,6 @@ public class UsuarioRespostaDTO {
     private Tipo tipoUsuario;
 
     public UsuarioRespostaDTO(Usuario user){
-        if (user.getTipoUsuario() == null || user.getTipoUsuario().getNome() == null) {
-            throw new IllegalArgumentException("Tipo de usuário não informado.");
-        }
-
-        atribuiValoresComuns(user);
-        switch (this.getTipoUsuario().getNome().toLowerCase()) {
-            case "fornecedor":
-                //lista de anuncios postados?
-            case "beneficiario":
-                //lista de relacoes com anuncio?
-            case "hibrido":
-                //lista de anuncios postados e de relacoes com anuncio?
-            default:
-                throw new IllegalArgumentException("Tipo inválido: " + this.tipoUsuario.getNome());
-        }
-    }
-
-    public void atribuiValoresComuns(Usuario user){
         this.nome = user.getNome();
         this.email = user.getEmail();
         this.cpfOuCnpj = user.getCpfOuCnpj();

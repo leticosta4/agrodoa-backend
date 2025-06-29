@@ -7,6 +7,7 @@ import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.model.pessoas.comportamento.PublicaAnuncios;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.CascadeType;
@@ -75,7 +76,7 @@ public class Anuncio {
 
     @ManyToOne
     @JoinColumn(name = "id_anunciante")
-    private Usuario anunciante; //pode ser fornecedor ou hibrido >> a verificação do comportamento deve ser feita no service com a interface PublicaAnuncios
+    private PublicaAnuncios anunciante; //pode ser fornecedor ou hibrido >> a verificação do comportamento deve ser feita no service com a interface PublicaAnuncios
 
     @OneToOne
     @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
@@ -95,7 +96,7 @@ public class Anuncio {
     }
     */
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto) {
+    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, PublicaAnuncios anunciante, Produto produto) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
