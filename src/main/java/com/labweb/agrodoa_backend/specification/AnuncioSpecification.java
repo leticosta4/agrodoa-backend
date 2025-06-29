@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.labweb.agrodoa_backend.model.Anuncio;
 
 public class AnuncioSpecification {
-    
+
     public static Specification<Anuncio> filtrarPorNome(String nome) {
         return (root, query, cb) -> {
             if (nome == null || nome.isEmpty()) {
@@ -22,7 +22,7 @@ public class AnuncioSpecification {
             if (cidade == null || cidade.isEmpty()) {
                 return cb.conjunction();
             }
-            return cb.like(cb.lower(root.get("fornecedor").get("cidade").get("nome")), "%" + cidade.toLowerCase() + "%");
+            return cb.like(cb.lower(root.get("cidade").get("nome")), "%" + cidade.toLowerCase() + "%");
         };
     }
 
@@ -31,7 +31,7 @@ public class AnuncioSpecification {
             if (precoMin == null) {
                 return cb.conjunction();
             }
-            return cb.greaterThanOrEqualTo(root.get("produto").get("precoUnitario"), precoMin);
+            return cb.greaterThanOrEqualTo(root.get("produto").get("precoUnidade"), precoMin);
         };
     }
 
