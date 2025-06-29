@@ -11,10 +11,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.labweb.agrodoa_backend.model.*;
+import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.pessoas.comportamento.PublicaAnuncios;
-import com.labweb.agrodoa_backend.model.pessoas.comportamento.RecebeAnuncios;
+import com.labweb.agrodoa_backend.model.pessoas.comportamento.*;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 @NoArgsConstructor
@@ -30,8 +30,8 @@ public class Hibrido extends Usuario implements PublicaAnuncios, RecebeAnuncios{
     @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
     private ArrayList<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>();
 
-    public Hibrido(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade){
-        super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, cidade, tipoUsuario, ehVoluntario);
+    public Hibrido(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Tipo tipoUsuario, Cidade cidade){
+        super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, cidade, tipoUsuario);
     }
 
     @Override
@@ -43,5 +43,4 @@ public class Hibrido extends Usuario implements PublicaAnuncios, RecebeAnuncios{
     public ArrayList<Anuncio> getAnunciosPostados() {
         return this.listaAnunciosPostados;    
     }
-
 }

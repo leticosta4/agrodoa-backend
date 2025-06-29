@@ -20,6 +20,7 @@ import lombok.Setter;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idproduto")
     private String idProduto;
 
     @Column(name = "nome")

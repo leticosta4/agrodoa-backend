@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`usuario` (
   `telefone` VARCHAR(70) NOT NULL,
   `cidade_idcidade` VARCHAR(7) NOT NULL,
   `tipo_idtipo` VARCHAR(7) NOT NULL,
-  `voluntario` INT(1) NOT NULL,
   PRIMARY KEY (`conta_idconta`),
   UNIQUE INDEX `conta_idconta_UNIQUE` (`conta_idconta` ASC) VISIBLE,
   INDEX `fk_usuario_cidade1_idx` (`cidade_idcidade` ASC) VISIBLE,

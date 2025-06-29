@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.model;
 
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ import lombok.Setter;
 public class RequisicaoTrocaTipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idrequisicao")
     private String idRequisicaoTrocaTipo; 
 
     @ManyToOne
