@@ -11,6 +11,7 @@ import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.service.pessoas.UsuarioService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -29,5 +30,11 @@ public class UsuarioController {
             listaUsers = userService.listarTodos();
         }
         return ResponseEntity.ok(listaUsers);
+    }    
+
+    @GetMapping({"/usuarios/{userId}"})
+    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String userId) { 
+        UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(userId);
+        return ResponseEntity.ok(usuario);
     }    
 }

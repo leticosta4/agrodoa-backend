@@ -10,7 +10,7 @@ import com.labweb.agrodoa_backend.model.Causa;
 
 public interface CausaRepository extends JpaRepository<Causa, String>{
     boolean existsByIdCausa(String idCausa);
-    Optional findByIdCausa(String idCausa); //p ver causa específica e finalizar a causa
+    Optional<Causa> findByIdCausa(String idCausa); //p ver causa específica e finalizar a causa
     ArrayList <Causa> findAll();
     ArrayList <Causa> findAllByIdCausa(String idCausa);
 

@@ -9,6 +9,8 @@ import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UsuarioService { //acho que não pode ser abstrata (deve dar alguns problemas pq o model ta abstrato)
     //metodos padrão tipo editar e deletar, exibir específico e exibir todos > criar acho que não por causa do factory
@@ -37,6 +39,13 @@ public class UsuarioService { //acho que não pode ser abstrata (deve dar alguns
         }
 
         return usersResposta;
+    }
+
+    public UsuarioRespostaDTO acessarUsuarioPorId(String userId){
+        Usuario user = userRepo.findUsuarioByIdConta(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("\n\n\nUsuário não encontrado com ID: " + userId + "\n\n"));
+
+        return new UsuarioRespostaDTO(user);
     }
 }
 
