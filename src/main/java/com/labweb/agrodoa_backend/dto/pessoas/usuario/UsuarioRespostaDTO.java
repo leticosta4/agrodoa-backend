@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
-import com.labweb.agrodoa_backend.model.Tipo;
-import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.dto.LocalDTO;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import lombok.Getter;
@@ -17,16 +16,16 @@ public class UsuarioRespostaDTO {
     String cpfOuCnpj;
     String telefone;
     String nomeArquivoFoto;
-    private Cidade cidade;
-    private Tipo tipoUsuario;
-
+    private String tipoUsuario;
+    private LocalDTO local;
+    
     public UsuarioRespostaDTO(Usuario user){
         this.nome = user.getNome();
         this.email = user.getEmail();
         this.cpfOuCnpj = user.getCpfOuCnpj();
         this.nomeArquivoFoto = user.getNomeArquivoFoto();
         this.telefone = user.getTelefone();
-        this.tipoUsuario = user.getTipoUsuario();
-        this.cidade = user.getCidade();
+        this.tipoUsuario = user.getTipoUsuario().getNome();
+        this.local = new LocalDTO(user.getCidade());
     }
 }

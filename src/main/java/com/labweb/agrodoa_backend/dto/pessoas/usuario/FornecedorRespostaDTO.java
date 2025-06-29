@@ -18,7 +18,6 @@ public class FornecedorRespostaDTO extends UsuarioRespostaDTO{
     private ArrayList<AnuncioRespostaDTO> anunciosPostados;
 
     public FornecedorRespostaDTO(PublicaAnuncios fornecedor) {
-        //essa pt interna ta dando erro mas deve sair dps que definir o construtor do AnuncioRespostaDTO
         super((Usuario) fornecedor);
         this.anunciosPostados = fornecedor.getAnunciosPostados()
             .stream()
