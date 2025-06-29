@@ -34,6 +34,7 @@ import lombok.Setter;
 public class Anuncio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idanuncio")
     private String idAnuncio;
     
     @Column(name = "titulo")

@@ -6,7 +6,7 @@ import com.labweb.agrodoa_backend.model.pessoas.Administrador;
 
 import java.util.ArrayList;
 
-public interface AdmRepository extends JpaRepository<Administrador, String>{
+public interface AdministradorRepository extends JpaRepository<Administrador, String>{
     boolean existsByIdConta(String idAdministrador);
     ArrayList <Administrador> findAll();  //para o sobre
     void removeByIdConta(String idAdministrador);
