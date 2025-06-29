@@ -14,13 +14,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `labweb_project`.`estado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `labweb_project`.`tipo` (
-  `idtipo` VARCHAR(7) NOT NULL,
-  `nome` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idtipo`),
-  UNIQUE INDEX `idtipo_UNIQUE` (`idtipo` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `labweb_project`.`estado` (
+  `idestado` VARCHAR(7) NOT NULL,
+  `nome` VARCHAR(60) NOT NULL,
+  PRIMARY KEY (`idestado`),
+  UNIQUE INDEX `idestado_UNIQUE` (`idestado` ASC) VISIBLE)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `labweb_project`.`cidade`
@@ -44,7 +43,7 @@ ENGINE = InnoDB;
 -- Table `labweb_project`.`tipo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`tipo` (
-  `idtipo` INT(5) NOT NULL,
+  `idtipo` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idtipo`),
   UNIQUE INDEX `idtipo_UNIQUE` (`idtipo` ASC) VISIBLE)
@@ -275,8 +274,8 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
   `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
   `status_negociacao` VARCHAR(1) NOT NULL,
-  `id_anuncio` INT(5) NOT NULL,
-  `id_beneficiario` INT(5) NOT NULL,
+  `id_anuncio` VARCHAR(7) NOT NULL,
+  `id_beneficiario` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`negociacao_idnegociacao`),
   UNIQUE INDEX `compra_idcompra_UNIQUE` (`negociacao_idnegociacao` ASC) VISIBLE,
   INDEX `fk_compra_negociacao1_idx` (`id_anuncio` ASC, `id_beneficiario` ASC) VISIBLE,
