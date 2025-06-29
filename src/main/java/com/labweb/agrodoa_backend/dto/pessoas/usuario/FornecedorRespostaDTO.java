@@ -1,9 +1,11 @@
 package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.model.pessoas.comportamento.PublicaAnuncios;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +19,10 @@ public class FornecedorRespostaDTO extends UsuarioRespostaDTO{
 
     public FornecedorRespostaDTO(PublicaAnuncios fornecedor) {
         //essa pt interna ta dando erro mas deve sair dps que definir o construtor do AnuncioRespostaDTO
-        // super(fornecedor);
-        // this.anunciosPostados = fornecedor.getAnunciosPostados()
-        //     .stream()
-        //     .map(AnuncioRespostaDTO::new)
-        //     .toList();
+        super((Usuario) fornecedor);
+        this.anunciosPostados = fornecedor.getAnunciosPostados()
+            .stream()
+            .map(AnuncioRespostaDTO::new)
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 }
