@@ -2,9 +2,6 @@ package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.pessoas.Beneficiario;
-import com.labweb.agrodoa_backend.model.pessoas.Fornecedor;
-import com.labweb.agrodoa_backend.model.pessoas.Hibrido;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import jakarta.validation.constraints.NotBlank;
@@ -40,15 +37,6 @@ public class UsuarioDTO {
             throw new IllegalArgumentException("Tipo de usuário não informado.");
         }
 
-        switch (this.tipoUsuario.getNome().toLowerCase()) {
-            case "fornecedor":
-                return new Fornecedor(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, tipoUsuario, cidade);
-            case "beneficiario":
-                return new Beneficiario(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, tipoUsuario, cidade);
-            case "hibrido":
-                return new Hibrido(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, tipoUsuario, cidade);
-            default:
-                throw new IllegalArgumentException("Tipo inválido: " + this.tipoUsuario.getNome());
-        }
+        return UsuarioDTOFactory.criarUsuarioDTO(this);
     }
 }
