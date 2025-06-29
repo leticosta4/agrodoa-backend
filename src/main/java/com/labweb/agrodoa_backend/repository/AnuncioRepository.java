@@ -17,11 +17,14 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, String>{
 
     @Query(value = "SELECT * FROM anuncio WHERE tipo_anuncio = :tipoAnuncio;", nativeQuery = true) //ver aqui como vai associar o item do enum a um caracter 'V' ou 'D'
     ArrayList<Anuncio> findByTipoAnuncio(TipoAnuncio tipoAnuncio); //venda ou doação
+    ArrayList<Anuncio> findByTipoAnuncio(TipoAnuncio tipoAnuncio); //venda ou doação
 
     @Query(value = "SELECT * FROM anuncio WHERE LOWER(titulo) LIKE CONCAT('%', :pesquisa, '%');", nativeQuery = true)
     ArrayList<Anuncio> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar
+    ArrayList<Anuncio> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar
 
     @Query(value = "SELECT * FROM anuncio WHERE data_expiracao = :dataExpiracao;", nativeQuery = true)
+    ArrayList<Anuncio> findByDataExpiracao(LocalDate dataExpiracao);
     ArrayList<Anuncio> findByDataExpiracao(LocalDate dataExpiracao);
 
 
