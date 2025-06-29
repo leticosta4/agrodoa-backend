@@ -22,25 +22,25 @@ public class UsuarioController {
     @Autowired
     private UsuarioService userService;
 
-    // @GetMapping({"/usuarios"})
-    // public ResponseEntity<ArrayList<UsuarioRespostaDTO>> exibirUsers(@RequestParam(required = false) String tipo) { 
-    //     ArrayList<UsuarioRespostaDTO> listaUsers;
-
-    //     if(tipo != null){
-    //         listaUsers = userService.listarTodosPorTipo(tipo); 
-    //     } else {
-    //         listaUsers = userService.listarTodos();
-    //     }
-    //     return ResponseEntity.ok(listaUsers);
-    // }    
     @GetMapping({"/usuarios"})
-    public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(@RequestParam(required = false) String tipo){
-        List<UsuarioRespostaDTO> usuarios = userService.buscarUsuarioFiltro(tipo);
-        if(usuarios.isEmpty()){
-             return ResponseEntity.noContent().build();
+    public ResponseEntity<ArrayList<UsuarioRespostaDTO>> exibirUsers(@RequestParam(required = false) String tipo) { 
+        ArrayList<UsuarioRespostaDTO> listaUsers;
+
+        if(tipo != null){
+            listaUsers = userService.listarTodosPorTipo(tipo); 
+        } else {
+            listaUsers = userService.listarTodos();
         }
-        return ResponseEntity.ok(usuarios);
-    }
+        return ResponseEntity.ok(listaUsers);
+    }    
+    // @GetMapping({"/usuarios"})  ---> alysson specification
+    // public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(@RequestParam(required = false) String tipo){
+    //     List<UsuarioRespostaDTO> usuarios = userService.buscarUsuarioFiltro(tipo);
+    //     if(usuarios.isEmpty()){
+    //          return ResponseEntity.noContent().build();
+    //     }
+    //     return ResponseEntity.ok(usuarios);
+    // }
 
     @GetMapping({"/{userId}"})
     public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String userId) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL

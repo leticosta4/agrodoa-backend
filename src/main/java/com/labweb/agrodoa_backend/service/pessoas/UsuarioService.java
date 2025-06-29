@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
 import com.labweb.agrodoa_backend.specification.TipoSpecification;
@@ -24,7 +25,7 @@ public class UsuarioService {
 
 
 
-    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
+    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(Tipo tipo){
         Specification<Usuario> spec = Specification
                                                 .where(new TipoSpecification<Usuario>(tipo));
 

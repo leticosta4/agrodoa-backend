@@ -27,8 +27,8 @@ public class AnuncioService {
         Specification<Anuncio> spec = Specification
                                                 .where(new NomeSpecification(dto.getNome()))
                                                 .and(new CidadeSpecification(dto.getCidade()))
-                                                .and(new PrecoMinimoSpecification(dto.getPrecoMin()))
-                                                .and(new TipoSpecification<Anuncio>(dto.getTipo()));
+                                                .and(new PrecoMinimoSpecification(dto.getPrecoMin()));
+                                                //.and(new TipoSpecification<Anuncio>(dto.getTipo()));
 
                                                 
         return anuncioRepo.findAll(spec)
