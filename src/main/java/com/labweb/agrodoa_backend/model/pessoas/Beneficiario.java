@@ -1,10 +1,10 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.model.pessoas.comportamento.RecebeAnuncios;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.Entity;
@@ -22,9 +22,9 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("BENEFICIARIO")
 @PrimaryKeyJoinColumn(name = "conta_idconta")
-public class Beneficiario extends Usuario{
+public class Beneficiario extends Usuario implements RecebeAnuncios{
     @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>();
+    private ArrayList<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>();
 
     /*na hora de filtrar fa\er algo tipo:
 
@@ -45,5 +45,10 @@ public class Beneficiario extends Usuario{
 
     public Beneficiario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, int ehVoluntario, Tipo tipoUsuario, Cidade cidade){
         super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, cidade, tipoUsuario, ehVoluntario);
+    }
+
+    @Override
+    public ArrayList<RelacaoBeneficiario> getRelacoesAnuncios() {
+        return this.relacoesAnuncio;    
     }
 }

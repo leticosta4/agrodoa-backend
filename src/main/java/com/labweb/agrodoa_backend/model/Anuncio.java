@@ -1,12 +1,12 @@
 package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.pessoas.Fornecedor;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import jakarta.persistence.CascadeType;
@@ -75,7 +75,7 @@ public class Anuncio {
 
     @ManyToOne
     @JoinColumn(name = "id_anunciante")
-    private Fornecedor anunciante; //restrição do tipo >> comando SQL - talvez tenha que mudar depois pq tem o hibrido tb
+    private Usuario anunciante; //pode ser fornecedor ou hibrido >> a verificação do comportamento deve ser feita no service com a interface PublicaAnuncios
 
     @OneToOne
     @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
@@ -83,9 +83,9 @@ public class Anuncio {
 
     //lista de beneficiarios?
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RelacaoBeneficiario> relacoes;   //ver o momento da inicializaçao
+    private ArrayList<RelacaoBeneficiario> relacoes;   //ver o momento da inicializaçao
 
-    /*na hora de filtrar fa\er algo tipo:
+    /*na hora de filtrar fazer algo tipo:
 
     public List<Usuario> getListaNegociantes() {  
         return relacoes.stream()
@@ -95,7 +95,7 @@ public class Anuncio {
     }
     */
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Fornecedor anunciante, Produto produto) {
+    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
