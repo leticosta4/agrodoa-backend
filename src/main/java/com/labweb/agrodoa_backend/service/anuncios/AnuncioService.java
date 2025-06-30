@@ -11,10 +11,8 @@ import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
-import com.labweb.agrodoa_backend.specification.TipoSpecification;
-import com.labweb.agrodoa_backend.specification.anuncio.CidadeSpecification;
-import com.labweb.agrodoa_backend.specification.anuncio.NomeSpecification;
-import com.labweb.agrodoa_backend.specification.anuncio.PrecoMinimoSpecification;
+import com.labweb.agrodoa_backend.specification.AnuncioSpecification;
+
 
 
 @Service
@@ -25,9 +23,9 @@ public class AnuncioService {
 
     public List<AnuncioRespostaDTO> buscarAnunciosFiltro(AnuncioFiltroDTO dto){
         Specification<Anuncio> spec = Specification
-                                                .where(new NomeSpecification(dto.getNome()))
-                                                .and(new CidadeSpecification(dto.getCidade()))
-                                                .and(new PrecoMinimoSpecification(dto.getPrecoMin()));
+                                                .where(AnuncioSpecification.filtrarPorNome(dto.getNome()))
+                                                .and(AnuncioSpecification.filtrarPorCidade(dto.getCidade()))
+                                                .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()));
                                                 //.and(new TipoSpecification<Anuncio>(dto.getTipo()));
 
                                                 

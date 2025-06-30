@@ -13,7 +13,7 @@ import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
-import com.labweb.agrodoa_backend.specification.TipoSpecification;
+import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
@@ -25,9 +25,9 @@ public class UsuarioService {
 
 
 
-    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(Tipo tipo){
+    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
         Specification<Usuario> spec = Specification
-                                                .where(new TipoSpecification<Usuario>(tipo));
+                                                .where(UsuarioSpecification.filtrarPorTipo(tipo));
 
         
         return userRepo.findAll(spec)
