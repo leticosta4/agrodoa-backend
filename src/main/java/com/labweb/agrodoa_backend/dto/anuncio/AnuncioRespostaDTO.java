@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.dto.anuncio;
 import java.time.LocalDate;
 
 import com.labweb.agrodoa_backend.dto.LocalDTO;
+import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
@@ -24,7 +25,7 @@ public class AnuncioRespostaDTO {
     private StatusAnuncio status;
     private TipoAnuncio tipo;
     private Usuario anunciante; //restrição do tipo >> validação no service com interface de comportamento
-    private Produto produto;
+    private ProdutoRespostaDTO produto;
     private LocalDTO local;
 
     public AnuncioRespostaDTO(Anuncio a){
@@ -35,7 +36,7 @@ public class AnuncioRespostaDTO {
         this.status = a.getStatus();
         this.tipo = a.getTipo();
         this.anunciante = a.getAnunciante();
-        this.produto = a.getProduto();
+        this.produto = new ProdutoRespostaDTO(a.getProduto());
         this.local = new LocalDTO(a.getCidade());
     }
 }
