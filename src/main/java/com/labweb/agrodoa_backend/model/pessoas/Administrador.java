@@ -1,5 +1,9 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
+import com.labweb.agrodoa_backend.service.NotificacaoObserver.Notificacao;
+import com.labweb.agrodoa_backend.service.NotificacaoObserver.Notificacao.TipoNotificacao;
+import com.labweb.agrodoa_backend.service.NotificacaoObserver.Observer;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -13,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Administrador extends Conta{
+public class Administrador extends Conta implements Observer {
     private String github;
     private String linkedin;
 
@@ -21,5 +25,17 @@ public class Administrador extends Conta{
         super(nome, email, senha);
         this.github = github;
         this.linkedin = linkedin;
+    }
+
+    @Override
+    public void atualizar(Notificacao notificacao) {
+        System.out.println("NOTIFICAÇÃO PARA ADMIN: " + notificacao.getMensagem());
+
+        if (notificacao.getTipo() == TipoNotificacao.USUARIO_ATINGIU_LIMITE_DENUNCIAS) {
+
+            Usuario usuarioProblematico = (Usuario) notificacao.getFonte();
+            System.out.println("AÇÃO REQUERIDA: Desativar conta de " + usuarioProblematico.getNome());
+
+        }
     }
 }
