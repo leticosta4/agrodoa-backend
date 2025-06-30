@@ -23,13 +23,14 @@ import lombok.Setter;
 public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idestado")
     private String idEstado;
 
     @Column(name = "nome")
     private String nome;
 
-    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cidade> cidades = new ArrayList<>();
+    // @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private List<Cidade> cidades = new ArrayList<>();
     
     public Estado(String nome) {
         this.nome = nome;

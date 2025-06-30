@@ -1,7 +1,7 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
-import com.labweb.agrodoa_backend.service.NotificacaoObserver.Notificacao;
-import com.labweb.agrodoa_backend.service.NotificacaoObserver.Notificacao.TipoNotificacao;
+import com.labweb.agrodoa_backend.service.NotificacaoObserver.NotificacaoObserver;
+import com.labweb.agrodoa_backend.service.NotificacaoObserver.NotificacaoObserver.TipoNotificacao;
 import com.labweb.agrodoa_backend.service.NotificacaoObserver.Observer;
 
 import jakarta.persistence.Entity;
@@ -28,7 +28,7 @@ public class Administrador extends Conta implements Observer {
     }
 
     @Override
-    public void atualizar(Notificacao notificacao) {
+    public void atualizar(NotificacaoObserver notificacao) {
         System.out.println("NOTIFICAÇÃO PARA ADMIN: " + notificacao.getMensagem());
 
         if (notificacao.getTipo() == TipoNotificacao.USUARIO_ATINGIU_LIMITE_DENUNCIAS) {

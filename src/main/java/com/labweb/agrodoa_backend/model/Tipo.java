@@ -1,5 +1,6 @@
 package com.labweb.agrodoa_backend.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,7 @@ import lombok.Setter;
 public class Tipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //para indicar que o banco de dados deve gerar o valor da PK
+    @Column(name = "idtipo")
     private String idTipo;
 
     @JoinColumn(name = "nome")

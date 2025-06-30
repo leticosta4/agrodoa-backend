@@ -22,6 +22,7 @@ import lombok.Setter;
 public class Avaliacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idavaliacao")
     private String idAvaliacao;
 
     @Column(name = "nota")

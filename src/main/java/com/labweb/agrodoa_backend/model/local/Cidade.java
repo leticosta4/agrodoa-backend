@@ -20,6 +20,7 @@ import lombok.Setter;
 public class Cidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idcidade")
     private String idCidade;
 
     @Column(name = "nome")

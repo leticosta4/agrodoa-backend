@@ -1,6 +1,5 @@
 package com.labweb.agrodoa_backend.model;
 
-import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +7,8 @@ import java.util.List;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.pessoas.Fornecedor;
+import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
-
-import com.labweb.agrodoa_backend.service.NotificacaoObserver.Notificacao;
-import com.labweb.agrodoa_backend.service.NotificacaoObserver.Notificacao.TipoNotificacao;
-import com.labweb.agrodoa_backend.service.NotificacaoObserver.Observer;
-import com.labweb.agrodoa_backend.service.NotificacaoObserver.Subject;
-
-import java.beans.Transient;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,9 +32,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Anuncio implements Subject {
+public class Anuncio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idanuncio")
     private String idAnuncio;
     
     @Column(name = "titulo")
@@ -84,7 +77,7 @@ public class Anuncio implements Subject {
 
     @ManyToOne
     @JoinColumn(name = "id_anunciante")
-    private Fornecedor anunciante; //restrição do tipo >> comando SQL - talvez tenha que mudar depois pq tem o hibrido tb
+    private Usuario anunciante; //pode ser fornecedor ou hibrido >> a verificação do comportamento deve ser feita no service com a interface PublicaAnuncios
 
     @OneToOne
     @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
@@ -92,9 +85,9 @@ public class Anuncio implements Subject {
 
     //lista de beneficiarios?
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RelacaoBeneficiario> relacoes;   //ver o momento da inicializaçao
+    private ArrayList<RelacaoBeneficiario> relacoes;   //ver o momento da inicializaçao
 
-    /*na hora de filtrar fa\er algo tipo:
+    /*na hora de filtrar fazer algo tipo:
 
     public List<Usuario> getListaNegociantes() {  
         return relacoes.stream()
@@ -104,7 +97,7 @@ public class Anuncio implements Subject {
     }
     */
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Fornecedor anunciante, Produto produto) {
+    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto) {
         this.titulo = titulo;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
@@ -117,50 +110,4 @@ public class Anuncio implements Subject {
         this.dataExpiracao = this.produto.getDataValidade();
     }
 
-    // Logica para a classe ser observada
-    // @Transient
-    // private List<Observer> observadores = new ArrayList<>();
-
-    private transient List<Observer> observadores = new ArrayList<>();
-
-    public void checarValidade() {
-        if (LocalDate.now().plusDays(3).isAfter(this.dataExpiracao)) {
-            Notificacao notificacao = new Notificacao(
-                "O anúncio '" + this.titulo + "' está próximo de expirar.",
-                TipoNotificacao.ANUNCIO_VALIDADE_PROXIMA,
-                this
-            );
-            notificarObservadores(notificacao);
-        }
-    }
-
-    public void checarLimiteNegociantes() {
-        final int LIMITE = 10; // Exemplo de limite
-        if (this.relacoes != null && this.relacoes.size() >= LIMITE) {
-            Notificacao notificacao = new Notificacao(
-                "O anúncio '" + this.titulo + "' atingiu seu limite de negociantes.",
-                TipoNotificacao.ANUNCIO_LIMITE_NEGOCIANTES,
-                this
-            );
-            notificarObservadores(notificacao);
-        }
-    }
-
-    //Metodos da interface
-    @Override
-    public void adicionarObservador(Observer observer) {
-        if (!observadores.contains(observer)) observadores.add(observer);
-    }
-
-    @Override
-    public void removerObservador(Observer observer) {
-        observadores.remove(observer);
-    }
-
-    @Override
-    public void notificarObservadores(Notificacao notificacao) {
-        for (Observer obs : observadores) {
-            obs.atualizar(notificacao);
-        }
-    }
 }
