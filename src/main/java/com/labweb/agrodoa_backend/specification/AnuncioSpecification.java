@@ -36,12 +36,30 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
         };
     }
 
+    public static Specification<Anuncio> filtrarPorPrecoMax(BigDecimal precoMax){
+        return (root,query,cb) -> {
+            if(precoMax == null){
+                return cb.conjunction();
+            }
+            return cb.lessThanOrEqualTo(root.get("produto").get("precoUnidade"), precoMax);
+        };
+    }
+
     public static Specification<Anuncio> filtrarPorTipo(String tipo) {  //doação ou venda
         return (root, query, cb) -> {
             if (tipo == null || tipo.isEmpty()) {
                 return cb.conjunction();
             }
-            return cb.equal(cb.lower(root.get("tipoAnuncio")), tipo.toLowerCase());
+            return cb.equal(cb.lower(root.get("tipo_Anuncio")), tipo.toLowerCase());
+        };
+    }
+
+    public static Specification<Anuncio> filtrarPorStatus(String status) {  //doação ou venda
+        return (root, query, cb) -> {
+            if (status == null || status.isEmpty()) {
+                return cb.conjunction();
+            }
+            return cb.equal(cb.lower(root.get("status")), status.toLowerCase());
         };
     }
 
@@ -50,7 +68,9 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
             if(data == null){
                 return cb.conjunction();
             }
-            return cb.greaterThanOrEqualTo(root.get("dataExpiracao"), data);
+            return cb.greaterThanOrEqualTo(root.get("data_expiracao"), data);
         };
     }
+
+    
 }

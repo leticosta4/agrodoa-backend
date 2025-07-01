@@ -22,7 +22,10 @@ public class AnuncioService {
                                                 .where(AnuncioSpecification.filtrarPorNome(dto.getNome()))
                                                 .and(AnuncioSpecification.filtrarPorCidade(dto.getCidade()))
                                                 .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()))
-                                                .and(AnuncioSpecification.filtrarPorTipo(dto.getTipo()));
+                                                .and(AnuncioSpecification.filtrarPorPrecoMax(dto.getPrecoMax()))
+                                                .and(AnuncioSpecification.filtrarPorTipo(dto.getTipo()))
+                                                .and(AnuncioSpecification.filtrarPorDataExpiracao(dto.getDataExpiracao()))
+                                                .and(AnuncioSpecification.filtrarPorStatus(dto.getStatus()));
 
                                                 
         return anuncioRepo.findAll(spec)
