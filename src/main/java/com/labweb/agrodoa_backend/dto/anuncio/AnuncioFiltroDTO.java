@@ -28,6 +28,8 @@ public class AnuncioFiltroDTO {
     private String tipo;
     private String status;
 
+    
+
      public TipoAnuncio getTipoEnum() {
         try {
             return tipo == null ? null : TipoAnuncio.valueOf(tipo.toUpperCase());
@@ -43,4 +45,7 @@ public class AnuncioFiltroDTO {
             return StatusAnuncio.ATIVO;
         }
     }
+
+    
+
 }
