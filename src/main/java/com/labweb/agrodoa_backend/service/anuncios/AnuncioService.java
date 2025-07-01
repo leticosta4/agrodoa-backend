@@ -21,9 +21,10 @@ public class AnuncioService {
         Specification<Anuncio> spec = Specification
                                                 .where(AnuncioSpecification.filtrarPorNome(dto.getNome()))
                                                 .and(AnuncioSpecification.filtrarPorCidade(dto.getCidade()))
-                                                .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()));
-                                                //.and(new TipoSpecification<Anuncio>(dto.getTipo()));
-                   
+                                                .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()))
+                                                .and(AnuncioSpecification.filtrarPorTipo(dto.getTipo()));
+
+                                                
         return anuncioRepo.findAll(spec)
                           .stream()
                           .map(AnuncioRespostaDTO::new)

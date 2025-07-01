@@ -1,6 +1,7 @@
 package com.labweb.agrodoa_backend.specification;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -44,5 +45,12 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
         };
     }
 
-    //add o de data expiração e talvez um de preço maximo fosse bom, 
+    public static Specification<Anuncio> filtrarPorDataExpiracao(LocalDate data){
+        return (root, query, cb) -> {
+            if(data == null){
+                return cb.conjunction();
+            }
+            return cb.greaterThanOrEqualTo(root.get("dataExpiracao"), data);
+        };
+    }
 }
