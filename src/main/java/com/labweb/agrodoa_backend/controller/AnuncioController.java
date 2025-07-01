@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.controller;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.service.anuncios.AnuncioService;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +34,12 @@ public class AnuncioController {
         @PathVariable String idUsuario,
         @ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
 
-        List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnuncioPorUserId(idUsuario);
+
+        AnuncioFiltroUsuarioDTO filtroComUsuario = new AnuncioFiltroUsuarioDTO();
+        BeanUtils.copyProperties(filtro, filtroComUsuario);
+        filtroComUsuario.setIdAnunciante(idUsuario);
+        
+        List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnunciosFiltroUsuario(filtroComUsuario);
         if(anuncios.isEmpty()){
             return ResponseEntity.noContent().build();
         }
