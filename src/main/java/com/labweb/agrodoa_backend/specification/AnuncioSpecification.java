@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
+import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 
 public class AnuncioSpecification { //falta diminuir os repositories com specifications que a gente já tem
 
@@ -45,21 +47,21 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
         };
     }
 
-    public static Specification<Anuncio> filtrarPorTipo(String tipo) {  //doação ou venda
+    public static Specification<Anuncio> filtrarPorTipo(TipoAnuncio tipo) {  //doação ou venda
         return (root, query, cb) -> {
-            if (tipo == null || tipo.isEmpty()) {
+            if (tipo == null) {
                 return cb.conjunction();
             }
-            return cb.equal(cb.lower(root.get("tipo_Anuncio")), tipo.toLowerCase());
+            return cb.equal(cb.lower(root.get("tipo_anuncio")), tipo);
         };
     }
 
-    public static Specification<Anuncio> filtrarPorStatus(String status) {  //doação ou venda
+    public static Specification<Anuncio> filtrarPorStatus(StatusAnuncio status) {  //doação ou venda
         return (root, query, cb) -> {
-            if (status == null || status.isEmpty()) {
+            if (status == null ) {
                 return cb.conjunction();
             }
-            return cb.equal(cb.lower(root.get("status")), status.toLowerCase());
+            return cb.equal(cb.lower(root.get("status")), status);
         };
     }
 
@@ -69,6 +71,16 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
                 return cb.conjunction();
             }
             return cb.greaterThanOrEqualTo(root.get("data_expiracao"), data);
+        };
+    }
+
+    public static Specification<Anuncio> filtrarPorAnuncianteId(String idAnunciante){
+        return ( root, query, cb) -> {
+            if(idAnunciante == null || idAnunciante.isEmpty()){
+                return cb.conjunction();
+            }
+
+            return cb.equal(root.get("id_anunciante").get("idusuario"), idAnunciante );
         };
     }
 
