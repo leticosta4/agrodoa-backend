@@ -105,8 +105,8 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
   `titulo` VARCHAR(60) NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NOT NULL,
   `data_expiracao` DATE NOT NULL,
-  `status` VARCHAR(1) NOT NULL,
-  `tipo_anuncio` VARCHAR(1) NOT NULL,
+  `status` VARCHAR(20) NOT NULL,
+  `tipo_anuncio` VARCHAR(20) NOT NULL,
   `entrega_pelo_fornecedor` INT(1) NOT NULL,
   `cidade_idcidade` VARCHAR(7) NOT NULL,
   `id_anunciante` VARCHAR(7) NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `meta` DECIMAL(7,2) NOT NULL,
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
-  `status_causa` VARCHAR(1) NOT NULL,
+  `status_causa` VARCHAR(20) NOT NULL,
   `valor_arrecadado` DECIMAL(7,2) NULL,
   PRIMARY KEY (`idcausa`),
   UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE)
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`denuncia` (
   `motivo_idmotivo` VARCHAR(7) NOT NULL,
   `id_denunciante` VARCHAR(7) NOT NULL,
   `id_denunciado` VARCHAR(7) NOT NULL,
-  `status_denuncia` VARCHAR(1) NOT NULL,
+  `status_denuncia` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`iddenuncia`),
   UNIQUE INDEX `iddenuncia_UNIQUE` (`iddenuncia` ASC) VISIBLE,
   INDEX `fk_denuncia_motivo1_idx` (`motivo_idmotivo` ASC) VISIBLE,
@@ -249,7 +249,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`relacao_beneficiario` (
   `anuncio_idanuncio` VARCHAR(7) NOT NULL,
   `usuario_conta_idconta` VARCHAR(7) NOT NULL,
-  `tipo_relacao_interessado` VARCHAR(1) NOT NULL, -- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio)
+  `tipo_relacao_interessado` VARCHAR(20) NOT NULL, -- o tipo da relação pode ser Aprovado (é a pessoa que fechou negocio), Interessado (salvou aquele anuncio)
   PRIMARY KEY (`anuncio_idanuncio`, `usuario_conta_idconta`),
   INDEX `fk_anuncio_has_usuario_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
   INDEX `fk_anuncio_has_usuario_anuncio1_idx` (`anuncio_idanuncio` ASC) VISIBLE,
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
   `negociacao_idnegociacao` VARCHAR(7) NOT NULL,
   `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
-  `status_negociacao` VARCHAR(1) NOT NULL,
+  `status_negociacao` VARCHAR(20) NOT NULL,
   `id_anuncio` VARCHAR(7) NOT NULL,
   `id_beneficiario` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`negociacao_idnegociacao`),
