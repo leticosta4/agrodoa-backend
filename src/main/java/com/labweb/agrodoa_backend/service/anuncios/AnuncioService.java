@@ -1,6 +1,5 @@
 package com.labweb.agrodoa_backend.service.anuncios;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,8 @@ import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.specification.AnuncioSpecification;
 
-
-
 @Service
 public class AnuncioService {
-
     @Autowired
     private AnuncioRepository anuncioRepo;
 
@@ -27,12 +23,10 @@ public class AnuncioService {
                                                 .and(AnuncioSpecification.filtrarPorCidade(dto.getCidade()))
                                                 .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()));
                                                 //.and(new TipoSpecification<Anuncio>(dto.getTipo()));
-
-                                                
+                   
         return anuncioRepo.findAll(spec)
                           .stream()
                           .map(AnuncioRespostaDTO::new)
                           .toList();
     }    
-
 }

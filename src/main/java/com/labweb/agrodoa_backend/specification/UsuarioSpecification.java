@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
-public class UsuarioSpecification {
+public class UsuarioSpecification {    //falta diminuir os repositories com specifications que a gente já tem
     public static Specification<Usuario> filtrarPorTipo(String tipo) {
         return (root, query, cb) -> {
             if (tipo == null || tipo.isEmpty()) {

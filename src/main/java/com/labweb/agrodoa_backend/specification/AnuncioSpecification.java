@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
 
-public class AnuncioSpecification {
+public class AnuncioSpecification { //falta diminuir os repositories com specifications que a gente já tem
 
     public static Specification<Anuncio> filtrarPorNome(String nome) {
         return (root, query, cb) -> {
@@ -35,7 +35,7 @@ public class AnuncioSpecification {
         };
     }
 
-    public static Specification<Anuncio> filtrarPorTipo(String tipo) {
+    public static Specification<Anuncio> filtrarPorTipo(String tipo) {  //doação ou venda
         return (root, query, cb) -> {
             if (tipo == null || tipo.isEmpty()) {
                 return cb.conjunction();
@@ -43,4 +43,6 @@ public class AnuncioSpecification {
             return cb.equal(cb.lower(root.get("tipoAnuncio")), tipo.toLowerCase());
         };
     }
+
+    //add o de data expiração e talvez um de preço maximo fosse bom, 
 }

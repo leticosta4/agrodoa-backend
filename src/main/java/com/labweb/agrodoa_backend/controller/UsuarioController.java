@@ -1,6 +1,5 @@
 package com.labweb.agrodoa_backend.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UsuarioController {
     @Autowired
     private UsuarioService userService;
-
-    // @GetMapping({"/usuarios"})
-    // public ResponseEntity<ArrayList<UsuarioRespostaDTO>> exibirUsers(@RequestParam(required = false) String tipo) { 
-    //     ArrayList<UsuarioRespostaDTO> listaUsers;
-
-    //     if(tipo != null){
-    //         listaUsers = userService.listarTodosPorTipo(tipo); 
-    //     } else {
-    //         listaUsers = userService.listarTodos();
-    //     }
-    //     return ResponseEntity.ok(listaUsers);
-    // }    
 
     @GetMapping({"/usuarios"})  
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(@RequestParam(required = false) String tipo){
@@ -56,6 +43,6 @@ public class UsuarioController {
     } 
     
     //editar
-    //cadastrar
+    //cadastrar -> vai ter o factory no service
 
 }
