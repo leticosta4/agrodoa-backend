@@ -1,5 +1,26 @@
 -- caso ja tenha criado as tabelas, rodar isso:
 
+-- caso ja tenha criado algumas colunas com tabelas que armazenam só um caracter para indicar tipo, status, etc:
+-- estamos adaptando para string para lidar de forma mais facil com os enums
+-- rodar:
+ALTER table anuncio MODIFY tipo_anuncio VARCHAR(20) NOT NULL;
+ALTER table anuncio MODIFY status VARCHAR(20) NOT NULL;
+ALTER table causa MODIFY status_causa VARCHAR(20) NOT NULL;
+ALTER table relacao_beneficiario MODIFY tipo_relacao_interessado VARCHAR(20) NOT NULL;
+ALTER table negociacao MODIFY status_negociacao VARCHAR(20) NOT NULL;
+ALTER table denuncia MODIFY status_denuncia VARCHAR(20) NOT NULL;
+
+-- e caso ja tenha rodado os inserts para anuncio, causa, relacao_beneficiario e negociacao, rode:
+UPDATE anuncio SET status = 'ATIVO' WHERE status = 'A';
+UPDATE anuncio SET status = 'EXPIRADO' WHERE status = 'E';
+UPDATE anuncio SET status = 'FINALIZADO' WHERE status = 'F';
+UPDATE anuncio SET tipo_anuncio = 'VENDA' WHERE tipo_anuncio = 'V';
+UPDATE anuncio SET tipo_anuncio = 'DOACAO' WHERE tipo_anuncio = 'D';
+UPDATE causa SET status_causa = 'ABERTA' WHERE status_causa = 'A';
+UPDATE causa SET status_causa = 'CONCLUIDA' WHERE status_causa = 'C';
+UPDATE negociacao SET status_negociacao = 'FINALIZADA' WHERE status_negociacao = 'F';
+UPDATE relacao_beneficiario SET tipo_relacao_interessado = 'SALVOU' WHERE tipo_relacao_interessado = 'S';
+UPDATE relacao_beneficiario SET tipo_relacao_interessado = 'NEGOCIANDO' WHERE tipo_relacao_interessado = 'N';
 
 -- para corrigir a chave anuncio-produto
 ALTER TABLE anuncio
