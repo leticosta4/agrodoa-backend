@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +21,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioService userService;
 
-    @GetMapping({"/usuarios"})
-    public ResponseEntity<ArrayList<UsuarioRespostaDTO>> exibirUsers(@RequestParam(required = false) String tipo) { 
-        ArrayList<UsuarioRespostaDTO> listaUsers;
-
-        if(tipo != null){
-            listaUsers = userService.listarTodosPorTipo(tipo); 
-        } else {
-            listaUsers = userService.listarTodos();
+    @GetMapping({"/usuarios"})  
+    public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(@RequestParam(required = false) String tipo){
+        List<UsuarioRespostaDTO> usuarios = userService.buscarUsuarioFiltro(tipo);
+        if(usuarios.isEmpty()){
+             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(listaUsers);
-    }    
+        return ResponseEntity.ok(usuarios);
+    }
 
     @GetMapping({"/{userId}"})
     public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String userId) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
@@ -46,6 +43,6 @@ public class UsuarioController {
     } 
     
     //editar
-    //cadastrar
+    //cadastrar -> vai ter o factory no service
 
 }

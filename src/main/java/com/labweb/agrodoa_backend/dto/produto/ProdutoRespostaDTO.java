@@ -15,7 +15,7 @@ public class ProdutoRespostaDTO { //precisa de um atributo id?
     private String nome;
     private int quantidade;
     private LocalDate dataValidade;
-    private double precoUnidade;
+    private Double precoUnidade;
 
     public ProdutoRespostaDTO(Produto p){ //precisa disso?
         this.nome = p.getNome();

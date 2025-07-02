@@ -1,8 +1,10 @@
 package com.labweb.agrodoa_backend.service.pessoas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
+import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
@@ -18,6 +21,16 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository userRepo;
+
+    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
+        Specification<Usuario> spec = Specification
+                                                .where(UsuarioSpecification.filtrarPorTipo(tipo));
+
+        return userRepo.findAll(spec)
+                       .stream()
+                       .map(UsuarioRespostaDTO::new)
+                       .toList();
+    }
 
     public ArrayList<UsuarioRespostaDTO> listarTodos(){
         ArrayList<Usuario> users = userRepo.findAll();
@@ -56,17 +69,6 @@ public class UsuarioService {
     }
 
     public void editarPerfilUser(String userId){
-        userRepo.removeByIdConta(userId);
+        //...
     }
 }
-
-
-/**
- * logica fatory que pensei por cima
- * product > usuario
- * concrete products > fornecedor, usuario e hibrido
- * 
- * fica faltando um creator e talvez concrete creators, fiquei na dúvida onde seria (talvez o controller) mas é o creator que instancia a classe de factory
- * 
- * a logica do template method seria basicamente pq em usuario tem alguns metodos padrão e nas classes filhas outras de acordo com seu comportamento
- */

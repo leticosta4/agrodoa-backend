@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
@@ -84,7 +85,7 @@ public class Anuncio {
 
     //lista de beneficiarios?
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<RelacaoBeneficiario> relacoes;   //ver o momento da inicializaçao
+    private List<RelacaoBeneficiario> relacoes = new ArrayList<>();   //ver o momento da inicializaçao
 
     /*na hora de filtrar fazer algo tipo:
 

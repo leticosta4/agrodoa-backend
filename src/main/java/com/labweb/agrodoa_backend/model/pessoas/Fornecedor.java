@@ -1,6 +1,7 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -23,14 +24,14 @@ import com.labweb.agrodoa_backend.model.pessoas.comportamento.PublicaAnuncios;
 @PrimaryKeyJoinColumn(name = "conta_idconta")
 public class Fornecedor extends Usuario implements PublicaAnuncios{ 
     @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<Anuncio> listaAnunciosPostados = new ArrayList<>();
+    private List<Anuncio> listaAnunciosPostados = new ArrayList<>();
 
     public Fornecedor(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Tipo tipoUsuario, Cidade cidade){
         super(nome, email, senha, cpfOuCnpj, nomeArquivoFoto, telefone, cidade, tipoUsuario);
     }
 
     @Override
-    public ArrayList<Anuncio> getAnunciosPostados() {
+    public List<Anuncio> getAnunciosPostados() {
         return this.listaAnunciosPostados;    
     }
 }
