@@ -9,8 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.model.local.Estado;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.repository.TipoRepository;
+import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
+import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
 import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
@@ -21,6 +28,12 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository userRepo;
+    @Autowired
+    TipoRepository tipoRepo;
+    @Autowired
+    EstadoRepository estadoRepo;
+    @Autowired
+    CidadeRepository cidadeRepo;
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
         Specification<Usuario> spec = Specification
@@ -70,5 +83,14 @@ public class UsuarioService {
 
     public void editarPerfilUser(String userId){
         //...
+    }
+
+    public Usuario cadastrarUsuario(UsuarioDTO userDTO){
+        Tipo tipoUsuario = tipoRepo.findByNome(userDTO.getTipoUsuario());
+        Estado estado = estadoRepo.findByNome(userDTO.getEstado());
+        Cidade cidade = cidadeRepo.findByIdCidade(userDTO.getIdCidade());
+
+        Usuario tempUser = userDTO.transformaParaObjeto(tipoUsuario, estado, cidade);
+        return userRepo.save(tempUser);
     }
 }
