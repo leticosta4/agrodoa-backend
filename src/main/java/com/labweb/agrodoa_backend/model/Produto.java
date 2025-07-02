@@ -33,9 +33,9 @@ public class Produto {
     private LocalDate dataValidade;
 
     @Column(name = "preco_unidade")
-    private double precoUnidade;
+    private Double precoUnidade;
     
-    public Produto(String nome, int quantidade, LocalDate dataValidade, double precoUnidade) {
+    public Produto(String nome, int quantidade, LocalDate dataValidade, Double precoUnidade) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.dataValidade = dataValidade;

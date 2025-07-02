@@ -1,6 +1,7 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
@@ -24,7 +25,7 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "conta_idconta")
 public class Beneficiario extends Usuario implements RecebeAnuncios{
     @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>();
+    private List<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>();
 
     /*na hora de filtrar fa\er algo tipo:
 
@@ -48,7 +49,7 @@ public class Beneficiario extends Usuario implements RecebeAnuncios{
     }
 
     @Override
-    public ArrayList<RelacaoBeneficiario> getRelacoesAnuncios() {
+    public List<RelacaoBeneficiario> getRelacoesAnuncios() {
         return this.relacoesAnuncio;    
     }
 }
