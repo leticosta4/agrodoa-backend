@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.labweb.agrodoa_backend.model.Notificacao;
 
-public interface NotificacaoRepository extends JpaRepository<Notificacao, Long> {
+public interface NotificacaoRepository extends JpaRepository<Notificacao, String> {
 }
