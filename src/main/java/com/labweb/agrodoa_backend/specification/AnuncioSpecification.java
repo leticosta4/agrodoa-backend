@@ -52,7 +52,7 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
             if (tipo == null) {
                 return cb.conjunction();
             }
-            return cb.equal(cb.lower(root.get("tipo_anuncio")), tipo);
+            return cb.equal(cb.lower(root.get("tipo")), tipo);
         };
     }
 
@@ -70,7 +70,7 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
             if(data == null){
                 return cb.conjunction();
             }
-            return cb.greaterThanOrEqualTo(root.get("data_expiracao"), data);
+            return cb.greaterThanOrEqualTo(root.get("dataExpiracao"), data);
         };
     }
 
@@ -80,7 +80,7 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
                 return cb.conjunction();
             }
 
-            return cb.equal(root.get("id_anunciante").get("idusuario"), idAnunciante );
+            return cb.equal(root.get("anunciante").get("idConta"), idAnunciante );
         };
     }
 
