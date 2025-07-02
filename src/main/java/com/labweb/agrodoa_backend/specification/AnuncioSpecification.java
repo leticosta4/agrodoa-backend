@@ -52,7 +52,7 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
             if (tipo == null) {
                 return cb.conjunction();
             }
-            return cb.equal(cb.lower(root.get("tipo")), tipo);
+            return cb.equal(root.get("tipo"), tipo);
         };
     }
 
@@ -61,7 +61,7 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
             if (status == null ) {
                 return cb.conjunction();
             }
-            return cb.equal(cb.lower(root.get("status")), status);
+            return cb.equal(root.get("status"), status);
         };
     }
 

@@ -48,6 +48,8 @@ public class AnuncioController {
     @GetMapping
     public ResponseEntity<List<AnuncioRespostaDTO>> listarAnunciosFiltro(@ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
         List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnunciosFiltro(filtro);
+
+        System.out.println("FILTROS PEGOS" + filtro);
         if(anuncios.isEmpty()){
             return ResponseEntity.noContent().build();
         }

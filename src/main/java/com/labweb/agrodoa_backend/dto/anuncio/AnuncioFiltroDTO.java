@@ -10,7 +10,11 @@ import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Setter
 @Getter
 public class AnuncioFiltroDTO {
     private String nome;
