@@ -35,6 +35,8 @@ public class JwtUtil {  //gera e valida os toens de segurança
     public boolean tokenValido(String token, UserDetails userDetails) {
         final String email = extraiEmail(token);
         return (email.equals(userDetails.getUsername())) && !tokenExpirado(token); //esse getUsername seria o equivalente a getEmail
+
+        //talvez seja melhor fazer um customUserDetails
     }
 
     private boolean tokenExpirado(String token) {
