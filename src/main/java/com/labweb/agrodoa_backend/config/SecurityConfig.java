@@ -39,9 +39,17 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) 
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
-                //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite pre-flight requests que os navegadores usam em chamadas CORS
-                .requestMatchers("/auth/login", "/usuarios/cadastrar_usuario", "/anuncios?status=ativo").permitAll() //definir aqui os endpoints
-                .requestMatchers("/error").permitAll()
+            .requestMatchers(
+                "/auth/login",
+                "/usuarios/cadastrar_usuario",
+                "/anuncios?status=ativo",
+                "/error",
+                
+                "/v3/api-docs/**",
+                "/v3/api-docs/swagger-config",
+                "/swagger-ui/**",
+                "/swagger-ui.html"
+            ).permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session
