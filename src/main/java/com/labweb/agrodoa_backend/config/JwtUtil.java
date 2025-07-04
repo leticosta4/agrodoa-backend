@@ -17,13 +17,16 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {  //gera e valida os toens de segurança
 
     @Value("${jwt.secret}")
-    private String secretKey;
+    private String chaveSecreta;
+
+    @Value("${jwt.expiration}")
+    private long tempoExpiracao;
 
     public String geraToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1h
+                .setExpiration(new Date(System.currentTimeMillis() + tempoExpiracao)) // 1h
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -52,6 +55,6 @@ public class JwtUtil {  //gera e valida os toens de segurança
     }
 
     private Key getSignKey() { //converte a chave secreta em um obj Key para assinar o token
-        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(chaveSecreta.getBytes(StandardCharsets.UTF_8));
     }
 }

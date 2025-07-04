@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -20,6 +21,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.labweb.agrodoa_backend.service.ContaDetailsService;
+
+import io.swagger.v3.oas.models.PathItem.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +39,9 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) 
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("auth/login", "/cadastrar_usuario", "anuncios?status=ativo").permitAll() //definir aqui os endpoints
+                //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite pre-flight requests que os navegadores usam em chamadas CORS
+                .requestMatchers("/auth/login", "/usuarios/cadastrar_usuario", "/anuncios?status=ativo").permitAll() //definir aqui os endpoints
+                .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session
@@ -62,15 +67,16 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        //return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance(); //só um teste
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));  //isso meio que substitui o CrossOrigins em cada controller
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));  //isso meio que substitui o CrossOrigins em cada controller > colocar a do frontend real depois
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
