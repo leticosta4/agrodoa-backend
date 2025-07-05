@@ -1,7 +1,7 @@
 package com.labweb.agrodoa_backend.model.relacoes;
 
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.model.Causa;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

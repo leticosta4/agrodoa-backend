@@ -1,6 +1,6 @@
-package com.labweb.agrodoa_backend.dto.pessoas.administrador;
+package com.labweb.agrodoa_backend.dto.contas.administrador;
 
-import com.labweb.agrodoa_backend.model.pessoas.Administrador;
+import com.labweb.agrodoa_backend.model.contas.Administrador;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

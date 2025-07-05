@@ -1,8 +1,8 @@
-package com.labweb.agrodoa_backend.repository.pessoas;
+package com.labweb.agrodoa_backend.repository.contas;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.labweb.agrodoa_backend.model.pessoas.Administrador;
+import com.labweb.agrodoa_backend.model.contas.Administrador;
 
 import java.util.ArrayList;
 

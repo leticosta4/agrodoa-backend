@@ -1,8 +1,8 @@
 package com.labweb.agrodoa_backend.model.relacoes;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
