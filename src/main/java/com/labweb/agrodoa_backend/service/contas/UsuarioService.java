@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.service.pessoas;
+package com.labweb.agrodoa_backend.service.contas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,21 +6,35 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
-import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
+import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.repository.TipoRepository;
+import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
+import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
+import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
-    //metodos padrão tipo editar e deletar, exibir específico e exibir todos
-    //no metodo de criar tentar aplicar a logica do factory
+    //metodos padrão tipo criar, editar e deletar, exibir específico e exibir todos
 
     @Autowired
     private UsuarioRepository userRepo;
+    @Autowired
+    TipoRepository tipoRepo;
+    @Autowired
+    EstadoRepository estadoRepo;
+    @Autowired
+    CidadeRepository cidadeRepo;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder; //por enquanto que tá sem segurança
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
         Specification<Usuario> spec = Specification
@@ -70,5 +84,28 @@ public class UsuarioService {
 
     public void editarPerfilUser(String userId){
         //...
+    }
+
+    public Usuario cadastrarUsuario(UsuarioDTO userDTO){
+        Tipo tipoUsuario = tipoRepo.findByNome(userDTO.getTipoUsuario());
+        //Estado estado = estadoRepo.findByNome(userDTO.getEstado());
+        Cidade cidade = cidadeRepo.findByIdCidade(userDTO.getIdCidade());
+
+        if (tipoUsuario == null || cidade == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário ou cidade inválida.");
+        }
+
+        Usuario tempUser = new Usuario();
+        tempUser.setNome(userDTO.getNome());
+        tempUser.setEmail(userDTO.getEmail());
+        //tempUser.setSenha(passwordEncoder.encode(userDTO.getSenha())); //criptografa a senha aqui e ja salva o hash no banco >> pra quando add segurança
+        tempUser.setSenha(userDTO.getSenha()); //por enquanto que tá sem segurança
+        tempUser.setCpfOuCnpj(userDTO.getCpfOuCnpj());
+        tempUser.setTelefone(userDTO.getTelefone());
+        tempUser.setNomeArquivoFoto(userDTO.getNomeArquivoFoto());
+        tempUser.setCidade(cidade);
+        tempUser.setTipoUsuario(tipoUsuario);
+
+        return userRepo.save(tempUser);
     }
 }

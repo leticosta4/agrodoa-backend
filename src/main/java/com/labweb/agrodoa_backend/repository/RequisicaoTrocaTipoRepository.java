@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.labweb.agrodoa_backend.model.RequisicaoTrocaTipo;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 public interface RequisicaoTrocaTipoRepository extends JpaRepository<RequisicaoTrocaTipo, String>{
     boolean existsByIdRequisicaoTrocaTipo(String idRequisicaoTrocaTipoId);

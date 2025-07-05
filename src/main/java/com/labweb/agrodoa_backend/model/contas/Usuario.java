@@ -1,11 +1,14 @@
-package com.labweb.agrodoa_backend.model.pessoas;
+package com.labweb.agrodoa_backend.model.contas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.model.relacoes.DoacaoCausa;
+import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 import com.labweb.agrodoa_backend.model.Denuncia;
+import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Avaliacao;
 
 import jakarta.persistence.CascadeType;
@@ -56,6 +59,12 @@ public class Usuario extends Conta{
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DoacaoCausa> doacoesCausas;
+
+    @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Anuncio> listaAnunciosPostados = new ArrayList<>(); //caso seja fornecedor ou hibrido
+
+    @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>(); //caso seja beneficiario ou hibrido
 
     public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Cidade cidade, Tipo tipoUsuario) {
         super(nome, email, senha);

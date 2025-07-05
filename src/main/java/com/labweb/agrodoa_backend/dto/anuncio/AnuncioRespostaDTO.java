@@ -2,8 +2,8 @@ package com.labweb.agrodoa_backend.dto.anuncio;
 
 import java.time.LocalDate;
 
-import com.labweb.agrodoa_backend.dto.LocalDTO;
-import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
@@ -11,10 +11,8 @@ import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class AnuncioRespostaDTO {
     private String titulo;

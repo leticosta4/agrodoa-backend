@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.repository.pessoas;
+package com.labweb.agrodoa_backend.repository.contas;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.labweb.agrodoa_backend.model.Tipo;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 
 public interface UsuarioRepository extends JpaRepository<Usuario, String>, JpaSpecificationExecutor<Usuario>{

@@ -1,5 +1,9 @@
 -- caso ja tenha criado as tabelas, rodar isso:
 
+-- colunas de adm com varchar maior
+alter table administrador modify github varchar(255);
+alter table administrador modify linkedin varchar(255);
+
 -- caso ja tenha criado algumas colunas com tabelas que armazenam só um caracter para indicar tipo, status, etc:
 -- estamos adaptando para string para lidar de forma mais facil com os enums
 -- rodar:
