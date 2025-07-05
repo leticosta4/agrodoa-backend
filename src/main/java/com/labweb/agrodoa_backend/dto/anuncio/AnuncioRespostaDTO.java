@@ -2,7 +2,7 @@ package com.labweb.agrodoa_backend.dto.anuncio;
 
 import java.time.LocalDate;
 
-import com.labweb.agrodoa_backend.dto.LocalDTO;
+import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;

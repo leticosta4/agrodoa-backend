@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.labweb.agrodoa_backend.dto.local.CidadeDTO;
+import com.labweb.agrodoa_backend.dto.local.EstadoDTO;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.model.local.Estado;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
@@ -24,23 +26,23 @@ public class LocalController {
     @Autowired
     CidadeRepository cidadeRepo;
 
-    public ResponseEntity<List<String>> listarEstados() {
-        List<String> nomesEstados = estadoRepo.findAll()
+    public ResponseEntity<List<EstadoDTO>> listarEstados() {
+        List<EstadoDTO> estados = estadoRepo.findAll()
         .stream()
-        .map(Estado::getNome)
+        .map(estado -> new EstadoDTO(estado.getIdEstado(), estado.getNome()))
         .collect(Collectors.toList());
 
-        return ResponseEntity.ok(nomesEstados);
+        return ResponseEntity.ok(estados);
     }
 
     @GetMapping("/{idEstado}/cidades")
-    public ResponseEntity<List<String>> listarCidadesPorEstado(@PathVariable String idEstado) {
-        List<String> nomesCidades = cidadeRepo.findAllByEstado_IdEstado(idEstado)
+    public ResponseEntity<List<CidadeDTO>> listarCidadesPorEstado(@PathVariable String idEstado) {
+        List<CidadeDTO> cidades = cidadeRepo.findAllByEstado_IdEstado(idEstado)
         .stream()
-        .map(Cidade::getNome)
+        .map(cidade -> new CidadeDTO(cidade.getIdCidade(), cidade.getNome()))
         .collect(Collectors.toList());
         
-        return ResponseEntity.ok(nomesCidades);
+        return ResponseEntity.ok(cidades);
     }
 
 }
