@@ -33,8 +33,8 @@ public class UsuarioService {
     EstadoRepository estadoRepo;
     @Autowired
     CidadeRepository cidadeRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder; //por enquanto que tá sem segurança
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
         Specification<Usuario> spec = Specification
@@ -98,7 +98,8 @@ public class UsuarioService {
         Usuario tempUser = new Usuario();
         tempUser.setNome(userDTO.getNome());
         tempUser.setEmail(userDTO.getEmail());
-        tempUser.setSenha(passwordEncoder.encode(userDTO.getSenha())); //criptografa a senha aqui e ja salva o hash no banco >> pra quando add segurança
+        //tempUser.setSenha(passwordEncoder.encode(userDTO.getSenha())); //criptografa a senha aqui e ja salva o hash no banco >> pra quando add segurança
+        tempUser.setSenha(userDTO.getSenha()); //por enquanto que tá sem segurança
         tempUser.setCpfOuCnpj(userDTO.getCpfOuCnpj());
         tempUser.setTelefone(userDTO.getTelefone());
         tempUser.setNomeArquivoFoto(userDTO.getNomeArquivoFoto());
