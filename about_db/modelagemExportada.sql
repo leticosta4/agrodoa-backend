@@ -294,8 +294,8 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
   `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
   `status_negociacao` VARCHAR(20) NOT NULL,
-  `id_anuncio` INT(5) NOT NULL,
-  `id_beneficiario` INT(5) NOT NULL,
+  `id_anuncio` VARCHAR(7) NOT NULL,
+  `id_beneficiario` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`negociacao_idnegociacao`),
   UNIQUE INDEX `compra_idcompra_UNIQUE` (`negociacao_idnegociacao` ASC) VISIBLE,
   INDEX `fk_compra_negociacao1_idx` (`id_anuncio` ASC, `id_beneficiario` ASC) VISIBLE,
@@ -336,8 +336,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`administrador` (
   `conta_idconta` VARCHAR(7) NOT NULL,
-  `github` VARCHAR(45) NOT NULL,
-  `linkedin` VARCHAR(45) NOT NULL,
+  `github` VARCHAR(255) NOT NULL,
+  `linkedin` VARCHAR(255) NOT NULL,
   INDEX `fk_table1_conta1_idx` (`conta_idconta` ASC) VISIBLE,
   PRIMARY KEY (`conta_idconta`),
   CONSTRAINT `fk_table1_conta1`
