@@ -1,7 +1,7 @@
 package com.labweb.agrodoa_backend.model;
 
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusDenuncia;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

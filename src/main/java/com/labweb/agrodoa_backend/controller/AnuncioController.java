@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
-import com.labweb.agrodoa_backend.service.anuncios.AnuncioService;
+import com.labweb.agrodoa_backend.service.AnuncioService;
 
 
 @RestController

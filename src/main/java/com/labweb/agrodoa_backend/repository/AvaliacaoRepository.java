@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.labweb.agrodoa_backend.model.Avaliacao;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, String>{

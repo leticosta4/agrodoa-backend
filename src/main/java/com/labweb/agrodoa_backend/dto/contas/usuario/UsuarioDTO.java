@@ -1,9 +1,8 @@
-package com.labweb.agrodoa_backend.dto.pessoas.usuario;
+package com.labweb.agrodoa_backend.dto.contas.usuario;
 
 import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.local.Estado;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -30,7 +29,7 @@ public class UsuarioDTO {
     String telefone;
 
     String nomeArquivoFoto;
-
+    
     @NotBlank(message = "O campo estado é obrigatório!")
     private String estado;
 
@@ -40,7 +39,7 @@ public class UsuarioDTO {
     @NotBlank(message = "O campo tipo é obrigatório!")
     private String tipoUsuario;
 
-    public Usuario transformaParaObjeto(Tipo tipoUsuario, Estado estado, Cidade cidade){ 
+    public Usuario transformaParaObjeto(Tipo tipoUsuario, Cidade cidade){ 
         if (this.tipoUsuario == null || this.tipoUsuario == null) {
             throw new IllegalArgumentException("Tipo de usuário não informado.");
         }

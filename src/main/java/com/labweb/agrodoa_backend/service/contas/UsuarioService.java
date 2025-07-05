@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.service.pessoas;
+package com.labweb.agrodoa_backend.service.contas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +10,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioDTO;
-import com.labweb.agrodoa_backend.dto.pessoas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.local.Estado;
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 import com.labweb.agrodoa_backend.repository.TipoRepository;
+import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
-import com.labweb.agrodoa_backend.repository.pessoas.UsuarioRepository;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
@@ -108,5 +107,4 @@ public class UsuarioService {
 
         return userRepo.save(tempUser);
     }
-
 }

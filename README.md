@@ -15,5 +15,3 @@ para rodar o linter:
 
 ##
  > obs.: a padronização dos dados vai ser com os nomes que deixamos no DER
-
-

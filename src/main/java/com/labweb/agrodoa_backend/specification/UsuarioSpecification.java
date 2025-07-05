@@ -2,7 +2,7 @@ package com.labweb.agrodoa_backend.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.labweb.agrodoa_backend.model.pessoas.Usuario;
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 public class UsuarioSpecification {    //falta diminuir os repositories com specifications que a gente já tem
     public static Specification<Usuario> filtrarPorTipo(String tipo) {

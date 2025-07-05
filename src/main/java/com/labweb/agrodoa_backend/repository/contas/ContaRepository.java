@@ -1,6 +1,6 @@
-package com.labweb.agrodoa_backend.repository.pessoas;
+package com.labweb.agrodoa_backend.repository.contas;
 
-import com.labweb.agrodoa_backend.model.pessoas.Conta;
+import com.labweb.agrodoa_backend.model.contas.Conta;
 
 import java.util.Optional;
 

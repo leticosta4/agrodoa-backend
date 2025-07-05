@@ -336,8 +336,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`administrador` (
   `conta_idconta` VARCHAR(7) NOT NULL,
-  `github` VARCHAR(45) NOT NULL,
-  `linkedin` VARCHAR(45) NOT NULL,
+  `github` VARCHAR(255) NOT NULL,
+  `linkedin` VARCHAR(255) NOT NULL,
   INDEX `fk_table1_conta1_idx` (`conta_idconta` ASC) VISIBLE,
   PRIMARY KEY (`conta_idconta`),
   CONSTRAINT `fk_table1_conta1`
