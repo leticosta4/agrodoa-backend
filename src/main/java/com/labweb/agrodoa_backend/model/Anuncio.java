@@ -77,7 +77,7 @@ public class Anuncio {
 
     @ManyToOne
     @JoinColumn(name = "id_anunciante")
-    private Usuario anunciante; //pode ser fornecedor ou hibrido >> a verificação do comportamento deve ser feita no service com a interface PublicaAnuncios
+    private Usuario anunciante; //pode ser fornecedor ou hibrido >> a verificação do comportamento ainda
 
     @OneToOne
     @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")

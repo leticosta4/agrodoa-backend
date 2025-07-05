@@ -1,5 +1,13 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "conta")
 @Inheritance(strategy = InheritanceType.JOINED) //cria uma tabela para cada classe, com JOIN nas consultas, e faz as tables/classes filhas herdarem o mesmo id
-public abstract class Conta {
+public abstract class Conta implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //para indicar que o banco de dados deve gerar o valor da PK
     @Column(name = "idconta")
@@ -38,5 +46,46 @@ public abstract class Conta {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+    }
+    
+    public abstract List<String> getRoles();
+
+    @Override
+    public String getUsername() {
+        return this.email; // O username é o email
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha; // A senha é a senha
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<String> roles = this.getRoles();
+        return roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+    }
+
+    //metodos padrao do UserDetails => melhorar depois talvez
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

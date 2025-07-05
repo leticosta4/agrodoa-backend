@@ -22,8 +22,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.labweb.agrodoa_backend.service.ContaDetailsService;
 
-import io.swagger.v3.oas.models.PathItem.HttpMethod;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -40,11 +38,12 @@ public class SecurityConfig {
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
+                //endpoints publicos
                 "/auth/login",
                 "/usuarios/cadastrar_usuario",
                 "/anuncios?status=ativo",
+                "/administradores", //talvez mudar para devs
                 "/error",
-                
                 "/v3/api-docs/**",
                 "/v3/api-docs/swagger-config",
                 "/swagger-ui/**",

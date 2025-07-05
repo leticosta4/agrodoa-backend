@@ -45,6 +45,6 @@ public class UsuarioDTO {
             throw new IllegalArgumentException("Tipo de usuário não informado.");
         }
 
-        return UsuarioDTOFactory.criarUsuarioDTO(this, tipoUsuario, estado, cidade);
+        return new Usuario(this.nome, this.email, this.senha, this.cpfOuCnpj, this.nomeArquivoFoto, this.telefone, cidade, tipoUsuario);
     }
 }

@@ -1,6 +1,10 @@
 package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
+import java.util.ArrayList;
+
 import com.labweb.agrodoa_backend.dto.LocalDTO;
+import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
 import lombok.Getter;
@@ -18,6 +22,8 @@ public class UsuarioRespostaDTO {
     String nomeArquivoFoto;
     private String tipoUsuario;
     private LocalDTO local;
+    private ArrayList<AnuncioRespostaDTO> anunciosPostados;
+    private ArrayList<RelacaoBeneficiarioDTO> relacoesAnuncios;
     
     public UsuarioRespostaDTO(Usuario user){
         this.nome = user.getNome();
@@ -27,5 +33,9 @@ public class UsuarioRespostaDTO {
         this.telefone = user.getTelefone();
         this.tipoUsuario = user.getTipoUsuario().getNome();
         this.local = new LocalDTO(user.getCidade());
+
+        //essa pt de baixo ta dando erro pq os dtos ainda não estao mt bem definidos
+        // this.anunciosPostados = user.getListaAnunciosPostados();
+        // this.relacoesAnuncios = user.getRelacoesAnuncio();
     }
 }

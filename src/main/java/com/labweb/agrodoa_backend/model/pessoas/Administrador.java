@@ -1,5 +1,8 @@
 package com.labweb.agrodoa_backend.model.pessoas;
 
+import java.util.List;
+
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -9,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "administrador")
+@DiscriminatorValue("ADMINISTRADOR")
 @PrimaryKeyJoinColumn(name = "conta_idconta") // mapeia PK+FK >> exato nome da coluna no banco
 @Getter
 @Setter
@@ -22,4 +26,11 @@ public class Administrador extends Conta{
         this.github = github;
         this.linkedin = linkedin;
     }
+
+    @Override
+    public List<String> getRoles(){
+        return List.of("ROLE_ADMINISTRADOR");
+    }
 }
+
+//tem os overrides ainda
