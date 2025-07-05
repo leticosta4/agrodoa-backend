@@ -1,7 +1,10 @@
 package com.labweb.agrodoa_backend.dto.pessoas.usuario;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
-import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioResumidoDTO;
 import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.model.pessoas.Usuario;
 
@@ -20,6 +23,8 @@ public class UsuarioRespostaDTO {
     String nomeArquivoFoto;
     private String tipoUsuario;
     private LocalDTO local;
+    private List<AnuncioResumidoDTO> anunciosPostados;
+    private List<RelacaoBeneficiarioDTO> relacoesAnuncios;
     
     public UsuarioRespostaDTO(Usuario user){
         this.nome = user.getNome();
@@ -29,5 +34,19 @@ public class UsuarioRespostaDTO {
         this.telefone = user.getTelefone();
         this.tipoUsuario = user.getTipoUsuario().getNome();
         this.local = new LocalDTO(user.getCidade());
+
+        if (user.getListaAnunciosPostados() != null) {
+            this.anunciosPostados = user.getListaAnunciosPostados()
+                                        .stream()
+                                        .map(AnuncioResumidoDTO::new)
+                                        .collect(Collectors.toList());
+        }
+
+        if (user.getRelacoesAnuncio() != null) {
+            this.relacoesAnuncios = user.getRelacoesAnuncio()
+                                        .stream()
+                                        .map(RelacaoBeneficiarioDTO::new)
+                                        .collect(Collectors.toList());
+        }
     }
 }
