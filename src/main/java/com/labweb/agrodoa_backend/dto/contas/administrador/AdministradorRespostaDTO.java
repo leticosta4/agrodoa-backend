@@ -4,10 +4,8 @@ import com.labweb.agrodoa_backend.model.contas.Administrador;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class AdministradorRespostaDTO {
     private String nome;

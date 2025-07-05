@@ -29,15 +29,18 @@ public class AnuncioDTO {
     @NotNull(message = "É obrigatório informar se a entrega é feita pelo anunciante!")
     private int entregaPeloFornecedor; //talvez mudar para boolean
 
-    private StatusAnuncio status;
-    private TipoAnuncio tipo;
-    private Cidade cidade;
-    private Usuario anunciante; //restrição do tipo >> comando SQL - talvez tenha que mudar depois pq tem o hibrido tb
-    private Produto produto;
+    @NotNull(message = "O tipo de anúncio é obrigatório!")
+    private String tipoAnuncio;
 
-    //na duvida se realmente precisa dessas coisas todas que coloquei ai em cima
+    @NotBlank(message = "O ID da cidade é obrigatório!")
+    private String cidadeId;
 
-    public Anuncio transformaParaObjeto(){ //precisa disso?
+    @NotNull(message = "O ID do produto é obrigatório!")
+    private String produtoId;
+
+    //o Usuario anunciante ja vai ser a pessoa logada e esses que tem ID seria o front que mandaria
+
+    public Anuncio transformaParaObjeto(TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto){ //precisa disso? esses parametros sao temporarios
         return new Anuncio(titulo, nomeArquivoFoto, dataExpiracao, entregaPeloFornecedor, tipo, cidade, anunciante, produto);
     }
 }

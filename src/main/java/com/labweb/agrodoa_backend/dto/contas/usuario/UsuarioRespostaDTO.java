@@ -10,10 +10,8 @@ import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class UsuarioRespostaDTO { 
     private String nome;
