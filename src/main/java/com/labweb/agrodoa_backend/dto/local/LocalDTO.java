@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.dto;
+package com.labweb.agrodoa_backend.dto.local;
 
 import com.labweb.agrodoa_backend.model.local.Cidade;
 
