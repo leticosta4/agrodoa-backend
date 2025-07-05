@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.controller;
+package com.labweb.agrodoa_backend.controller.contas;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.labweb.agrodoa_backend.repository.pessoas.ContaRepository;
+import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 
 @Service
 public class ContaDetailsService implements UserDetailsService{
