@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.labweb.agrodoa_backend.dto.local.CidadeDTO;
 import com.labweb.agrodoa_backend.dto.local.EstadoDTO;
-import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.local.Estado;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
 

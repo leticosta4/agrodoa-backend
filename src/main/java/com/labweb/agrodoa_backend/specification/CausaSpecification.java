@@ -2,7 +2,6 @@ package com.labweb.agrodoa_backend.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.labweb.agrodoa_backend.dto.CausaDTO;
 import com.labweb.agrodoa_backend.model.Causa;
 
 public class CausaSpecification {

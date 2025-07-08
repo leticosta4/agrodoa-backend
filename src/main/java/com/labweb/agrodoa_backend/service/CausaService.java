@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.service.causa;
+package com.labweb.agrodoa_backend.service;
 
 import com.labweb.agrodoa_backend.dto.CausaDTO;
 import com.labweb.agrodoa_backend.model.Causa;

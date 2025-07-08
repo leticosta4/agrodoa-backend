@@ -20,7 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.labweb.agrodoa_backend.service.ContaDetailsService;
+import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +43,9 @@ public class SecurityConfig {
                 "/usuarios/cadastrar_usuario",
                 "/anuncios?status=ativo",
                 "/administradores", //talvez mudar para devs
+                "/causas",
                 "/error",
+
                 "/v3/api-docs/**",
                 "/v3/api-docs/swagger-config",
                 "/swagger-ui/**",

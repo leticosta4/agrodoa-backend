@@ -2,7 +2,8 @@ package com.labweb.agrodoa_backend.controller;
 
 import com.labweb.agrodoa_backend.dto.CausaDTO;
 import com.labweb.agrodoa_backend.model.Causa;
-import com.labweb.agrodoa_backend.service.causa.CausaService;
+import com.labweb.agrodoa_backend.service.CausaService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +32,9 @@ public class CausaController {
         return ResponseEntity.ok(paginaDeCausas);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CausaDTO> buscarPorId(@PathVariable String id) {
-        CausaDTO causaDTO = causaService.buscarPorId(id);
+    @GetMapping("/{idCausa}")
+    public ResponseEntity<CausaDTO> buscarPorId(@PathVariable String idCausa) {
+        CausaDTO causaDTO = causaService.buscarPorId(idCausa);
         return ResponseEntity.ok(causaDTO);
     }
 
@@ -46,7 +47,7 @@ public class CausaController {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
+                .path("/{idCausa}")
                 .buildAndExpand(causaSalva.getIdCausa()) 
                 .toUri();
 
