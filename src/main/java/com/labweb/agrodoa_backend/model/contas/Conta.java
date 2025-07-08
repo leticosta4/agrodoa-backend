@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -29,7 +27,6 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED) //cria uma tabela para cada classe, com JOIN nas consultas, e faz as tables/classes filhas herdarem o mesmo id
 public abstract class Conta implements UserDetails{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //para indicar que o banco de dados deve gerar o valor da PK
     @Column(name = "idconta")
     private String idConta;
 

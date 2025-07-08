@@ -1,26 +1,28 @@
 package com.labweb.agrodoa_backend.controller.contas;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.service.contas.UsuarioService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -52,7 +54,7 @@ public class UsuarioController {
     public ResponseEntity<?> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
         Usuario usuarioSalvo = userService.cadastrarUsuario(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
-    }
+    } //acho que isso tem que retornar um usuario DTO ai vai ter que mudar la p colocar um construtor
 
     //editar
 

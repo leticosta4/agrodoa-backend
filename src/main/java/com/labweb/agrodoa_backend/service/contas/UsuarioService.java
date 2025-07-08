@@ -19,6 +19,7 @@ import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
+import com.labweb.agrodoa_backend.service.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
@@ -96,6 +97,7 @@ public class UsuarioService {
         }
 
         Usuario tempUser = new Usuario();
+        tempUser.setIdConta(GeradorIdCustom.gerarIdComPrefixo("CON", userRepo, "idConta"));
         tempUser.setNome(userDTO.getNome());
         tempUser.setEmail(userDTO.getEmail());
         tempUser.setSenha(passwordEncoder.encode(userDTO.getSenha())); //criptografa a senha aqui e ja salva o hash no banco
