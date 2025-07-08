@@ -68,6 +68,10 @@ alter table denuncia modify iddenuncia VARCHAR(7);
 ALTER TABLE negociacao MODIFY COLUMN negociacao_idnegociacao VARCHAR(7);
 ALTER TABLE requisicao MODIFY COLUMN idrequisicao VARCHAR(7);
 
+-- Mudanca de 45 para 60 no linkedin do Administrador
+ALTER TABLE administrador MODIFY linkedin VARCHAR(255);
+ALTER TABLE administrador MODIFY github VARCHAR(255);
+
 --alterando as tabelas que ja estavam preenchidas antes
 update requisicao set idrequisicao = CONCAT('REQ', LPAD(idrequisicao, 4, '0')); -- esse LPAD é preenchimento à esquerda 
 update negociacao set negociacao_idnegociacao = CONCAT('NEG', LPAD(negociacao_idnegociacao, 4, '0'));
