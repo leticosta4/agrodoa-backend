@@ -8,8 +8,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -23,7 +21,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Causa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idcausa")
     private String idCausa;
 
@@ -49,14 +46,15 @@ public class Causa {
     @Column(name = "status_causa")
     private StatusCausa status;
    
-    public Causa(String nome, String descricao, double meta, LocalDate prazo, String nomeArquivoFoto,
-            double valorArrecadado) {
+    public Causa(String nome, String descricao, double meta, LocalDate prazo, String nomeArquivoFoto) {
         this.nome = nome;
         this.descricao = descricao;
         this.meta = meta;
         this.prazo = prazo;
         this.nomeArquivoFoto = nomeArquivoFoto;
-        this.valorArrecadado = valorArrecadado;
+
+        //valores pdrao
+        this.valorArrecadado = 0.0;
         this.status = StatusCausa.ABERTA; //valor padrao
     }
 }

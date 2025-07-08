@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.http.HttpMethod;
 
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
@@ -37,8 +38,9 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) 
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
+
+            //endpoints publicos
             .requestMatchers(
-                //endpoints publicos
                 "/auth/login",
                 "/usuarios/cadastrar_usuario",
                 "/anuncios?status=ativo",
@@ -52,7 +54,11 @@ public class SecurityConfig {
                 "/swagger-ui/**",
                 "/swagger-ui.html"
             ).permitAll()
-                .anyRequest().authenticated()
+
+            //endpoints adm
+            .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+
+            .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session
             .authenticationProvider(authenticationProvider())
