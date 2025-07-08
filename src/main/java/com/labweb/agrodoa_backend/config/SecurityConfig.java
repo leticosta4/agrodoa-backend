@@ -44,6 +44,7 @@ public class SecurityConfig {
                 "/anuncios?status=ativo",
                 "/administradores", //talvez mudar para devs
                 "/causas",
+                "/causas/{idCausa}",
                 "/error",
 
                 "/v3/api-docs/**",

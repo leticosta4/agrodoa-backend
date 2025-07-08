@@ -40,7 +40,7 @@ public class CausaController {
 
 
     //Provavelmente só adm deve poder
-    @PostMapping
+    @PostMapping("/criar_causa")
     public ResponseEntity<CausaDTO> criarCausa(@RequestBody CausaDTO causaDTO) {
         
         Causa causaSalva = causaService.criarCausa(causaDTO);
