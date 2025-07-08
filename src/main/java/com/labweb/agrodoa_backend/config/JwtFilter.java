@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.labweb.agrodoa_backend.service.ContaDetailsService;
+import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

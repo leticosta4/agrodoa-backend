@@ -27,6 +27,17 @@ public class CausaDTO {
 
     private StatusCausa status;
 
+    //Construtor
+    public CausaDTO(Causa causa) {
+        this.nome = causa.getNome();
+        this.descricao = causa.getDescricao();
+        this.meta = causa.getMeta();
+        this.prazo = causa.getPrazo();
+        this.nomeArquivoFoto = causa.getNomeArquivoFoto();
+        this.valorArrecadado = causa.getValorArrecadado();
+        this.status = causa.getStatus();
+    }
+
     public Causa transformaParaObjeto(){
         return new Causa(nome, descricao, meta, prazo, nomeArquivoFoto, valorArrecadado);
     }

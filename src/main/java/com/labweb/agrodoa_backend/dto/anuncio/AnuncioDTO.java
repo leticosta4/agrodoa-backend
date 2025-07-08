@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
-import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 
