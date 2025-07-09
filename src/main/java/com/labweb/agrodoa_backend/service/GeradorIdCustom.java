@@ -15,7 +15,7 @@ public class GeradorIdCustom { //pra gerar os IDs com base no nosso padrão de p
         
         for(T entidade: todasEntidades){
             try{
-                Field campo = entidade.getClass().getDeclaredField(nomeCampoId);
+                Field campo = getCampoIncluindoSuperclasse(entidade.getClass(), nomeCampoId);
                 campo.setAccessible(true);
                 String valorId = (String) campo.get(entidade);
 
@@ -35,5 +35,16 @@ public class GeradorIdCustom { //pra gerar os IDs com base no nosso padrão de p
         int proximoNumero = maiorNumero + 1;
 
         return String.format("%s%04d", prefixo, proximoNumero);
+    }
+
+    private static Field getCampoIncluindoSuperclasse(Class<?> classe, String nomeCampo) throws NoSuchFieldException { //para procurar o campo de ID nas classes mãe tipo conta > user
+        while (classe != null) {
+            try {
+                return classe.getDeclaredField(nomeCampo);
+            } catch (NoSuchFieldException e) {
+                classe = classe.getSuperclass();
+            }
+        }
+        throw new NoSuchFieldException("Campo " + nomeCampo + " não encontrado na hierarquia.");
     }
 }

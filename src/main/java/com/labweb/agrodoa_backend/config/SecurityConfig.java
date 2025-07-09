@@ -42,20 +42,23 @@ public class SecurityConfig {
             //endpoints publicos
             .requestMatchers(
                 "/auth/login",
-                "/usuarios/cadastrar_usuario",
-                "/anuncios?status=ativo",
-                "/administradores", //talvez mudar para devs
-                "/causas",
-                "/causas/{idCausa}",
-                "/error",
+                            "/usuarios/cadastrar_usuario",
+                            "/usuarios/ver_perfil/**",
+                            "/anuncios",
+                            "/anuncios/**",
+                            "/administradores",
+                            "/causas",
+                            "/causas/{idCausa}",
+                            "/error",
 
-                "/v3/api-docs/**",
-                "/v3/api-docs/swagger-config",
-                "/swagger-ui/**",
-                "/swagger-ui.html"
+                            "/v3/api-docs/**",
+                            "/v3/api-docs/swagger-config",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
             ).permitAll()
 
             //endpoints adm
+            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             .anyRequest().authenticated()

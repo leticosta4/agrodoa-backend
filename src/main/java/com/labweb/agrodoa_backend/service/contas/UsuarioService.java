@@ -18,19 +18,15 @@ import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
-import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
+import com.labweb.agrodoa_backend.service.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
-    //metodos padrão tipo criar, editar e deletar, exibir específico e exibir todos
-
     @Autowired
     private UsuarioRepository userRepo;
     @Autowired
     TipoRepository tipoRepo;
-    @Autowired
-    EstadoRepository estadoRepo;
     @Autowired
     CidadeRepository cidadeRepo;
     @Autowired
@@ -87,8 +83,11 @@ public class UsuarioService {
     }
 
     public Usuario cadastrarUsuario(UsuarioDTO userDTO){
+        if (!userDTO.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userDTO.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Os tipos permitido para cadastro são apenas 'fornecedor' e 'beneficiario'.");
+        }
+
         Tipo tipoUsuario = tipoRepo.findByNome(userDTO.getTipoUsuario());
-        //Estado estado = estadoRepo.findByNome(userDTO.getEstado());
         Cidade cidade = cidadeRepo.findByIdCidade(userDTO.getIdCidade());
 
         if (tipoUsuario == null || cidade == null) {
@@ -96,6 +95,7 @@ public class UsuarioService {
         }
 
         Usuario tempUser = new Usuario();
+        tempUser.setIdConta(GeradorIdCustom.gerarIdComPrefixo("CON", userRepo, "idConta"));
         tempUser.setNome(userDTO.getNome());
         tempUser.setEmail(userDTO.getEmail());
         tempUser.setSenha(passwordEncoder.encode(userDTO.getSenha())); //criptografa a senha aqui e ja salva o hash no banco
