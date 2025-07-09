@@ -3,7 +3,6 @@ package com.labweb.agrodoa_backend.dto;
 import java.time.LocalDate;
 
 import com.labweb.agrodoa_backend.model.Causa;
-import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +22,6 @@ public class CausaDTO {
 
     private String nomeArquivoFoto;
 
-    private double valorArrecadado;
-
-    private StatusCausa status;
-
     //Construtor
     public CausaDTO(Causa causa) {
         this.nome = causa.getNome();
@@ -34,11 +29,10 @@ public class CausaDTO {
         this.meta = causa.getMeta();
         this.prazo = causa.getPrazo();
         this.nomeArquivoFoto = causa.getNomeArquivoFoto();
-        this.valorArrecadado = causa.getValorArrecadado();
-        this.status = causa.getStatus();
+        //o status e o valor arrecadado vai ser preechido por valor padrão no construtor de causa
     }
 
     public Causa transformaParaObjeto(){
-        return new Causa(nome, descricao, meta, prazo, nomeArquivoFoto, valorArrecadado);
+        return new Causa(nome, descricao, meta, prazo, nomeArquivoFoto);
     }
 }
