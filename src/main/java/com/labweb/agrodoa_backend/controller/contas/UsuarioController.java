@@ -30,6 +30,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService userService;
 
+    @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(@RequestParam(required = false) String tipo){
         List<UsuarioRespostaDTO> usuarios = userService.buscarUsuarioFiltro(tipo);
         if(usuarios.isEmpty()){
