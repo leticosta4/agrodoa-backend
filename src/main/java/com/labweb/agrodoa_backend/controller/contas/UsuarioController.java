@@ -38,24 +38,38 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping({"/{userId}"})
-    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String userId) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
-        UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(userId);
+    @GetMapping({"/ver_perfil/{idUser}"})
+    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
+        UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
         return ResponseEntity.ok(usuario);
-    }    
+    }   
+    
+    // @GetMapping({"/{idUser}/minha_conta"})
+    // public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
+    //     UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
+    //     return ResponseEntity.ok(usuario);
+    // }   
 
-    @DeleteMapping({"/{userId}/apagar_conta"})
-    public ResponseEntity<Void> apagarContaUser(@PathVariable String userId) {
-        userService.apagarPerfilUser(userId);
+    @DeleteMapping({"/{idUser}/apagar_conta"})
+    public ResponseEntity<Void> apagarContaUser(@PathVariable String idUser) {
+        userService.apagarPerfilUser(idUser);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
     } 
     
     @PostMapping({"/cadastrar_usuario"})
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
-        Usuario usuarioSalvo = userService.cadastrarUsuario(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
-    } //acho que isso tem que retornar um usuario DTO ai vai ter que mudar la p colocar um construtor
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
+        Usuario userSalvo = userService.cadastrarUsuario(userDTO);
+
+        URI location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{idUser}")
+            .buildAndExpand(userSalvo.getIdConta())
+            .toUri();
+
+        return ResponseEntity.created(location).body(new UsuarioDTO(userSalvo));
+    }
 
     //editar
-
+    //bloquear conta usuario >> para os ADMs
+    //notificar usuario?
 }

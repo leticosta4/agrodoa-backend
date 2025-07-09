@@ -18,20 +18,15 @@ import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
-import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
 import com.labweb.agrodoa_backend.service.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 @Service
 public class UsuarioService {
-    //metodos padrão tipo criar, editar e deletar, exibir específico e exibir todos
-
     @Autowired
     private UsuarioRepository userRepo;
     @Autowired
     TipoRepository tipoRepo;
-    @Autowired
-    EstadoRepository estadoRepo;
     @Autowired
     CidadeRepository cidadeRepo;
     @Autowired
@@ -89,7 +84,6 @@ public class UsuarioService {
 
     public Usuario cadastrarUsuario(UsuarioDTO userDTO){
         Tipo tipoUsuario = tipoRepo.findByNome(userDTO.getTipoUsuario());
-        //Estado estado = estadoRepo.findByNome(userDTO.getEstado());
         Cidade cidade = cidadeRepo.findByIdCidade(userDTO.getIdCidade());
 
         if (tipoUsuario == null || cidade == null) {

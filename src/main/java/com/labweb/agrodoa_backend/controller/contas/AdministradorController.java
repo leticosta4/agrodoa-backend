@@ -21,5 +21,8 @@ public class AdministradorController {
         ArrayList<AdministradorRespostaDTO> listaAdmins = admService.listarTodos(); //talvez mudar essa para devs
         return ResponseEntity.ok(listaAdmins);
     }
+
+    //editar conta adm
+    //desativar conta
     
 }

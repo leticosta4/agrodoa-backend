@@ -39,6 +39,17 @@ public class UsuarioDTO {
     @NotBlank(message = "O campo tipo é obrigatório!")
     private String tipoUsuario;
 
+    public UsuarioDTO(Usuario user) {
+        this.nome = user.getNome();
+        this.email = user.getEmail();
+        this.cpfOuCnpj = user.getCpfOuCnpj();
+        this.telefone = user.getTelefone();
+        this.nomeArquivoFoto = user.getNomeArquivoFoto();
+        this.estado = user.getCidade().getEstado().getNome();
+        this.idCidade = user.getCidade().getIdCidade();
+        this.tipoUsuario = user.getTipoUsuario().getNome();
+    }
+
     public Usuario transformaParaObjeto(Tipo tipoUsuario, Cidade cidade){ 
         if (this.tipoUsuario == null || this.tipoUsuario == null) {
             throw new IllegalArgumentException("Tipo de usuário não informado.");

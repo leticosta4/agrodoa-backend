@@ -63,4 +63,6 @@ public class CausaController {
 
         return ResponseEntity.created(location).body(responseCausaDto);
     }
+
+    //concluir causa
 }

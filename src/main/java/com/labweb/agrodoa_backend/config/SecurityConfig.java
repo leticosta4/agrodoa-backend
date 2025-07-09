@@ -41,22 +41,32 @@ public class SecurityConfig {
 
             //endpoints publicos
             .requestMatchers(
-                "/auth/login",
-                "/usuarios/cadastrar_usuario",
-                "/anuncios?status=ativo",
-                "/administradores", //talvez mudar para devs
-                "/causas",
-                "/causas/{idCausa}",
-                "/error",
+                "/auth/login", //funciona
+                            "/usuarios/cadastrar_usuario",
+                            "/ver_perfil/{idUser}", //403 
+                            "/anuncios?status=ativo",
+                            "/administradores", //404; com uma barra extra dá 403
+                            "/causas",  //funciona
+                            "/causas/{idCausa}", //funciona
+                            "/error", //funciona
 
-                "/v3/api-docs/**",
-                "/v3/api-docs/swagger-config",
-                "/swagger-ui/**",
-                "/swagger-ui.html"
+                            //funciona
+                            "/v3/api-docs/**",
+                            "/v3/api-docs/swagger-config",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.POST,
+            "/causas/criar_causa", //funciona
+                        "/usuarios" //404
+            ).hasRole("ADMINISTRADOR")
+
+            //endpoints usuario gerais
+            // .requestMatchers(HttpMethod.POST,
+            // [listar os endpoints]
+            // ).hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
             .anyRequest().authenticated()
             )
