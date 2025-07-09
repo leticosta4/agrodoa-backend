@@ -43,7 +43,7 @@ public class SecurityConfig {
             .requestMatchers(
                 "/auth/login",
                             "/usuarios/cadastrar_usuario",
-                            "usuarios/ver_perfil/**",
+                            "/usuarios/ver_perfil/**",
                             "/anuncios",
                             "/anuncios/**",
                             "/administradores",
@@ -58,7 +58,7 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR") //ta dando 403
+            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             .anyRequest().authenticated()
