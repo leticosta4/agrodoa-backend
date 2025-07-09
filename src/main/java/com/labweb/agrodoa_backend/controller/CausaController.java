@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/causas")
@@ -30,14 +31,14 @@ public class CausaController {
 
     //Utiliza o pageable para reduzir o tamanho de retorno do banco
     @GetMapping
-    public ResponseEntity<Page<CausaDTO>> buscarComFiltros(
+    public ResponseEntity<List<CausaDTO>> buscarComFiltros(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Double metaMin,
-            @RequestParam(required = false) Double metaMax,
-            Pageable pageable) {
+            @RequestParam(required = false) Double metaMax) {
         
-        Page<CausaDTO> paginaDeCausas = causaService.buscarComFiltros(nome, metaMin, metaMax, pageable);
-        return ResponseEntity.ok(paginaDeCausas);
+        List<CausaDTO> listaDeCausas = causaService.buscarComFiltros(nome, metaMin, metaMax);
+        
+        return ResponseEntity.ok(listaDeCausas);
     }
 
     @GetMapping("/{idCausa}")
