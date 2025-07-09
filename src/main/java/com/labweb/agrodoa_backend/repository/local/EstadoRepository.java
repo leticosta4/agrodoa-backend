@@ -9,5 +9,6 @@ import com.labweb.agrodoa_backend.model.local.Estado;
 public interface EstadoRepository extends JpaRepository<Estado, String>{
     boolean existsByIdEstado(String idEstado); //ver se precisa mesmo
     ArrayList <Estado> findAllBy();
+    Estado findByNome(String nome);
     void removeByIdEstado(String idEstado);
 }

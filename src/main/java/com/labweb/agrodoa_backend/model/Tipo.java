@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class Tipo {
     @Column(name = "idtipo")
     private String idTipo;
 
-    @JoinColumn(name = "nome")
+    @Column(name = "nome")
     private String nome;
     
     public Tipo(String nome) {

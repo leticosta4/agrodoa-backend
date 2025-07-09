@@ -1,15 +1,15 @@
 -- contas de adm
 INSERT INTO labweb_project.conta (idconta, nome, senha, email) VALUES
 ('CON0001', 'Letícia Almeida', 'senha123', 'leticiacostaoa@gmail.com'),
-('CON0002', 'Alysson Oliveira', 'senha456', 'alyssonoliveira456@email.com'),
+('CON0002', 'Alysson Oliveira', 'senha456', 'alyssonoliveira456@gmail.com'),
 ('CON0003', 'Cainan de Brito', 'senha789', 'cainan.bas@gmail.com'),
 ('CON0004', 'Sophia Lima', 'minhanamorada', 'sophialimasantos4@gmail.com'),
-('CON0005', 'Brunna Moura', 'brunna123', 'brugabi@gmail.com'),
-('CON0006', 'Kaik Pereira', 'kaik123', 'kaik.pereira@gmail.com'),
-('CON0007', 'FornecedoraAlimentos1', 'fornecedora123', 'fornecedora.alimentos1@gmail.com'),
-('CON0008', 'FornecedoraALimentos2', 'fornecedora456', 'fornecedora.alimentos2@gmail.com'),
-('CON0009', 'AlimentosSaudaveis', 'alimentos123', 'alimentos.saudaveis@gmail.com'),
-('CON0010', 'Rafael Argolo', 'rafael123', 'rafael.argolo@gmail.com');
+('CON0005', 'Brunna Moura', 'brunna123', 'bgabriellams@gmail.com'),
+('CON0006', 'Kaik Pereira', 'kaik123', 'kaikcpereira@gmail.com'),
+('CON0007', 'FornecedoraAlimentos1', 'fornecedora123', 'leti.almeida0221@gmail.com'),
+('CON0008', 'FornecedoraALimentos2', 'fornecedora456', 'melcostaoa@gmail.com'),
+('CON0009', 'AlimentosSaudaveis', 'alimentos123', 'alyssonoliveira4567@gmail.com'),
+('CON0010', 'Alizon Anjos', 'rafael123', 'alyssonoliveira45678@gmail.com');
 --- 4 a 6 p beneficiario, 7 a  p fornecedor, 10 p virar hibrido
 
 -- em adm
@@ -107,11 +107,11 @@ INSERT INTO `labweb_project`.`negociacao`
 
 INSERT INTO labweb_project.causa 
 (idcausa, nome, descricao, meta, prazo, nome_arquivo_foto, status_causa, valor_arrecadado) VALUES
-('CAU0001', 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', 5000.00, '2024-12-20', 'natal_sem_fome.jpg', 'CONCLUIDA', NULL),
-('CAU0002', 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', 3000.00, '2025-07-31', 'kit_escolar.jpg', 'ABERTA', NULL),
-('CAU0003', 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', 10000.00, '2024-11-30', 'sos_enchentes.jpg', 'CONCLUIDA', NULL),
-('CAU0004', 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', 15000.00, '2025-08-15', 'inclusao_digital.jpg', 'ABERTA', NULL),
-('CAU0005', 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', 8000.00, '2024-09-30', 'feira_agro.jpg', 'CONCLUIDA', NULL);
+('CAU0001', 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', 5000.00, '2024-12-20', 'natal_sem_fome.jpg', 'CONCLUIDA', 5000),
+('CAU0002', 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', 3000.00, '2025-07-31', 'kit_escolar.jpg', 'ABERTA', 0.0),
+('CAU0003', 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', 10000.00, '2024-11-30', 'sos_enchentes.jpg', 'CONCLUIDA', 5000),
+('CAU0004', 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', 15000.00, '2025-08-15', 'inclusao_digital.jpg', 'CONCLUIDA', 13000),
+('CAU0005', 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', 8000.00, '2024-09-30', 'feira_agro.jpg', 'CONCLUIDA', 5000);
 
 
 --fazer inserts da tabela motivo, denuncia, avaliação e usuario_has_causa

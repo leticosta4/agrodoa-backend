@@ -21,7 +21,7 @@ public class AnuncioRespostaDTO {
     private int entregaPeloFornecedor; //talvez mudar para boolean
     private StatusAnuncio status;
     private TipoAnuncio tipo;
-    private UsuarioRespostaDTO anunciante; //restrição do tipo >> validação no service com interface de comportamento
+    private UsuarioRespostaDTO anunciante; //restrição do tipo ainda
     private ProdutoRespostaDTO produto;
     private LocalDTO local;
 

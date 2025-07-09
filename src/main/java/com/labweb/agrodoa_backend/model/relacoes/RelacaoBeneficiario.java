@@ -34,7 +34,7 @@ public class RelacaoBeneficiario {
     @ManyToOne
     @MapsId("beneficiarioId")
     @JoinColumn(name = "usuario_conta_idconta")
-    private Usuario beneficiario;  //pode ser beneficiario ou hibrido >> a verificação do comportamento deve ser feita no service com a interface RecebeAnuncios
+    private Usuario beneficiario;  //pode ser beneficiario ou hibrido >> a verificação do comportamento ainda
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_relacao_interessado")
