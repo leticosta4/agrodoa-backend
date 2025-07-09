@@ -20,9 +20,9 @@ INSERT INTO labweb_project.administrador (conta_idconta, github, linkedin) VALUE
 
 
 INSERT INTO labweb_project.tipo (idtipo, nome) VALUES
-('TIP0001', 'beneficiário'),
+('TIP0001', 'beneficiario'),
 ('TIP0002', 'fornecedor'),
-('TIP0003', 'híbrido');
+('TIP0003', 'hibrido');
 
 INSERT INTO labweb_project.usuario (conta_idconta, cpf_ou_cnpj, nome_arquivo_foto, telefone, cidade_idcidade, tipo_idtipo) VALUES
 ('CON0004', '12345678909', 'foto_sophia.png', '71997172280', 'CID0001', 'TIP0001'),
