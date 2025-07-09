@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -44,15 +43,9 @@ public class UsuarioController {
         UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
         return ResponseEntity.ok(usuario);
     }   
-    
-    // @GetMapping({"/{idUser}/minha_conta"})
-    // public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
-    //     UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
-    //     return ResponseEntity.ok(usuario);
-    // }   
 
     @DeleteMapping({"/{idUser}/apagar_conta"})
-    public ResponseEntity<Void> apagarContaUser(@PathVariable String idUser) {
+    public ResponseEntity<Void> apagarContaUser(@PathVariable String idUser) {  //deveria ter apagar? ou só desativar?
         userService.apagarPerfilUser(idUser);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
     } 

@@ -61,11 +61,6 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR") //ta dando 403
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
-            //endpoints usuario gerais
-            // .requestMatchers(HttpMethod.POST,
-            // [listar os endpoints]
-            // ).hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-
             .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session
