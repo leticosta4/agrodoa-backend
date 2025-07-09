@@ -83,6 +83,10 @@ public class UsuarioService {
     }
 
     public Usuario cadastrarUsuario(UsuarioDTO userDTO){
+        if (!userDTO.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userDTO.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Os tipos permitido para cadastro são apenas 'fornecedor' e 'beneficiario'.");
+        }
+
         Tipo tipoUsuario = tipoRepo.findByNome(userDTO.getTipoUsuario());
         Cidade cidade = cidadeRepo.findByIdCidade(userDTO.getIdCidade());
 
