@@ -50,7 +50,7 @@ public class UsuarioDTO {
         this.tipoUsuario = user.getTipoUsuario().getNome();
     }
 
-    public Usuario transformaParaObjeto(Tipo tipoUsuario, Cidade cidade){ 
+    public Usuario transformaParaObjeto(Tipo tipoUsuario, Cidade cidade){ //talvez seja bom tirar isso aqui
         if (this.tipoUsuario == null || this.tipoUsuario == null) {
             throw new IllegalArgumentException("Tipo de usuário não informado.");
         }

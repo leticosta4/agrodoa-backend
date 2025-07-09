@@ -18,7 +18,7 @@ public class CausaDTO {
 
     private double meta;
 
-    private LocalDate prazo;
+    private LocalDate prazo; //mudar a forma de exibição para DD/MM/AAAA
 
     private String nomeArquivoFoto;
 

@@ -36,6 +36,8 @@ public class AuthController {
         String token = jwt.geraToken(loginDTO.getEmail());
         System.out.println("\n\nRecebi login de: " + loginDTO.getEmail() + "\n\n");
         return ResponseEntity.ok(new TokenRespostaDTO(token));
-    } //exemplo de uso no front
+    }
+
+    //para requisições que precise estar logado add um header  =>  Authorization: Bearer {valorDoToken}
     
 }

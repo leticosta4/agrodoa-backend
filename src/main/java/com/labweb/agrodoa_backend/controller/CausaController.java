@@ -29,7 +29,7 @@ public class CausaController {
 
     private final CausaService causaService;
 
-    //Utiliza o pageable para reduzir o tamanho de retorno do banco
+
     @GetMapping
     public ResponseEntity<List<CausaDTO>> buscarComFiltros(
             @RequestParam(required = false) String nome,
