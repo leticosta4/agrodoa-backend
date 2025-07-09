@@ -1,15 +1,15 @@
 -- contas de adm
 INSERT INTO labweb_project.conta (idconta, nome, senha, email) VALUES
 ('CON0001', 'Letícia Almeida', 'senha123', 'leticiacostaoa@gmail.com'),
-('CON0002', 'Alysson Oliveira', 'senha456', 'alyssonoliveira456@email.com'),
+('CON0002', 'Alysson Oliveira', 'senha456', 'alyssonoliveira456@gmail.com'),
 ('CON0003', 'Cainan de Brito', 'senha789', 'cainan.bas@gmail.com'),
 ('CON0004', 'Sophia Lima', 'minhanamorada', 'sophialimasantos4@gmail.com'),
-('CON0005', 'Brunna Moura', 'brunna123', 'brugabi@gmail.com'),
-('CON0006', 'Kaik Pereira', 'kaik123', 'kaik.pereira@gmail.com'),
-('CON0007', 'FornecedoraAlimentos1', 'fornecedora123', 'fornecedora.alimentos1@gmail.com'),
-('CON0008', 'FornecedoraALimentos2', 'fornecedora456', 'fornecedora.alimentos2@gmail.com'),
-('CON0009', 'AlimentosSaudaveis', 'alimentos123', 'alimentos.saudaveis@gmail.com'),
-('CON0010', 'Rafael Argolo', 'rafael123', 'rafael.argolo@gmail.com');
+('CON0005', 'Brunna Moura', 'brunna123', 'bgabriellams@gmail.com'),
+('CON0006', 'Kaik Pereira', 'kaik123', 'kaikcpereira@gmail.com'),
+('CON0007', 'FornecedoraAlimentos1', 'fornecedora123', 'leti.almeida0221@gmail.com'),
+('CON0008', 'FornecedoraALimentos2', 'fornecedora456', 'melcostaoa@gmail.com'),
+('CON0009', 'AlimentosSaudaveis', 'alimentos123', 'alyssonoliveira4567@gmail.com'),
+('CON0010', 'Alizon Anjos', 'rafael123', 'alyssonoliveira45678@gmail.com');
 --- 4 a 6 p beneficiario, 7 a  p fornecedor, 10 p virar hibrido
 
 -- em adm
