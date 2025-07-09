@@ -76,10 +76,17 @@ ALTER TABLE administrador MODIFY github VARCHAR(255);
 update requisicao set idrequisicao = CONCAT('REQ', LPAD(idrequisicao, 4, '0')); -- esse LPAD é preenchimento à esquerda 
 update negociacao set negociacao_idnegociacao = CONCAT('NEG', LPAD(negociacao_idnegociacao, 4, '0'));
 
---falta mts c FK
--- para ver o nome da FK usar: show create {nome_da_tabela}
--- 1. apagar a chave estrangeira
--- 2. alterar tipos das colunas primeiro na tabela referenciada depois na que faz referencia
--- 3. alterar o conteudo ja inserido SE a tabela tiver preenchida nas 2 tabelas em questão
--- 4. recriar a chave estrangeira
--- para automatizar, usar o scrip python para gerar os comandos
+--varios atributos na tabela de user foram alterados:
+update conta set email = 'alyssonoliveira456@gmail.com' where idconta = 'CON0002';
+update conta set email = 'bgabriellams@gmail.com' where idconta = 'CON0005';
+update conta set email = 'kaikcpereira@gmail.com' where idconta = 'CON0006';
+update conta set email = 'leti.almeida0221@gmail.com' where idconta = 'CON0007';
+update conta set email = 'melcostaoa@gmail.com' where idconta = 'CON0008';
+update conta set email = 'alyssonoliveira4567@gmail.com' where idconta = 'CON0009';
+update conta set email = 'alyssonoliveira4568@gmail.com' where idconta = 'CON0010';
+update conta set nome = 'Alizon Anjos' where idconta = 'CON0010';
+
+
+--os nomes dos tipos de user estavam errados no banco
+update tipo set nome = 'beneficiario' where idtipo = 'TIP0001';
+update tipo set nome = 'hibrido' where idtipo = 'TIP0003';
