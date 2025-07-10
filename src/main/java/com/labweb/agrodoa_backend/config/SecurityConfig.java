@@ -48,7 +48,7 @@ public class SecurityConfig {
                             "/usuarios/cadastrar_usuario",
                             "/usuarios/ver_perfil/**",
                             "/anuncios",
-                            "/anuncios/**",
+                            "/anuncios/*",
                             "/error",
 
                             "/v3/api-docs/**",
@@ -62,7 +62,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
-            .requestMatchers(HttpMethod.PATCH, "/usuarios/*/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.PATCH, "/usuarios/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
             .anyRequest().authenticated()
             )

@@ -92,7 +92,7 @@ public class Usuario extends Conta{
             return List.of("ROLE_USER");
         }
 
-        switch (this.tipoUsuario.getNome()) {
+        switch (this.tipoUsuario.getNome().toLowerCase()) {
             case "fornecedor":
                 return List.of("ROLE_FORNECEDOR");
             case "beneficiario":
