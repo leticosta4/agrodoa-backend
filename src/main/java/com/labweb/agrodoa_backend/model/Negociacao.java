@@ -23,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Negociacao { //nossa negociacao confirmada fechada já com algum beneficiario => venda ou doação, por isso esse nome em vez de pagamento
     @Id
+    
     @Column(name = "negociacao_idnegociacao")
     private String idNegociacao;
     private double valorPago;

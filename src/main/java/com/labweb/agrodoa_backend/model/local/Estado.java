@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Estado {
     @Id
+    
     @Column(name = "idestado")
     private String idEstado;
 

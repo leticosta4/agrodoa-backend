@@ -62,7 +62,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
-            .requestMatchers(HttpMethod.PATCH, "/usuarios/*/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.PATCH, "/usuarios/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
             //endpoints fornecedor
             .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio").hasAnyRole("FORNECEDOR")

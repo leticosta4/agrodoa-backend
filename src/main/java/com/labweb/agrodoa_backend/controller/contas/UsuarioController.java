@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
+import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 import com.labweb.agrodoa_backend.service.contas.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -30,6 +33,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService userService;
 
+    @Autowired
+    private ContaDetailsService contaService;
+
     @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
         @RequestParam(required = false) String tipo,
@@ -48,8 +54,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }   
 
-    @PatchMapping({"/{idUser}/desativar_conta"})
-    public ResponseEntity<Void> desativarContaUser(@PathVariable String idUser) {  //deveria ter apagar? ou só desativar?
+    @PatchMapping({"/desativar_conta"})  //MUDAR
+    public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){
+        // String emailUsuario = userDetails.getUsername(); 
+        String idUser = contaService.findIdByEmail(userDetails.getUsername());
+
         boolean inativo = userService.alterarSituacao(idUser, SituacaoUsuario.INATIVO);
         
         if(inativo){
