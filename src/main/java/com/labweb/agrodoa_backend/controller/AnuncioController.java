@@ -95,7 +95,7 @@ public class AnuncioController {
         return ResponseEntity.created(location).body(respostaDTO);
     }
 
-     @PutMapping("/{idAnuncio}")
+    @PutMapping("/{idAnuncio}")
     public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {
         AnuncioRespostaDTO anuncioAtualizado = anuncioService.editarAnuncio(idAnuncio, anuncioDTO);
         return ResponseEntity.ok(anuncioAtualizado);
