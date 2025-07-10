@@ -19,6 +19,7 @@ import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.repository.ProdutoRepository;
+import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.specification.AnuncioSpecification;
@@ -32,6 +33,7 @@ public class AnuncioService {
     @Autowired private CidadeRepository cidadeRepo;
     @Autowired private ProdutoRepository produtoRepo;
     @Autowired private UsuarioRepository userRepo; // Para buscar o anunciante
+    @Autowired private ContaRepository contaRepo; // Para buscar o anunciante, se necessário
 
     private Specification<Anuncio> criarSpecification(AnuncioFiltroDTO dto) {
         return Specification
@@ -71,6 +73,11 @@ public class AnuncioService {
     }
 
     @Transactional
+    // public Anuncio criarAnuncio(AnuncioDTO dto, String emailAnunciante) {
+
+    //     String idAnunciante = contaRepo.findByEmail(emailAnunciante)
+    //             .orElseThrow(() -> new EntityNotFoundException("Usuário anunciante não encontrado."))
+    //             .getIdConta();
     public Anuncio criarAnuncio(AnuncioDTO dto, String idAnunciante) {
 
         Cidade cidade = cidadeRepo.findById(dto.getCidadeId())
@@ -82,8 +89,11 @@ public class AnuncioService {
 
 
         TipoAnuncio tipo = TipoAnuncio.valueOf(dto.getTipoAnuncio().toUpperCase());
-        Anuncio novoAnuncio = dto.transformaParaObjeto(tipo, cidade, anunciante, produto);
+
+        String novoId = GeradorIdCustom.gerarIdComPrefixo("ANU", anuncioRepo, "idAnuncio");
         
+        Anuncio novoAnuncio = dto.transformaParaObjeto(tipo, cidade, anunciante, produto);
+        novoAnuncio.setIdAnuncio(novoId);
 
         return anuncioRepo.save(novoAnuncio);
     }

@@ -5,8 +5,6 @@ import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.service.CausaService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -29,16 +27,14 @@ public class CausaController {
 
     private final CausaService causaService;
 
-
     @GetMapping
     public ResponseEntity<List<CausaDTO>> buscarComFiltros(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Double metaMin,
             @RequestParam(required = false) Double metaMax) {
         
-        List<CausaDTO> listaDeCausas = causaService.buscarComFiltros(nome, metaMin, metaMax);
-        
-        return ResponseEntity.ok(listaDeCausas);
+        List<CausaDTO> causas = causaService.buscarComFiltros(nome, metaMin, metaMax);
+        return ResponseEntity.ok(causas);
     }
 
     @GetMapping("/{idCausa}")

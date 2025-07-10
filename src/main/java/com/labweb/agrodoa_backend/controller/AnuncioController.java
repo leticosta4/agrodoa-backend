@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.labweb.agrodoa_backend.dto.CausaDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.service.AnuncioService;
 
 import jakarta.validation.Valid;
@@ -77,12 +79,15 @@ public class AnuncioController {
                          .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
-        
-        String idAnunciante = userDetails.getUsername(); 
 
-        Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, idAnunciante);
+
+    @PostMapping("/criar_anuncio/{idUsuario}")
+    // public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
+    // String emailAnunciante = userDetails.getUsername(); 
+    // Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, emailAnunciante);
+    public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@PathVariable String idUsuario, @Valid @RequestBody AnuncioDTO anuncioDTO) {
+
+        Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, idUsuario);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -94,6 +99,9 @@ public class AnuncioController {
 
         return ResponseEntity.created(location).body(respostaDTO);
     }
+
+
+
 
     @PutMapping("/{idAnuncio}")
     public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {

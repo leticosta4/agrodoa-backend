@@ -39,16 +39,20 @@ public class SecurityConfig {
             .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
 
+            // // Protege o endpoint de criação de anúncio
+            // .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
+
+
             //endpoints publicos
             .requestMatchers(
                 "/auth/login",
+                            "/administradores",
+                            "/causas",
+                            "/causas/{idCausa}",
                             "/usuarios/cadastrar_usuario",
                             "/usuarios/ver_perfil/**",
                             "/anuncios",
                             "/anuncios/**",
-                            "/administradores",
-                            "/causas",
-                            "/causas/{idCausa}",
                             "/error",
 
                             "/v3/api-docs/**",
@@ -58,8 +62,11 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.GET, "/usuarios", "/estados", "/estados/*/cidades").hasRole("ADMINISTRADOR")
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+
+            //endpoints user geral
+            .requestMatchers(HttpMethod.PATCH, "/usuarios/*/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
             .anyRequest().authenticated()
             )

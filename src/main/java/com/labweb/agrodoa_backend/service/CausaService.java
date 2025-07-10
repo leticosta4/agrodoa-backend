@@ -25,8 +25,7 @@ public class CausaService {
     @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
 
     @Transactional(readOnly = true)
-    public List<CausaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) { 
-        
+    public List<CausaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) {
         Specification<Causa> spec = Specification.where(null);
 
         if (nome != null && !nome.isEmpty()) {
@@ -39,11 +38,9 @@ public class CausaService {
             spec = spec.and(CausaSpecification.filtrarPorMetaMax(metaMax));
         }
 
-        List<Causa> listaDeCausas = causaRepo.findAll(spec); 
+        List<Causa> causas = causaRepo.findAll(spec);
 
-        return listaDeCausas.stream()
-                            .map(CausaDTO::new)
-                            .collect(Collectors.toList());
+        return causas.stream().map(CausaDTO::new).collect(Collectors.toList()); 
     }
 
     @Transactional(readOnly = true)
