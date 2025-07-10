@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.repository.relacoes;
+package com.labweb.relacoes;
 
 import java.util.ArrayList;
 

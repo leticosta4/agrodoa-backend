@@ -18,13 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.labweb.agrodoa_backend.dto.CausaDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
-import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.service.AnuncioService;
 
 import jakarta.validation.Valid;
@@ -103,7 +101,7 @@ public class AnuncioController {
 
 
 
-    @PutMapping("/{idAnuncio}")
+    @PutMapping("/{idAnuncio}/editar")
     public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {
         AnuncioRespostaDTO anuncioAtualizado = anuncioService.editarAnuncio(idAnuncio, anuncioDTO);
         return ResponseEntity.ok(anuncioAtualizado);

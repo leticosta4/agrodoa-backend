@@ -95,7 +95,7 @@ public class AnuncioService {
         Anuncio novoAnuncio = dto.transformaParaObjeto(tipo, cidade, anunciante, produto);
         novoAnuncio.setIdAnuncio(novoId);
 
-        return anuncioRepo.save(novoAnuncio);
+        return anuncioRepo.saveAndFlush(novoAnuncio);
     }
 
     @Transactional

@@ -7,8 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
@@ -25,7 +23,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Negociacao { //nossa negociacao confirmada fechada já com algum beneficiario => venda ou doação, por isso esse nome em vez de pagamento
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "negociacao_idnegociacao")
     private String idNegociacao;
     private double valorPago;
