@@ -15,6 +15,7 @@ import com.labweb.agrodoa_backend.dto.local.EstadoDTO;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
 
+
 @RestController
 @RequestMapping("/estados")
 public class LocalController {
@@ -24,6 +25,7 @@ public class LocalController {
     @Autowired
     CidadeRepository cidadeRepo;
 
+    @GetMapping
     public ResponseEntity<List<EstadoDTO>> listarEstados() {
         List<EstadoDTO> estados = estadoRepo.findAll()
         .stream()
