@@ -61,6 +61,9 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
+            //endpoints adm
+            .requestMatchers(HttpMethod.PUT, "/usuarios/*/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+
             .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session

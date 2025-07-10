@@ -32,9 +32,10 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
+    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo, String situacao){
         Specification<Usuario> spec = Specification
-                                                .where(UsuarioSpecification.filtrarPorTipo(tipo));
+                                                .where(UsuarioSpecification.filtrarPorTipo(tipo))
+                                                .and(UsuarioSpecification.filtrarPorSituacao(situacao));
 
         return userRepo.findAll(spec)
                        .stream()

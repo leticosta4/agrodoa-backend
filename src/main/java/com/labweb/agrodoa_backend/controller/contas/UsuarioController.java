@@ -30,8 +30,11 @@ public class UsuarioController {
     private UsuarioService userService;
 
     @GetMapping
-    public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(@RequestParam(required = false) String tipo){
-        List<UsuarioRespostaDTO> usuarios = userService.buscarUsuarioFiltro(tipo);
+    public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
+        @RequestParam(required = false) String tipo,
+        @RequestParam(required = false) String situacao){
+
+        List<UsuarioRespostaDTO> usuarios = userService.buscarUsuarioFiltro(tipo, situacao);
         if(usuarios.isEmpty()){
              return ResponseEntity.noContent().build();
         }
@@ -44,8 +47,8 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }   
 
-    @DeleteMapping({"/{idUser}/apagar_conta"})
-    public ResponseEntity<Void> apagarContaUser(@PathVariable String idUser) {  //deveria ter apagar? ou só desativar?
+    @DeleteMapping({"/{idUser}/desativar_conta"})
+    public ResponseEntity<Void> desativarContaUser(@PathVariable String idUser) {  //deveria ter apagar? ou só desativar?
         userService.apagarPerfilUser(idUser);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
     } 

@@ -90,3 +90,8 @@ update conta set nome = 'Alizon Anjos' where idconta = 'CON0010';
 --os nomes dos tipos de user estavam errados no banco
 update tipo set nome = 'beneficiario' where idtipo = 'TIP0001';
 update tipo set nome = 'hibrido' where idtipo = 'TIP0003';
+
+
+--nova coluna na tabela usuatio pq vamos desativar a conta dele
+alter table usuario add column situacao varchar(7) not null;
+update usuario set situacao = 'ATIVO';
