@@ -6,6 +6,7 @@ import java.util.List;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,8 +23,12 @@ import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
+import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.service.AnuncioService;
+import com.labweb.agrodoa_backend.service.ProdutoService;
+import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
 import jakarta.validation.Valid;
 
@@ -39,6 +44,12 @@ public class AnuncioController {
 
     @Autowired
     private AnuncioService anuncioService;
+
+    @Autowired
+    private ContaDetailsService contaService;
+
+    @Autowired
+    private ProdutoService produtoService;
 
 
     @GetMapping("/usuario/{idUsuario}")
@@ -79,24 +90,29 @@ public class AnuncioController {
 
 
 
-    @PostMapping("/criar_anuncio/{idUsuario}")
-    // public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
-    // String emailAnunciante = userDetails.getUsername(); 
-    // Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, emailAnunciante);
-    public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@PathVariable String idUsuario, @Valid @RequestBody AnuncioDTO anuncioDTO) {
+    @PostMapping("/criar_anuncio")
+    public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        
+        String idAnunciante = contaService.findIdByEmail(userDetails.getUsername());
+        Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, idAnunciante);
 
-        Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, idUsuario);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{idAnuncio}")
-                .buildAndExpand(anuncioSalvo.getIdAnuncio())
-                .toUri();
+                .buildAndExpand(anuncioSalvo.getIdAnuncio()).toUri();
 
         AnuncioRespostaDTO respostaDTO = new AnuncioRespostaDTO(anuncioSalvo);
 
         return ResponseEntity.created(location).body(respostaDTO);
     }
+
+    @PostMapping("/criar_anuncio/criar_produto")
+    public ResponseEntity<ProdutoRespostaDTO> criarProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
+
+        ProdutoRespostaDTO resposta = produtoService.criarProduto(produtoDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
+    }
+    
 
 
 

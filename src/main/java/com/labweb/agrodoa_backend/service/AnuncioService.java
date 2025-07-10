@@ -73,11 +73,6 @@ public class AnuncioService {
     }
 
     @Transactional
-    // public Anuncio criarAnuncio(AnuncioDTO dto, String emailAnunciante) {
-
-    //     String idAnunciante = contaRepo.findByEmail(emailAnunciante)
-    //             .orElseThrow(() -> new EntityNotFoundException("Usuário anunciante não encontrado."))
-    //             .getIdConta();
     public Anuncio criarAnuncio(AnuncioDTO dto, String idAnunciante) {
 
         Cidade cidade = cidadeRepo.findById(dto.getCidadeId())

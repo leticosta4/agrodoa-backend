@@ -50,6 +50,7 @@ public class SecurityConfig {
                             "/anuncios",
                             "/anuncios/*",
                             "/error",
+                            "/anuncios/criar_anuncio/criar_produto",
 
                             "/v3/api-docs/**",
                             "/v3/api-docs/swagger-config",
