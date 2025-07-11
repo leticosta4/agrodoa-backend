@@ -35,8 +35,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping("/anuncios")
 public class AnuncioController {
@@ -109,7 +107,7 @@ public class AnuncioController {
 
         ProdutoRespostaDTO resposta = produtoService.criarProduto(produtoDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resposta); //talvez retornar o id do produto para podermos usar no /criar_anuncio
     }
     
 

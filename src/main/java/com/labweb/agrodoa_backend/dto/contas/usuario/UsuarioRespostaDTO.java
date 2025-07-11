@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UsuarioRespostaDTO { 
+    //talvez add o id aqui
     private String nome;
     private String email;
     String cpfOuCnpj;
