@@ -9,7 +9,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.labweb.agrodoa_backend.config.JwtUtil;
+import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
@@ -36,6 +39,9 @@ public class UsuarioController {
 
     @Autowired
     private ContaDetailsService contaService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
@@ -68,8 +74,12 @@ public class UsuarioController {
     } 
 
     @PostMapping({"/cadastrar_usuario"})
-    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
+    public ResponseEntity<LoginRespostaDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
         Usuario userSalvo = userService.cadastrarUsuario(userDTO);
+        String token = jwtUtil.geraToken(userSalvo.getEmail());
+
+        UsuarioLoginDTO usuarioDados = new UsuarioLoginDTO(userSalvo);
+        LoginRespostaDTO respostaLogin = new LoginRespostaDTO(token, usuarioDados);
 
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
@@ -77,7 +87,7 @@ public class UsuarioController {
             .buildAndExpand(userSalvo.getIdConta())
             .toUri();
 
-        return ResponseEntity.created(location).body(new UsuarioDTO(userSalvo));
+        return ResponseEntity.created(location).body(respostaLogin);
     }
 
     //reativar_conta
