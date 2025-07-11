@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -54,9 +55,8 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }   
 
-    @PatchMapping({"/desativar_conta"})  //MUDAR
+    @PatchMapping({"/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){
-        // String emailUsuario = userDetails.getUsername(); 
         String idUser = contaService.findIdByEmail(userDetails.getUsername());
 
         boolean inativo = userService.alterarSituacao(idUser, SituacaoUsuario.INATIVO);
@@ -66,7 +66,7 @@ public class UsuarioController {
         }
         return ResponseEntity.notFound().build(); //404 - acho que não precisa
     } 
-    
+
     @PostMapping({"/cadastrar_usuario"})
     public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
         Usuario userSalvo = userService.cadastrarUsuario(userDTO);
@@ -80,6 +80,7 @@ public class UsuarioController {
         return ResponseEntity.created(location).body(new UsuarioDTO(userSalvo));
     }
 
+    //reativar_conta
     //editar
     //bloquear conta usuario >> para os ADMs
     //notificar usuario?

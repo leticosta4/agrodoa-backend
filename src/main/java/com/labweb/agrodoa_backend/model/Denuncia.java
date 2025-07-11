@@ -22,10 +22,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Denuncia {
     @Id
-    
     @Column(name = "iddenuncia")
     private String idDenuncia;
-    //adicionar o enum do status da denuncia
 
     @ManyToOne
     @JoinColumn(name = "motivo_idmotivo")
