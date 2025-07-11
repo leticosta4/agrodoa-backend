@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.model.relacoes.DoacaoCausa;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
@@ -15,6 +16,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -69,6 +72,10 @@ public class Usuario extends Conta{
     @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RelacaoBeneficiario> relacoesAnuncio = new ArrayList<>(); //caso seja beneficiario ou hibrido
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "situacao")
+    private SituacaoUsuario situacaoUser;
+
     public Usuario(String nome, String email, String senha, String cpfOuCnpj, String nomeArquivoFoto, String telefone, Cidade cidade, Tipo tipoUsuario) {
         super(nome, email, senha);
         this.cpfOuCnpj = cpfOuCnpj;
@@ -76,6 +83,7 @@ public class Usuario extends Conta{
         this.telefone = telefone;
         this.cidade = cidade;
         this.tipoUsuario = tipoUsuario;
+        this.situacaoUser = SituacaoUsuario.ATIVO; //valor padrão
     }
 
     @Override
@@ -84,7 +92,7 @@ public class Usuario extends Conta{
             return List.of("ROLE_USER");
         }
 
-        switch (this.tipoUsuario.getNome()) {
+        switch (this.tipoUsuario.getNome().toLowerCase()) {
             case "fornecedor":
                 return List.of("ROLE_FORNECEDOR");
             case "beneficiario":

@@ -24,14 +24,14 @@ INSERT INTO labweb_project.tipo (idtipo, nome) VALUES
 ('TIP0002', 'fornecedor'),
 ('TIP0003', 'hibrido');
 
-INSERT INTO labweb_project.usuario (conta_idconta, cpf_ou_cnpj, nome_arquivo_foto, telefone, cidade_idcidade, tipo_idtipo) VALUES
-('CON0004', '12345678909', 'foto_sophia.png', '71997172280', 'CID0001', 'TIP0001'),
-('CON0005', '98765432100', 'foto_brunna.png', '71997456739', 'CID0001', 'TIP0001'),
-('CON0006', '11122233396', 'foto_kaik.png', '71987664532', 'CID0002', 'TIP0001'),
-('CON0010', '55544477735', 'foto_rafael.png', '7199443567', 'CID0003','TIP0003'),
-('CON0007', '12345678000195', 'foto_fornecedora1.png', '71912345678', 'CID0001', 'TIP0002'),
-('CON0008', '98765432000146', 'foto_fornecedora2.png', '21987654321', 'CID0004', 'TIP0002'),
-('CON0009', '55444333000122', 'foto_aliimentos.png', '2134567890', 'CID0005', 'TIP0002');
+INSERT INTO labweb_project.usuario (conta_idconta, cpf_ou_cnpj, nome_arquivo_foto, telefone, cidade_idcidade, tipo_idtipo, situacao) VALUES
+('CON0004', '12345678909', 'foto_sophia.png', '71997172280', 'CID0001', 'TIP0001', 'ATIVO'),
+('CON0005', '98765432100', 'foto_brunna.png', '71997456739', 'CID0001', 'TIP0001', 'ATIVO'),
+('CON0006', '11122233396', 'foto_kaik.png', '71987664532', 'CID0002', 'TIP0001', 'ATIVO'),
+('CON0010', '55544477735', 'foto_rafael.png', '7199443567', 'CID0003','TIP0003', 'ATIVO'),
+('CON0007', '12345678000195', 'foto_fornecedora1.png', '71912345678', 'CID0001', 'TIP0002', 'ATIVO'),
+('CON0008', '98765432000146', 'foto_fornecedora2.png', '21987654321', 'CID0004', 'TIP0002', 'ATIVO'),
+('CON0009', '55444333000122', 'foto_aliimentos.png', '2134567890', 'CID0005', 'TIP0002', 'ATIVO');
 
 
 INSERT INTO labweb_project.cidade (idcidade, nome, estado_idestado) VALUES
