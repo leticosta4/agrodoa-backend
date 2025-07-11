@@ -24,6 +24,7 @@ public class LocalController {
     @Autowired
     CidadeRepository cidadeRepo;
 
+    @GetMapping
     public ResponseEntity<List<EstadoDTO>> listarEstados() {
         List<EstadoDTO> estados = estadoRepo.findAll()
         .stream()
