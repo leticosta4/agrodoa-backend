@@ -40,7 +40,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
             //endpoints publicos
-            .requestMatchers("/anuncios/criar_anuncio/criar_produto").permitAll()
             .requestMatchers(
                 "/auth/login",
                             "/administradores",
@@ -49,9 +48,8 @@ public class SecurityConfig {
                             "/usuarios/cadastrar_usuario",
                             "/usuarios/ver_perfil/**",
                             "/anuncios",
-                            // "/anuncios/*",
+                            //"/anuncios/*",
                             "/error",
-                            // "/anuncios/criar_anuncio/criar_produto",
 
                             "/v3/api-docs/**",
                             "/v3/api-docs/swagger-config",
@@ -67,7 +65,9 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PATCH, "/usuarios/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
             //endpoints fornecedor
-            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio").hasAnyRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.PUT, "/anuncios/{idAnuncio}/editar").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.PATCH, "/anuncios//{idAnuncio}/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
 
             .anyRequest().authenticated()
             )

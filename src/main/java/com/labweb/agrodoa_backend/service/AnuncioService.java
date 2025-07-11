@@ -123,7 +123,7 @@ public class AnuncioService {
         Anuncio anuncio = anuncioRepo.findById(idAnuncio)
             .orElseThrow(() -> new EntityNotFoundException("Anúncio não encontrado com o ID: " + idAnuncio));
         
-        anuncio.setStatus(StatusAnuncio.FINALIZADO); //talvez colocar um novo status de cancelado
+        anuncio.setStatus(StatusAnuncio.CANCELADO); //talvez colocar um novo status de cancelado
         anuncioRepo.save(anuncio);
     }
 }

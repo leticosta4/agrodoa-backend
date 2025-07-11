@@ -52,7 +52,7 @@ public class AnuncioController {
     private ProdutoService produtoService;
 
 
-    @GetMapping("/usuario/{idUsuario}")
+    @GetMapping("/usuario/{idUsuario}") // Mudar nome, diferença entre meus anuncios e anuncios de um outro usuario
     public ResponseEntity<List<AnuncioRespostaDTO>> buscarAnuncioPorUsuario(
         @PathVariable String idUsuario,
         @ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
@@ -113,9 +113,6 @@ public class AnuncioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
     
-
-
-
 
     @PutMapping("/{idAnuncio}/editar")
     public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {
