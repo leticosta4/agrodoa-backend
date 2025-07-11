@@ -40,6 +40,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
             //endpoints publicos
+            .requestMatchers("/anuncios/criar_anuncio/criar_produto").permitAll()
             .requestMatchers(
                 "/auth/login",
                             "/administradores",
@@ -48,9 +49,9 @@ public class SecurityConfig {
                             "/usuarios/cadastrar_usuario",
                             "/usuarios/ver_perfil/**",
                             "/anuncios",
-                            "/anuncios/*",
+                            // "/anuncios/*",
                             "/error",
-                            "/anuncios/criar_anuncio/criar_produto",
+                            // "/anuncios/criar_anuncio/criar_produto",
 
                             "/v3/api-docs/**",
                             "/v3/api-docs/swagger-config",
