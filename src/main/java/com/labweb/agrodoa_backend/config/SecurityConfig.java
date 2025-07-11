@@ -48,7 +48,9 @@ public class SecurityConfig {
                             "/anuncios/**",
                             "/administradores",
                             "/causas",
-                            "/causas/{idCausa}",
+                            "/causas/*",
+                            "/estados",
+                            "/estados/*/cidades",
                             "/error",
 
                             "/v3/api-docs/**",

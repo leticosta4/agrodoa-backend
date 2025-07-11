@@ -32,30 +32,35 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
         Pageable paginacao = PageRequest.of(0, tamLote);
         Page<Usuario> paginaUsers;
 
+        String assunto = "Uma nova causa precisa da sua ajuda: " + causaCriada.getNome();
+        String corpoTemplate = "Olá, %s!\n\n" +
+                "Uma nova causa foi cadastrada em nossa plataforma e pode ser do seu interesse.\n\n" +
+                "Nome da Causa: %s\n" +
+                "Descrição: %s\n" +
+                "Meta: R$ %.2f\n" +
+                "Prazo Final para Doações: %s\n\n" +
+                "Sua ajuda pode fazer a diferença! Acesse nosso site para saber mais.\n\n" +
+                "Atenciosamente,\nEquipe Agrodoa.";
+
         do {
             paginaUsers = userRepo.findAll(paginacao);
 
             if(!paginaUsers.hasContent()){ break; }
 
-            informes(paginaUsers, paginacao);
-
-            //preparando o conteúdo para o email
-            String assunto = "Uma nova causa precisa da sua ajuda: " + causaCriada.getNome();
-            String corpo = String.format(
-                "Olá, %s!\n\nUma nova causa foi cadastrada em nossa plataforma e pode ser do seu interesse.\n\n" +
-                "Nome: %s\n" +
-                "Descrição: %s\n",
-                "Prazo final para doações: %s\n\n" +
-                "Sua ajuda pode fazer a diferença! Acesse nosso site para saber mais.\n\n" +
-                "Atenciosamente,\nEquipe Agrodoa.",
-                causaCriada.getNome(),
-                causaCriada.getMeta(),
-                causaCriada.getPrazo().format(FORMATADOR_DATA)
-            );
+            informes(paginaUsers, paginacao);            
 
             //enviando a todos 
             for(Usuario user: paginaUsers.getContent()){
-                String corpoPersonalizado = String.format(corpo, user.getNome());
+                String corpoPersonalizado = String.format(
+                        corpoTemplate, 
+                        user.getNome(),
+                        causaCriada.getNome(),
+                        causaCriada.getDescricao(),
+                        causaCriada.getMeta(),
+                        causaCriada.getPrazo().format(FORMATADOR_DATA)
+                );
+
+
                 emailService.enviarEmail(user.getEmail(), assunto, corpoPersonalizado);
                 System.out.println("\n\nE-mail de notificação enviado para: " + user.getEmail() + "\n\n");
             }
