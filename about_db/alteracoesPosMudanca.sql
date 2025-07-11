@@ -83,10 +83,15 @@ update conta set email = 'kaikcpereira@gmail.com' where idconta = 'CON0006';
 update conta set email = 'leti.almeida0221@gmail.com' where idconta = 'CON0007';
 update conta set email = 'melcostaoa@gmail.com' where idconta = 'CON0008';
 update conta set email = 'alyssonoliveira4567@gmail.com' where idconta = 'CON0009';
-update conta set email = 'alyssonoliveira4568@gmail.com' where idconta = 'CON0010';
+update conta set email = 'alyssonoliveira45678@gmail.com' where idconta = 'CON0010';
 update conta set nome = 'Alizon Anjos' where idconta = 'CON0010';
 
 
 --os nomes dos tipos de user estavam errados no banco
 update tipo set nome = 'beneficiario' where idtipo = 'TIP0001';
 update tipo set nome = 'hibrido' where idtipo = 'TIP0003';
+
+
+--nova coluna na tabela usuatio pq vamos desativar a conta dele
+alter table usuario add column situacao varchar(7) not null;
+update usuario set situacao = 'ATIVO';

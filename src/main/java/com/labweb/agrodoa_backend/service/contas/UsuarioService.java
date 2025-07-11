@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.service.contas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,6 +15,7 @@ import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
+import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
@@ -32,9 +34,10 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo){
+    public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo, String situacao){
         Specification<Usuario> spec = Specification
-                                                .where(UsuarioSpecification.filtrarPorTipo(tipo));
+                                                .where(UsuarioSpecification.filtrarPorTipo(tipo))
+                                                .and(UsuarioSpecification.filtrarPorSituacao(situacao));
 
         return userRepo.findAll(spec)
                        .stream()
@@ -64,21 +67,28 @@ public class UsuarioService {
         return usersResposta;
     }
 
-    public UsuarioRespostaDTO acessarUsuarioPorId(String userId){ //ver ainda como fazer a validação pra quando o usuario tiver na conta dele ou vendo outro perfil
-        Usuario user = userRepo.findUsuarioByIdConta(userId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "\n\n\nUsuário não encontrado com o ID: " + userId + "!\n\n"));
+    public UsuarioRespostaDTO acessarUsuarioPorId(String idUser){ //ver ainda como fazer a validação pra quando o usuario tiver na conta dele ou vendo outro perfil
+        Usuario user = userRepo.findUsuarioByIdConta(idUser)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "\n\n\nUsuário não encontrado com o ID: " + idUser + "!\n\n"));
 
         return new UsuarioRespostaDTO(user);
     }
 
-    public void apagarPerfilUser(String userId){
-        userRepo.findUsuarioByIdConta(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "\n\n\nUsuário não encontrado com o ID: " + userId + "!\n\n"));
+    public boolean alterarSituacao(String idUser, SituacaoUsuario novaSituacao){
+        Optional<Usuario> user = userRepo.findUsuarioByIdConta(idUser);
+        if (user.isEmpty()) { return false; }
+    
+        Usuario usuario = user.get();
+        usuario.setSituacaoUser(novaSituacao);
 
-        userRepo.removeByIdConta(userId);
+        if(novaSituacao == SituacaoUsuario.BANIDO){ /*enviar email para o usuario em questão sobre banimento por 3 alertas e motivos descritos */}
+
+        userRepo.save(usuario);
+        return true;
     }
+    
 
-    public void editarPerfilUser(String userId){
+    public void editarPerfilUser(String idUser){
         //...
     }
 
@@ -104,6 +114,7 @@ public class UsuarioService {
         tempUser.setNomeArquivoFoto(userDTO.getNomeArquivoFoto());
         tempUser.setCidade(cidade);
         tempUser.setTipoUsuario(tipoUsuario);
+        tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
 
         return userRepo.save(tempUser);
     }

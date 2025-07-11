@@ -19,4 +19,8 @@ public class ContaDetailsService implements UserDetailsService{
         return contaRepo.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("\nConta não encontrada com o email:" + email + "!\n\n"));
     }
+
+    public String findIdByEmail(String userEmail){
+        return contaRepo.findIdContaByEmail(userEmail);
+    }
 }

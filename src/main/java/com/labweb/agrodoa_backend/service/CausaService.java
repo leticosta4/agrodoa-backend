@@ -6,10 +6,11 @@ import com.labweb.agrodoa_backend.observer.CausaCriadaEvent;
 import com.labweb.agrodoa_backend.repository.CausaRepository;
 import com.labweb.agrodoa_backend.specification.CausaSpecification;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class CausaService {
     @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
 
     @Transactional(readOnly = true)
-    public Page<CausaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax, Pageable pageable) {
+    public List<CausaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) {
         Specification<Causa> spec = Specification.where(null);
 
         if (nome != null && !nome.isEmpty()) {
@@ -37,9 +38,9 @@ public class CausaService {
             spec = spec.and(CausaSpecification.filtrarPorMetaMax(metaMax));
         }
 
-        Page<Causa> paginaDeCausas = causaRepo.findAll(spec, pageable);
+        List<Causa> causas = causaRepo.findAll(spec);
 
-        return paginaDeCausas.map(CausaDTO::new); 
+        return causas.stream().map(CausaDTO::new).collect(Collectors.toList()); 
     }
 
     @Transactional(readOnly = true)

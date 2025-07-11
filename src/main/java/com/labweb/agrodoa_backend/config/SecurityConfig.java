@@ -42,15 +42,16 @@ public class SecurityConfig {
             //endpoints publicos
             .requestMatchers(
                 "/auth/login",
-                            "/usuarios/cadastrar_usuario",
-                            "/usuarios/ver_perfil/**",
-                            "/anuncios",
-                            "/anuncios/**",
                             "/administradores",
                             "/causas",
                             "/causas/*",
                             "/estados",
                             "/estados/*/cidades",
+                            "/usuarios/cadastrar_usuario",
+                            "/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar
+                            "/usuarios/ver_perfil/*",
+                            "/anuncios",
+                            //"/anuncios/*",  //NAO FUNCIONA AINDA
                             "/error",
 
                             "/v3/api-docs/**",
@@ -60,8 +61,16 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+
+            //endpoints user geral
+            .requestMatchers(HttpMethod.PATCH, "/usuarios/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+
+            //endpoints fornecedor
+            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
 
             .anyRequest().authenticated()
             )
