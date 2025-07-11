@@ -26,7 +26,7 @@ public class JwtUtil {  //gera e valida os toens de segurança
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + tempoExpiracao)) // 1h
+                .setExpiration(new Date(System.currentTimeMillis() + tempoExpiracao)) //2hrs => 7200000
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

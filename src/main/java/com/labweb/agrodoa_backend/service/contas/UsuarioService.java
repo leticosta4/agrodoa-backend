@@ -114,6 +114,7 @@ public class UsuarioService {
         tempUser.setNomeArquivoFoto(userDTO.getNomeArquivoFoto());
         tempUser.setCidade(cidade);
         tempUser.setTipoUsuario(tipoUsuario);
+        tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
 
         return userRepo.save(tempUser);
     }

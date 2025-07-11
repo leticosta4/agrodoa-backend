@@ -19,7 +19,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RequisicaoTrocaTipo {
     @Id
-    
     @Column(name = "idrequisicao")
     private String idRequisicaoTrocaTipo; 
 

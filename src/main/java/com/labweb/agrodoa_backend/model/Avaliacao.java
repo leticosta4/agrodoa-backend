@@ -19,7 +19,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Avaliacao {
     @Id
-    
     @Column(name = "idavaliacao")
     private String idAvaliacao;
 

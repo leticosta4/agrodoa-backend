@@ -17,7 +17,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Cidade {
     @Id
-    
     @Column(name = "idcidade")
     private String idCidade;
 

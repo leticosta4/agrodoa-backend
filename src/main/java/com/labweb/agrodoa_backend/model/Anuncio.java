@@ -32,7 +32,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Anuncio {
     @Id
-    
     @Column(name = "idanuncio")
     private String idAnuncio;
     
@@ -50,7 +49,7 @@ public class Anuncio {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private StatusAnuncio status; //para criar/atribuir StatusAnuncio.ATIVO ; 
+    private StatusAnuncio status;
     /*
      Anuncio anuncio = anuncioRepository.findById(1L).orElseThrow();
     System.out.println(anuncio.getStatus()); // Saída: ATIVO
@@ -83,7 +82,7 @@ public class Anuncio {
 
     //lista de beneficiarios?
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RelacaoBeneficiario> relacoes = new ArrayList<>();   //ver o momento da inicializaçao
+    private List<RelacaoBeneficiario> relacoes = new ArrayList<>();
 
     /*na hora de filtrar fazer algo tipo:
 
@@ -104,7 +103,7 @@ public class Anuncio {
         this.anunciante = anunciante;
         this.produto = produto;
         //valores padrao
-        this.status = StatusAnuncio.ATIVO; //ver como fazer associação com letra para armazenar no banco
+        this.status = StatusAnuncio.ATIVO;
         this.dataExpiracao = this.produto.getDataValidade();
     }
 }
