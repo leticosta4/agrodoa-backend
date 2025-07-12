@@ -14,6 +14,7 @@ import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
@@ -57,11 +58,24 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
+ 
     @GetMapping({"/ver_perfil/{idUser}"})
-    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
+    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) {
+
         UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
         return ResponseEntity.ok(usuario);
-    }   
+    }
+
+    @GetMapping("/meu_perfil")
+    public ResponseEntity<UsuarioRespostaDTO> exibirMeuPerfil(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
+
+        UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUsuario);
+
+        return ResponseEntity.ok(usuario);
+    }
+
 
     @PatchMapping({"/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){

@@ -18,7 +18,7 @@ public class ProdutoService {
     @Autowired private ContaRepository contaRepo;
 
     @Transactional
-    public ProdutoRespostaDTO criarProduto(ProdutoDTO dto) {
+    public Produto criarProduto(ProdutoDTO dto) {
         String novoId = GeradorIdCustom.gerarIdComPrefixo("PRO", produtoRepo, "idProduto");
 
         Produto produto = dto.transformaParaObjeto();
@@ -26,6 +26,6 @@ public class ProdutoService {
 
         Produto produtoSalvo = produtoRepo.save(produto);
 
-        return new ProdutoRespostaDTO(produtoSalvo);
+        return produtoSalvo;
     }
 }

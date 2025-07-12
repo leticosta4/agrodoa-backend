@@ -25,6 +25,7 @@ import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.service.AnuncioService;
 import com.labweb.agrodoa_backend.service.ProdutoService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
@@ -48,24 +49,6 @@ public class AnuncioController {
     @Autowired
     private ProdutoService produtoService;
 
-
-    @GetMapping("/usuario/{idUsuario}") // Mudar nome, diferença entre meus anuncios e anuncios de um outro usuario
-    public ResponseEntity<List<AnuncioRespostaDTO>> buscarAnuncioPorUsuario(
-        @PathVariable String idUsuario,
-        @ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
-
-
-        AnuncioFiltroUsuarioDTO filtroComUsuario = new AnuncioFiltroUsuarioDTO();
-        BeanUtils.copyProperties(filtro, filtroComUsuario);
-        filtroComUsuario.setIdAnunciante(idUsuario);
-        
-        List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnunciosFiltroUsuario(filtroComUsuario);
-        if(anuncios.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(anuncios);
-
-    }
     @GetMapping
     public ResponseEntity<List<AnuncioRespostaDTO>> listarAnunciosFiltro(@ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
         List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnunciosFiltro(filtro);
@@ -85,7 +68,7 @@ public class AnuncioController {
                          .orElse(ResponseEntity.notFound().build());
     }
 
-
+    // Metodos CRUD
 
     @PostMapping("/criar_anuncio")
     public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
@@ -105,9 +88,15 @@ public class AnuncioController {
     @PostMapping("/criar_anuncio/criar_produto")
     public ResponseEntity<ProdutoRespostaDTO> criarProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
 
-        ProdutoRespostaDTO resposta = produtoService.criarProduto(produtoDTO);
+        Produto resposta = produtoService.criarProduto(produtoDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resposta); //talvez retornar o id do produto para podermos usar no /criar_anuncio
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{idProduto}")
+                    .buildAndExpand(resposta.getIdProduto()).toUri();
+
+        ProdutoRespostaDTO respostaDTO = new ProdutoRespostaDTO(resposta);
+
+        return ResponseEntity.created(location).body(respostaDTO); //talvez retornar o id do produto para podermos usar no /criar_anuncio
     }
     
 
@@ -122,5 +111,4 @@ public class AnuncioController {
         anuncioService.cancelarAnuncio(idAnuncio);
         return ResponseEntity.noContent().build();
     }
-    
 }
