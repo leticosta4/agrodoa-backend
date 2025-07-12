@@ -4,9 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,16 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
-import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Produto;
+import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.service.AnuncioService;
 import com.labweb.agrodoa_backend.service.ProdutoService;
+import com.labweb.agrodoa_backend.service.RelacaoBeneficiarioService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
 import jakarta.validation.Valid;
@@ -40,14 +40,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/anuncios")
 public class AnuncioController {
 
-    @Autowired
-    private AnuncioService anuncioService;
-
-    @Autowired
-    private ContaDetailsService contaService;
-
-    @Autowired
-    private ProdutoService produtoService;
+    @Autowired private AnuncioService anuncioService;
+    @Autowired private ContaDetailsService contaService;
+    @Autowired private ProdutoService produtoService;
+    @Autowired private RelacaoBeneficiarioService relBenefService;
 
     @GetMapping
     public ResponseEntity<List<AnuncioRespostaDTO>> listarAnunciosFiltro(@ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
@@ -66,6 +62,22 @@ public class AnuncioController {
        return anuncioService.buscarAnuncioPorId(idAnuncio)
                          .map(ResponseEntity::ok)
                          .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{idAnuncio}/salvar")
+    public ResponseEntity<RelacaoBeneficiarioDTO> salvarAnuncio(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
+        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+        RelacaoBeneficiarioDTO salvou = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.SALVOU);
+
+       return ResponseEntity.ok(salvou);
+    }
+
+    @PostMapping("/{idAnuncio}/inicar_negociacao") //ainda falta desenvolver
+    public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
+        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+        RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO);
+
+       return ResponseEntity.ok(negociacaoIniciada);
     }
 
     // Metodos CRUD
@@ -100,6 +112,7 @@ public class AnuncioController {
     }
     
 
+    //isso aqui tem que ser restrito ao user que tá logado 
     @PutMapping("/{idAnuncio}/editar")
     public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {
         AnuncioRespostaDTO anuncioAtualizado = anuncioService.editarAnuncio(idAnuncio, anuncioDTO);
