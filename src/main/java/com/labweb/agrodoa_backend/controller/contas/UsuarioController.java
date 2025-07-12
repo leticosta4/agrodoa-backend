@@ -1,7 +1,9 @@
 package com.labweb.agrodoa_backend.controller.contas;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.service.DenunciaService;
+import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
@@ -91,13 +94,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/meu_perfil") 
-    public ResponseEntity<UsuarioRespostaDTO> exibirMeuPerfil(@AuthenticationPrincipal UserDetails userDetails) {
+        public ResponseEntity<UsuarioLoginDTO> exibirMeuPerfil(Principal principal) {
+            String emailUsuario = principal.getName();
+            UsuarioLoginDTO responseDTO = userService.logarComToken(emailUsuario);
 
-        String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
-
-        UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUsuario);
-
-        return ResponseEntity.ok(usuario);
+        return ResponseEntity.ok(responseDTO);
     }
 
 

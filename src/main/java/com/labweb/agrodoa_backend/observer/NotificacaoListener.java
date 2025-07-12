@@ -12,7 +12,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.labweb.agrodoa_backend.model.Causa;
+import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
+import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.service.EmailService;
 
@@ -21,6 +23,7 @@ import com.labweb.agrodoa_backend.service.EmailService;
 public class NotificacaoListener { //depois remodelar provavelmente ja q vão ter outros tipos de notificacao
     @Autowired private EmailService emailService;
     @Autowired private UsuarioRepository userRepo;
+    @Autowired private ContaRepository contaRepo;
 
     private static final DateTimeFormatter FORMATADOR_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -68,6 +71,32 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
         }while(paginaUsers.hasNext());
 
         System.out.println("Envio de notificações para usuários concluído.");
+    }
+
+    @Async
+    @EventListener
+    public void aoAprovarDenuncia(DenunciaAprovadaEvent evento) {
+        System.out.println("Iniciando processo de notificação para denúncia aprovada...");
+
+        Denuncia denunciaAprovada = evento.getDenuncia();
+        Usuario usuarioDenunciado = denunciaAprovada.getDenunciado();
+
+        String assunto = "Aviso: Uma denúncia contra você foi aprovada";
+        String corpo = String.format(
+            "Olá, %s.\n\n" +
+            "Informamos que uma denúncia registrada contra você em nossa plataforma foi analisada e aprovada por nossa equipe de moderação.\n\n" +
+            "Motivo da Denúncia: %s\n\n" +
+            "Ações cabíveis poderão ser tomadas de acordo com nossos termos de serviço.\n\n" +
+            "Atenciosamente,\nEquipe Agrodoa.",
+            usuarioDenunciado.getNome(),
+            denunciaAprovada.getMotivo().getNome()
+        );
+
+        String emailDenunciado = contaRepo.findEmailByIdConta(usuarioDenunciado.getIdConta());
+
+        emailService.enviarEmail(emailDenunciado, assunto, corpo);
+
+        System.out.printf("\n\nE-mail de notificação de denúncia aprovada enviado para: %s\n\n", emailDenunciado);
     }
 
     private void informes(Page<Usuario> intermedPage, Pageable paginacao){

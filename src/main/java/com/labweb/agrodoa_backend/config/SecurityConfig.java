@@ -63,9 +63,10 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
-
+            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+            
+            .requestMatchers(HttpMethod.POST, "/denuncias/*/avaliar").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")

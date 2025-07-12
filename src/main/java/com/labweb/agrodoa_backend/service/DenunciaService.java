@@ -1,11 +1,20 @@
 package com.labweb.agrodoa_backend.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import com.labweb.agrodoa_backend.dto.denuncia.AvaliacaoDenunciaDTO;
+import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRespostaDTO;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Motivo;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
+import com.labweb.agrodoa_backend.model.enums.StatusDenuncia;
+import com.labweb.agrodoa_backend.observer.CausaCriadaEvent;
+import com.labweb.agrodoa_backend.observer.DenunciaAprovadaEvent;
 import com.labweb.agrodoa_backend.repository.DenunciaRepository;
 import com.labweb.agrodoa_backend.repository.MotivoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
@@ -24,6 +33,17 @@ public class DenunciaService {
 
     @Autowired
     private MotivoRepository motivoRepository;
+
+    @Autowired 
+    private ApplicationEventPublisher eventPublisher;
+
+
+    public List<DenunciaRespostaDTO> listarTodas() {
+
+        List<Denuncia> denuncias = denunciaRepository.findAll();
+
+        return denuncias.stream().map(DenunciaRespostaDTO::new).collect(Collectors.toList());
+    }
     
     @Transactional
     public void criarDenuncia(String idDenunciante, String idDenunciado, String nomeMotivo) {
@@ -43,5 +63,21 @@ public class DenunciaService {
         novaDenuncia.setIdDenuncia(novoIdDenuncia);
 
         denunciaRepository.saveAndFlush(novaDenuncia);
+    }
+
+    @Transactional
+    public void avaliarDenuncia(String idDenuncia, AvaliacaoDenunciaDTO avaliacaoDTO) {
+        Denuncia denuncia = denunciaRepository.findById(idDenuncia)
+                .orElseThrow(() -> new EntityNotFoundException("Denúncia não encontrada com o ID: " + idDenuncia));
+
+        StatusDenuncia novoStatus = StatusDenuncia.valueOf(avaliacaoDTO.getStatus().toUpperCase());
+        denuncia.setStatus(novoStatus);
+
+        denunciaRepository.save(denuncia);
+
+        // Verifica se a denúncia foi aprovada para então notificar o usuário
+        if (novoStatus == StatusDenuncia.APROVADA) {
+        //     eventPublisher.publishEvent(new DenunciaAprovadaEvent(denuncia));
+        }
     }
 }
