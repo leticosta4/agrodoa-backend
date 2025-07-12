@@ -14,7 +14,6 @@ import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
-import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
@@ -106,7 +105,7 @@ public class UsuarioController {
         return ResponseEntity.created(location).body(respostaLogin);
     }
 
-    @PutMapping("/editar")
+    @PutMapping("/meu_perfil/editar")
     public ResponseEntity<UsuarioRespostaDTO> editarUsuario(@RequestBody @Valid UsuarioDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
         String idUser = contaService.findIdByEmail(userDetails.getUsername());
         UsuarioRespostaDTO userAtualizado = userService.editarPerfilUser(idUser, userDTO);
@@ -114,7 +113,7 @@ public class UsuarioController {
         return ResponseEntity.ok(userAtualizado);
     }
 
-    //reativar_conta
+    //reativar_conta >> se der tempo
     //bloquear conta usuario >> para os ADMs
     //notificar usuario?
 }
