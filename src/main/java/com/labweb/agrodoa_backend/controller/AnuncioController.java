@@ -4,9 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,15 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
-import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Produto;
+import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.service.AnuncioService;
 import com.labweb.agrodoa_backend.service.ProdutoService;
+import com.labweb.agrodoa_backend.service.RelacaoBeneficiarioService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
 import jakarta.validation.Valid;
@@ -39,33 +40,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/anuncios")
 public class AnuncioController {
 
-    @Autowired
-    private AnuncioService anuncioService;
+    @Autowired private AnuncioService anuncioService;
+    @Autowired private ContaDetailsService contaService;
+    @Autowired private ProdutoService produtoService;
+    @Autowired private RelacaoBeneficiarioService relBenefService;
 
-    @Autowired
-    private ContaDetailsService contaService;
-
-    @Autowired
-    private ProdutoService produtoService;
-
-
-    @GetMapping("/usuario/{idUsuario}") // Mudar nome, diferença entre meus anuncios e anuncios de um outro usuario
-    public ResponseEntity<List<AnuncioRespostaDTO>> buscarAnuncioPorUsuario(
-        @PathVariable String idUsuario,
-        @ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
-
-
-        AnuncioFiltroUsuarioDTO filtroComUsuario = new AnuncioFiltroUsuarioDTO();
-        BeanUtils.copyProperties(filtro, filtroComUsuario);
-        filtroComUsuario.setIdAnunciante(idUsuario);
-        
-        List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnunciosFiltroUsuario(filtroComUsuario);
-        if(anuncios.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(anuncios);
-
-    }
     @GetMapping
     public ResponseEntity<List<AnuncioRespostaDTO>> listarAnunciosFiltro(@ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
         List<AnuncioRespostaDTO> anuncios = anuncioService.buscarAnunciosFiltro(filtro);
@@ -85,7 +64,23 @@ public class AnuncioController {
                          .orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping("/{idAnuncio}/salvar")
+    public ResponseEntity<RelacaoBeneficiarioDTO> salvarAnuncio(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
+        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+        RelacaoBeneficiarioDTO salvou = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.SALVOU);
 
+       return ResponseEntity.ok(salvou);
+    }
+
+    @PostMapping("/{idAnuncio}/iniciar_negociacao") //ainda falta desenvolver
+    public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
+        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+        RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO);
+
+       return ResponseEntity.ok(negociacaoIniciada);
+    }
+
+    // Metodos CRUD
 
     @PostMapping("/criar_anuncio")
     public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
@@ -105,12 +100,19 @@ public class AnuncioController {
     @PostMapping("/criar_anuncio/criar_produto")
     public ResponseEntity<ProdutoRespostaDTO> criarProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
 
-        ProdutoRespostaDTO resposta = produtoService.criarProduto(produtoDTO);
+        Produto resposta = produtoService.criarProduto(produtoDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resposta); //talvez retornar o id do produto para podermos usar no /criar_anuncio
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{idProduto}")
+                    .buildAndExpand(resposta.getIdProduto()).toUri();
+
+        ProdutoRespostaDTO respostaDTO = new ProdutoRespostaDTO(resposta);
+
+        return ResponseEntity.created(location).body(respostaDTO); //talvez retornar o id do produto para podermos usar no /criar_anuncio
     }
     
 
+    //isso aqui tem que ser restrito ao user que tá logado 
     @PutMapping("/{idAnuncio}/editar")
     public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {
         AnuncioRespostaDTO anuncioAtualizado = anuncioService.editarAnuncio(idAnuncio, anuncioDTO);
@@ -122,5 +124,4 @@ public class AnuncioController {
         anuncioService.cancelarAnuncio(idAnuncio);
         return ResponseEntity.noContent().build();
     }
-    
 }

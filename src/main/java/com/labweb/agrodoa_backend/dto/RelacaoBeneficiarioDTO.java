@@ -5,11 +5,9 @@ import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class RelacaoBeneficiarioDTO {
     private TipoRelacaoBenef tipoRelacao;

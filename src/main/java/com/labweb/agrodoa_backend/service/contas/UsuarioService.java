@@ -23,6 +23,8 @@ import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.service.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UsuarioService {
     @Autowired
@@ -86,11 +88,7 @@ public class UsuarioService {
         userRepo.save(usuario);
         return true;
     }
-    
 
-    public void editarPerfilUser(String idUser){
-        //...
-    }
 
     public Usuario cadastrarUsuario(UsuarioDTO userDTO){
         if (!userDTO.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userDTO.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
@@ -117,5 +115,37 @@ public class UsuarioService {
         tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
 
         return userRepo.save(tempUser);
+    }
+
+
+    public UsuarioRespostaDTO editarPerfilUser(String idUser, UsuarioDTO userRecebido){
+        if (!userRecebido.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userRecebido.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Os tipos permitido para cadastro são apenas 'fornecedor' e 'beneficiario'.");
+        }
+
+        Tipo tipoUsuario = tipoRepo.findByNome(userRecebido.getTipoUsuario());
+        Cidade cidade = cidadeRepo.findByIdCidade(userRecebido.getIdCidade());
+
+        if (tipoUsuario == null || cidade == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário ou cidade inválida.");
+        }
+
+
+        Usuario tempUser = userRepo.findUsuarioByIdConta(idUser)
+        .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com o ID: " + idUser));
+
+
+        tempUser.setNome(userRecebido.getNome());
+        tempUser.setEmail(userRecebido.getEmail());
+        tempUser.setSenha(passwordEncoder.encode(userRecebido.getSenha())); //criptografa a senha aqui e ja salva o hash no banco
+        tempUser.setCpfOuCnpj(userRecebido.getCpfOuCnpj());
+        tempUser.setTelefone(userRecebido.getTelefone());
+        tempUser.setNomeArquivoFoto(userRecebido.getNomeArquivoFoto());
+        tempUser.setCidade(cidade);
+        tempUser.setTipoUsuario(tipoUsuario);
+        tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
+
+        userRepo.save(tempUser);
+        return new UsuarioRespostaDTO(tempUser);
     }
 }

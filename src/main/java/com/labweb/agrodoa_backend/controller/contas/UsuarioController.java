@@ -4,21 +4,30 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
+import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Denuncia;
+import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
+import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
+import com.labweb.agrodoa_backend.service.RelacaoBeneficiarioService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 import com.labweb.agrodoa_backend.service.contas.UsuarioService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +38,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -39,6 +50,12 @@ public class UsuarioController {
 
     @Autowired
     private ContaDetailsService contaService;
+
+    @Autowired
+    private DenunciaService denunciaService;
+
+    @Autowired
+    private RelacaoBeneficiarioService relacaoBenefService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -55,11 +72,34 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
+ 
     @GetMapping({"/ver_perfil/{idUser}"})
-    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
+    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) {
+
         UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
         return ResponseEntity.ok(usuario);
-    }   
+    }
+
+    @PostMapping("/ver_perfil/{idUser}/denunciar")
+    public ResponseEntity<?> denunciarUsuario(@PathVariable String idUser, @RequestBody DenunciaRequestDTO denunciaDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        String idDenunciante = contaService.findIdByEmail(userDetails.getUsername());
+
+        denunciaService.criarDenuncia(idDenunciante, idUser, denunciaDTO.getNomeMotivo());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/meu_perfil") 
+    public ResponseEntity<UsuarioRespostaDTO> exibirMeuPerfil(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
+
+        UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUsuario);
+
+        return ResponseEntity.ok(usuario);
+    }
+
 
     @PatchMapping({"/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){
@@ -90,8 +130,31 @@ public class UsuarioController {
         return ResponseEntity.created(location).body(respostaLogin);
     }
 
-    //reativar_conta
-    //editar
+    @PutMapping("/meu_perfil/editar")
+    public ResponseEntity<UsuarioRespostaDTO> editarUsuario(@RequestBody @Valid UsuarioDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        String idUser = contaService.findIdByEmail(userDetails.getUsername());
+        UsuarioRespostaDTO userAtualizado = userService.editarPerfilUser(idUser, userDTO);
+        
+        return ResponseEntity.ok(userAtualizado);
+    }
+    
+
+    @GetMapping("/meu_perfil/meus_salvos")
+    public ResponseEntity<List<AnuncioRespostaDTO>> meusSalvos(@AuthenticationPrincipal UserDetails userDetails) {
+        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+        List<AnuncioRespostaDTO> retorno = relacaoBenefService.exibirGrupoAnuncios(idBeneficiario, TipoRelacaoBenef.SALVOU);
+        
+        return ResponseEntity.ok(retorno);
+    }
+
+    @GetMapping("/meu_perfil/minhas_negociacoes")
+    public ResponseEntity<List<AnuncioRespostaDTO>> minhasNegociacoes(@AuthenticationPrincipal UserDetails userDetails) {
+        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+        List<AnuncioRespostaDTO> retorno =  relacaoBenefService.exibirGrupoAnuncios(idBeneficiario, TipoRelacaoBenef.NEGOCIANDO);
+        
+        return ResponseEntity.ok(retorno);
+    }
+    //reativar_conta >> se der tempo
     //bloquear conta usuario >> para os ADMs
     //notificar usuario?
 }
