@@ -36,8 +36,8 @@ public class RelacaoBeneficiarioService {
         Anuncio anuncio = anuncioRepo.findByIdAnuncio(idAnuncio)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anúncio não encontrado com ID: " + idAnuncio + "!\n"));
 
-        if(tipoRelacao == TipoRelacaoBenef.NEGOCIANDO){
-            //chamar funcao auxiliar para ver quantidade de negociantes
+        if (tipoRelacao == TipoRelacaoBenef.NEGOCIANDO && (rbRepo.countByAnuncioIdAndTipoRelacao(idAnuncio, TipoRelacaoBenef.NEGOCIANDO) == 5)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Este anúncio já atingiu o limite de 5 negociantes.");
         }
 
         Usuario beneficiario = userRepo.findUsuarioByIdConta(idBeneficiario)

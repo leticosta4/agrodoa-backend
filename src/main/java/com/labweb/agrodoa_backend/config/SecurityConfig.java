@@ -48,7 +48,7 @@ public class SecurityConfig {
                             "/estados",
                             "/estados/*/cidades",
                             "/usuarios/cadastrar_usuario",
-                            "/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar
+                            //"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo
                             "/usuarios/ver_perfil/*",
                             "/anuncios",
                             "/anuncios/*",
