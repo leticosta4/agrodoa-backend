@@ -69,7 +69,7 @@ public class SecurityConfig {
 
             //endpoints user geral
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/denunciar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")//denunciar n funciona
             .requestMatchers(HttpMethod.PATCH, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PUT, "/usuarios/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 

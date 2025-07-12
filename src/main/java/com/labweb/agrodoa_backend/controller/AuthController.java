@@ -63,7 +63,7 @@ public class AuthController {
             Map<String, String> tokenAdm = Map.of("token", token);
             
             System.out.println("\n\nLogin de ADMINISTRADOR: " + contaAutenticada.getEmail() + "\n\n");
-            return ResponseEntity.ok(tokenAdm);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(tokenAdm);
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errooo"); //so por segurança

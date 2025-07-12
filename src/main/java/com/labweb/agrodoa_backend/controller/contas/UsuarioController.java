@@ -17,10 +17,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
+import com.labweb.agrodoa_backend.service.AvaliacaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -60,6 +62,9 @@ public class UsuarioController {
     private RelacaoBeneficiarioService relacaoBenefService;
 
     @Autowired
+    private AvaliacaoService avalaicaoService;
+
+    @Autowired
     private JwtUtil jwt;
 
     @GetMapping
@@ -88,6 +93,16 @@ public class UsuarioController {
         String idDenunciante = contaService.findIdByEmail(userDetails.getUsername());
 
         denunciaService.criarDenuncia(idDenunciante, idUser, denunciaDTO.getNomeMotivo());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/ver_perfil/{idUser}/avaliar")
+    public ResponseEntity<?> avaliarUsuario(@PathVariable String idUser, @RequestBody AvaliacaoRequestDTO avaliacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        String idAvaliador = contaService.findIdByEmail(userDetails.getUsername());
+
+        avalaicaoService.criarAvaliacao(idAvaliador, idUser, avaliacaoDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
