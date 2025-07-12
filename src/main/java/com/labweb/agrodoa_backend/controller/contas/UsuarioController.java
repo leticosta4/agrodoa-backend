@@ -56,11 +56,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    // quando acessar o perfil enviar uma lista 
+ 
     @GetMapping({"/ver_perfil/{idUser}"})
-    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) { //ver ainda a diferenciação de MINHA CONTA (do user logado) e OUTRO PERFIL
-
-        // metodo de verificação se e beneficiario ou fonecedor
+    public ResponseEntity<UsuarioRespostaDTO> exibirUserPorId(@PathVariable String idUser) {
 
         UsuarioRespostaDTO usuario = userService.acessarUsuarioPorId(idUser);
         return ResponseEntity.ok(usuario);
@@ -76,10 +74,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    // @GetMapping("/ver_perfil/")
-    // public String getMethodName(@RequestParam String param) {
-    //     return new String();
-    // }
 
     @PatchMapping({"/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){
