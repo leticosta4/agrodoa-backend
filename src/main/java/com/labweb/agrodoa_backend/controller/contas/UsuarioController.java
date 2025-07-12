@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -90,8 +92,15 @@ public class UsuarioController {
         return ResponseEntity.created(location).body(respostaLogin);
     }
 
+    @PutMapping("/editar")
+    public ResponseEntity<UsuarioRespostaDTO> editarUsuario(@RequestBody @Valid UsuarioDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        String idUser = contaService.findIdByEmail(userDetails.getUsername());
+        UsuarioRespostaDTO userAtualizado = userService.editarPerfilUser(idUser, userDTO);
+        
+        return ResponseEntity.ok(userAtualizado);
+    }
+
     //reativar_conta
-    //editar
     //bloquear conta usuario >> para os ADMs
     //notificar usuario?
 }
