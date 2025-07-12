@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.dto;
+package com.labweb.agrodoa_backend.dto.causa;
 
 import java.time.LocalDate;
 
@@ -21,16 +21,6 @@ public class CausaDTO {
     private LocalDate prazo; //mudar a forma de exibição para DD/MM/AAAA
 
     private String nomeArquivoFoto;
-
-    //Construtor
-    public CausaDTO(Causa causa) {
-        this.nome = causa.getNome();
-        this.descricao = causa.getDescricao();
-        this.meta = causa.getMeta();
-        this.prazo = causa.getPrazo();
-        this.nomeArquivoFoto = causa.getNomeArquivoFoto();
-        //o status e o valor arrecadado vai ser preechido por valor padrão no construtor de causa
-    }
 
     public Causa transformaParaObjeto(){
         return new Causa(nome, descricao, meta, prazo, nomeArquivoFoto);

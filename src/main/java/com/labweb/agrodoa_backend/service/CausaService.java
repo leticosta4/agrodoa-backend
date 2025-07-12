@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.service;
 
-import com.labweb.agrodoa_backend.dto.CausaDTO;
+import com.labweb.agrodoa_backend.dto.causa.*;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.observer.CausaCriadaEvent;
 import com.labweb.agrodoa_backend.repository.CausaRepository;
@@ -25,7 +25,7 @@ public class CausaService {
     @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
 
     @Transactional(readOnly = true)
-    public List<CausaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) {
+    public List<CausaRespostaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) {
         Specification<Causa> spec = Specification.where(null);
 
         if (nome != null && !nome.isEmpty()) {
@@ -40,13 +40,13 @@ public class CausaService {
 
         List<Causa> causas = causaRepo.findAll(spec);
 
-        return causas.stream().map(CausaDTO::new).collect(Collectors.toList()); 
+        return causas.stream().map(CausaRespostaDTO::new).collect(Collectors.toList()); 
     }
 
     @Transactional(readOnly = true)
-    public CausaDTO buscarPorId(String idCausa) {
+    public CausaRespostaDTO buscarPorId(String idCausa) {
         return causaRepo.findById(idCausa)
-                .map(CausaDTO::new) 
+                .map(CausaRespostaDTO::new) 
                 .orElseThrow(() -> new EntityNotFoundException("Causa não encontrada com o ID: " + idCausa));
     }
 
