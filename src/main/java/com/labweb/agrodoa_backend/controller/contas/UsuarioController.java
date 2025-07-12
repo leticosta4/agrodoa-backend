@@ -23,6 +23,7 @@ import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
 import com.labweb.agrodoa_backend.service.AvaliacaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
+import com.labweb.agrodoa_backend.model.RequisicaoTrocaTipo;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
@@ -74,12 +75,18 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @PostMapping({"/ver_perfil/{idUser}/requerir_tipo_perfil"})
-    public ResponseEntity<RequisicaoTipoDTO> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
+
+
+    @PostMapping({"/ver_perfil/requerir_tipo_perfil"})
+    public ResponseEntity<?> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
+
         String idUser = contaService.findIdByEmail(userDetails.getUsername());
-        RequisicaoTipoDTO req = userService.trocaTipoUsuario(idUser);
-        return ResponseEntity.ok(req);
+        userService.trocaTipoUsuario(idUser);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+
 
     @PostMapping("/ver_perfil/{idUser}/denunciar")
     public ResponseEntity<?> denunciarUsuario(@PathVariable String idUser, @RequestBody DenunciaRequestDTO denunciaDTO, @AuthenticationPrincipal UserDetails userDetails) {
