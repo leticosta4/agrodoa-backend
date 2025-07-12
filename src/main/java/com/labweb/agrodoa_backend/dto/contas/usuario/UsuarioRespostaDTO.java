@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UsuarioRespostaDTO { 
+public class UsuarioRespostaDTO { //vai ser o exibido ao clicar em perfil
+    private String idUser;
     private String nome;
     private String email;
     String cpfOuCnpj;
@@ -25,6 +26,7 @@ public class UsuarioRespostaDTO {
     private List<RelacaoBeneficiarioDTO> relacoesAnuncios;
     
     public UsuarioRespostaDTO(Usuario user){
+        this.idUser = user.getIdConta();
         this.nome = user.getNome();
         this.email = user.getEmail();
         this.cpfOuCnpj = user.getCpfOuCnpj();
