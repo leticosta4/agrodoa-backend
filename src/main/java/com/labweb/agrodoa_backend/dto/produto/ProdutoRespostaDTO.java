@@ -12,14 +12,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProdutoRespostaDTO {
-    //private String idProduto;
+    private String idProduto;
     private String nome;
     private int quantidade;
     private LocalDate dataValidade;
     private Double precoUnidade;
 
     public ProdutoRespostaDTO(Produto p){
-        //this.idProduto = p.getIdProduto();
+        this.idProduto = p.getIdProduto();
         this.nome = p.getNome();
         this.quantidade = p.getQuantidade();
         this.dataValidade = p.getDataValidade();
