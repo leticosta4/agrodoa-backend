@@ -3,7 +3,6 @@ package com.labweb.agrodoa_backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoDTO;
 import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.model.Avaliacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -14,7 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
-public class AvalaicaoService {
+public class AvaliacaoService {
 
     // Injeção dos repositórios necessários para acessar o banco de dados.
     @Autowired

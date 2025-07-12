@@ -20,7 +20,7 @@ import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
-import com.labweb.agrodoa_backend.service.AvalaicaoService;
+import com.labweb.agrodoa_backend.service.AvaliacaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
@@ -59,7 +59,7 @@ public class UsuarioController {
     private RelacaoBeneficiarioService relacaoBenefService;
 
     @Autowired
-    private AvalaicaoService avalaicaoService;
+    private AvaliacaoService avalaicaoService;
 
     @Autowired
     private JwtUtil jwt;
