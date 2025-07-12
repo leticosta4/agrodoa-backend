@@ -2,6 +2,8 @@ package com.labweb.agrodoa_backend.config;
 
 import java.io.IOException;
 
+
+import jakarta.servlet.http.Cookie; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,35 +33,52 @@ public class JwtFilter extends OncePerRequestFilter{ //filtro que deixa as requi
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-            final String authHeader = request.getHeader("Authorization");
+          
             String email = null; //equivalente ao email?
             String jwt = null;
-
-            if (authHeader != null && authHeader.startsWith("Bearer")) {
-                jwt = authHeader.substring(7);
-                try{
-                    email = jwtUtil.extraiEmail(jwt);
-                } catch (io.jsonwebtoken.ExpiredJwtException e) {
-                    // Token expirado
-                    // Você pode logar isso ou adicionar um header na resposta
-                } catch (io.jsonwebtoken.JwtException e) {
-                    // Token malformado ou inválido
+            
+            if (request.getCookies() != null){
+                for (Cookie cookie : request.getCookies()){
+                    if("jwt".equals(cookie.getName())){
+                        jwt = cookie.getValue();
+                        break;
+                    }
                 }
-
-                
             }
-
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = contaDetailsService.loadUserByUsername(email);
-            if (jwtUtil.tokenValido(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken token =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(token);
-            }
+            
+            if (jwt == null) { // Se não encontrou o JWT no cookie, passa para o próximo filtro
+            filterChain.doFilter(request, response);
+            return;
+        }
+            
+         if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        filterChain.doFilter(request, response);
+        try {
+            email = jwtUtil.extraiEmail(jwt); 
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            System.err.printf("Token expirou amigo: %s/ \n ", e.getMessage());
+           
+        } catch (io.jsonwebtoken.JwtException e) {
+            System.err.printf("Token Inválido: %s/ \n ", e.getMessage());
+        } catch(Exception e){
+            System.err.printf("Erro processando o token: %s/ \n ", e.getMessage());
+        }
+
+             if (email != null) { 
+            UserDetails userDetails = contaDetailsService.loadUserByUsername(email);
+
+        
+            if (jwtUtil.tokenValido(jwt, userDetails)) {
+                UsernamePasswordAuthenticationToken authToken = 
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+            filterChain.doFilter(request, response);
     }
 }
