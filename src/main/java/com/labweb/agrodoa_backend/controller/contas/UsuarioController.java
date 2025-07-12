@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
+import com.labweb.agrodoa_backend.dto.RequisicaoTipoDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
@@ -46,23 +47,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    @Autowired
-    private UsuarioService userService;
-
-    @Autowired
-    private ContaDetailsService contaService;
-
-    @Autowired
-    private DenunciaService denunciaService;
-
-    @Autowired
-    private RelacaoBeneficiarioService relacaoBenefService;
-
-    @Autowired
-    private AvaliacaoService avalaicaoService;
-
-    @Autowired
-    private JwtUtil jwt;
+    @Autowired private UsuarioService userService;
+    @Autowired private ContaDetailsService contaService;
+    @Autowired private DenunciaService denunciaService;
+    @Autowired private RelacaoBeneficiarioService relacaoBenefService;
+    @Autowired private JwtUtil jwt;
+    @Autowired private AvaliacaoService avaliacaoService;
 
     @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
@@ -84,9 +74,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @PostMapping({"/ver_perfil/{idUser}/requerir_tipo_perfil"})
+    public ResponseEntity<RequisicaoTipoDTO> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
+        String idUser = contaService.findIdByEmail(userDetails.getUsername());
+        RequisicaoTipoDTO req = userService.trocaTipoUsuario(idUser);
+        return ResponseEntity.ok(req);
+    }
+
     @PostMapping("/ver_perfil/{idUser}/denunciar")
     public ResponseEntity<?> denunciarUsuario(@PathVariable String idUser, @RequestBody DenunciaRequestDTO denunciaDTO, @AuthenticationPrincipal UserDetails userDetails) {
-
         String idDenunciante = contaService.findIdByEmail(userDetails.getUsername());
 
         denunciaService.criarDenuncia(idDenunciante, idUser, denunciaDTO.getNomeMotivo());
@@ -99,7 +95,7 @@ public class UsuarioController {
 
         String idAvaliador = contaService.findIdByEmail(userDetails.getUsername());
 
-        avalaicaoService.criarAvaliacao(idAvaliador, idUser, avaliacaoDTO);
+        avaliacaoService.criarAvaliacao(idAvaliador, idUser, avaliacaoDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

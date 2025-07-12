@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.labweb.agrodoa_backend.dto.RequisicaoTipoDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Tipo;
@@ -74,6 +75,15 @@ public class UsuarioService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "\n\n\nUsuário não encontrado com o ID: " + idUser + "!\n\n"));
 
         return new UsuarioRespostaDTO(user);
+    }
+
+    public RequisicaoTipoDTO trocaTipoUsuario(String idUser){ 
+        Usuario user = userRepo.findUsuarioByIdConta(idUser)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "\n\n\nUsuário não encontrado com o ID: " + idUser + "!\n\n"));
+        
+        user.setTipoUsuario(new Tipo("hibrido"));
+        // userRepo.save(user); //so é p fzr isso se quisererm
+        return new RequisicaoTipoDTO(user);
     }
 
     public boolean alterarSituacao(String idUser, SituacaoUsuario novaSituacao){
