@@ -64,6 +64,19 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errooo"); //so por segurança
     }
 
-    //para requisições que precise estar logado add um header  =>  Authorization: Bearer {valorDoToken}
+
+      @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        ResponseCookie expiredCookie = ResponseCookie.from("jwt", "") 
+                .httpOnly(true)
+                .secure(false) 
+                .path("/")
+                .maxAge(0) 
+                .sameSite("Lax")
+                .build();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, expiredCookie.toString())
+                .body("Logout bem-sucedido");
+    }
     
 }
