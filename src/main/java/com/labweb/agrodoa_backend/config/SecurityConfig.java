@@ -77,6 +77,7 @@ public class SecurityConfig {
 
             //endpoints beneficiario
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil/meus_salvos", "/usuarios/meu_perfil/minhas_negociacoes").hasRole("BENEFICIARIO")
+            .requestMatchers(HttpMethod.POST, "/anuncios/*/salvar", "/anuncios/*/iniciar_negociacao").hasRole("BENEFICIARIO") //ainda falta testar a de iniciar negociacao
 
             .anyRequest().authenticated()
             )
