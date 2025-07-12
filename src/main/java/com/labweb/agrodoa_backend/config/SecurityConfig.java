@@ -75,6 +75,9 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
             .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
 
+            //endpoints beneficiario
+            .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil/meus_salvos", "/usuarios/meu_perfil/minhas_negociacoes").hasRole("BENEFICIARIO")
+
             .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session

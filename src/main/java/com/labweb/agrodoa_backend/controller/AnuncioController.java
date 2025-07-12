@@ -4,9 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
-import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
