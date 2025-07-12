@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,9 +38,9 @@ public class DenunciaController {
 
     // @PatchMapping("/{idDenuncia}/avaliar")
     @PostMapping("/{idDenuncia}/avaliar")
-    public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia,@Valid @RequestBody AvaliacaoDenunciaDTO avaliacaoDTO) {
-        
-        denunciaService.avaliarDenuncia(idDenuncia, avaliacaoDTO);
+    public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia, @Valid @RequestBody String avaliacaoDTO) {
+        AvaliacaoDenunciaDTO teste = new AvaliacaoDenunciaDTO(avaliacaoDTO);
+        denunciaService.avaliarDenuncia(idDenuncia, teste);
         return ResponseEntity.ok().build(); 
     }
 }

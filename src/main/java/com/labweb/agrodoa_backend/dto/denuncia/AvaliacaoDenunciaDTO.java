@@ -10,8 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor 
 public class AvaliacaoDenunciaDTO {
 
-    // @NotBlank(message = "O campo 'status' é obrigatório.")
+    @NotBlank(message = "O campo 'status' é obrigatório.")
     private String status; 
 
-    
+    public AvaliacaoDenunciaDTO(String s){
+        this.status = s;
+    }
 }
