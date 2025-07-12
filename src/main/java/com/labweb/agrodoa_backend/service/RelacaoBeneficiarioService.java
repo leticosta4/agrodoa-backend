@@ -35,6 +35,9 @@ public class RelacaoBeneficiarioService {
     }
 
     public RelacaoBeneficiarioDTO criarRelacao(String idAnuncio, String idBeneficiario, TipoRelacaoBenef tipoRelacao) {
+        Usuario beneficiario = userRepo.findUsuarioByIdConta(idBeneficiario)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com ID: " + idBeneficiario + "!\n"));
+
         Anuncio anuncio = anuncioRepo.findByIdAnuncio(idAnuncio)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anúncio não encontrado com ID: " + idAnuncio + "!\n"));
 
@@ -48,9 +51,6 @@ public class RelacaoBeneficiarioService {
             }
             
         }
-
-        Usuario beneficiario = userRepo.findUsuarioByIdConta(idBeneficiario)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com ID: " + idBeneficiario + "!\n"));
 
         RelacaoBeneficiario relacaoSalva = rbRepo.save(new RelacaoBeneficiario(anuncio, beneficiario, tipoRelacao));
 

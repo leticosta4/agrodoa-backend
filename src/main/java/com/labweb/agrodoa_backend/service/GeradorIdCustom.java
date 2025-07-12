@@ -11,7 +11,7 @@ public class GeradorIdCustom { //pra gerar os IDs com base no nosso padrão de p
      public static <T> String gerarIdComPrefixo(String prefixo, JpaRepository<T, String> repository, String nomeCampoId) {
         List<T> todasEntidades = repository.findAll();
 
-        int maiorNumero = 0;
+        int maior = 0;
         
         for(T entidade: todasEntidades){
             try{
@@ -22,19 +22,18 @@ public class GeradorIdCustom { //pra gerar os IDs com base no nosso padrão de p
                 if (valorId != null && valorId.startsWith(prefixo)) {
                     String numeroStr = valorId.substring(prefixo.length());
                     int numero = Integer.parseInt(numeroStr);
-                    if (numero > maiorNumero) {
-                        maiorNumero = numero;
+                    if (numero > maior) {
+                        maior = numero;
                     }
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
-                // log: não conseguiu acessar o campo
             }
         }
 
-        int proximoNumero = maiorNumero + 1;
+        int proxNum = maior + 1;
 
-        return String.format("%s%04d", prefixo, proximoNumero);
+        return String.format("%s%04d", prefixo, proxNum);
     }
 
     private static Field getCampoIncluindoSuperclasse(Class<?> classe, String nomeCampo) throws NoSuchFieldException { //para procurar o campo de ID nas classes mãe tipo conta > user

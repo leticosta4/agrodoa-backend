@@ -71,6 +71,9 @@ public class CausaService {
     }
 
     public DoacaoCausaDTO doarParaCausa(String idUser, String idCausa, Double valorDoado){
+        Usuario user = userRepo.findUsuarioByIdConta(idUser)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com ID: " + idUser + "!\n"));
+
         Causa causa = causaRepo.findByIdCausa(idCausa)
                  .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Causa não encontrada com ID: " + idCausa + "!\n"));
 
@@ -78,8 +81,7 @@ public class CausaService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Não é possível doar para esta causa, pois ela não está aberta ou já atingiu o prazo.");
         }
 
-        Usuario user = userRepo.findUsuarioByIdConta(idUser)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com ID: " + idUser + "!\n"));
+        
 
         //algo para validar o pagamento
 
