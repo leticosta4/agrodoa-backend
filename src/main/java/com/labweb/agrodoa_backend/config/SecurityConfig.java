@@ -51,7 +51,9 @@ public class SecurityConfig {
                             //"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo
                             "/usuarios/ver_perfil/*",
                             "/anuncios",
+
                             "/anuncios/*",
+              
                             "/error",
 
                             "/v3/api-docs/**",
@@ -67,8 +69,10 @@ public class SecurityConfig {
 
             //endpoints user geral
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PATCH, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PUT, "/usuarios/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+
 
             //endpoints fornecedor
             .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
