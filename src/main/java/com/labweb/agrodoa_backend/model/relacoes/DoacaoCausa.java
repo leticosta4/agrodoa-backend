@@ -34,9 +34,9 @@ public class DoacaoCausa {
     private Causa causa;
 
     @Column(name = "valor_doado")
-    private float valorDoado;
+    private double valorDoado;
 
-    public DoacaoCausa(Usuario usuario, Causa causa, float valorDoado){
+    public DoacaoCausa(Usuario usuario, Causa causa, double valorDoado){
         this.usuario = usuario;
         this.causa = causa;
         this.valorDoado = valorDoado;

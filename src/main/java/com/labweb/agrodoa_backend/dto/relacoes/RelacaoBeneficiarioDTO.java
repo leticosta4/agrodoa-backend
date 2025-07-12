@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.dto;
+package com.labweb.agrodoa_backend.dto.relacoes;
 
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioResumidoDTO;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;

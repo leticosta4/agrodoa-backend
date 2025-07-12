@@ -7,7 +7,8 @@ import com.labweb.agrodoa_backend.service.CausaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,12 @@ public class CausaController {
 
     @GetMapping("/{idCausa}")
     public ResponseEntity<CausaRespostaDTO> buscarPorId(@PathVariable String idCausa) {
+        CausaRespostaDTO causaDTO = causaService.buscarPorId(idCausa);
+        return ResponseEntity.ok(causaDTO);
+    }
+
+    @PostMapping("/{idCausa}/doar")
+    public ResponseEntity<CausaRespostaDTO> doar(@PathVariable String idCausa, @RequestBody String valorDoado, @AuthenticationPrincipal UserDetails userDetails) {
         CausaRespostaDTO causaDTO = causaService.buscarPorId(idCausa);
         return ResponseEntity.ok(causaDTO);
     }

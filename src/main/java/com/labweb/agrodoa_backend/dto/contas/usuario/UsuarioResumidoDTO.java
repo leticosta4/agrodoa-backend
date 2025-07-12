@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class AnuncianteDTO {
+public class UsuarioResumidoDTO {
     private String idAnunciante;
     private String nome;
     private String email;
+    private String cpfOuCnpj;
     String telefone;
-    String nomeArquivoFoto;
     
-    public AnuncianteDTO(Usuario user){
+    public UsuarioResumidoDTO(Usuario user){
         this.idAnunciante = user.getIdConta();
         this.nome = user.getNome();
         this.email = user.getEmail();
-        this.nomeArquivoFoto = user.getNomeArquivoFoto();
+        this.cpfOuCnpj = user.getCpfOuCnpj();
         this.telefone = user.getTelefone();
     }
 }

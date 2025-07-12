@@ -118,6 +118,11 @@ INSERT INTO motivo (idmotivo, nome) VALUES
 ('MOT0002', 'Propaganda enganosa'),
 ('MOT0003', 'Não recebimento do produto');
 
+INSERT INTO usuario_has_causa (usuario_conta_idconta, causa_idcausa, valor_doado) VALUES
+('CON0004', 'CAU0001', 20.00),
+('CON0007', 'CAU0002', 100.00),
+('CON0010', 'CAU0003', 5.00);
+
 
 --fazer inserts da tabela denuncia, avaliação e usuario_has_causa
 
