@@ -51,7 +51,7 @@ public class SecurityConfig {
                             "/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar
                             "/usuarios/ver_perfil/*",
                             "/anuncios",
-                            //"/anuncios/*",  //NAO FUNCIONA AINDA
+                            "/anuncios/*",  //NAO FUNCIONA AINDA
                             "/error",
 
                             "/v3/api-docs/**",
@@ -67,6 +67,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
+            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PATCH, "/usuarios/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PUT, "/usuarios/*/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 

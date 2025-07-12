@@ -113,6 +113,11 @@ INSERT INTO labweb_project.causa
 ('CAU0004', 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', 15000.00, '2025-08-15', 'inclusao_digital.jpg', 'CONCLUIDA', 13000),
 ('CAU0005', 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', 8000.00, '2024-09-30', 'feira_agro.jpg', 'CONCLUIDA', 5000);
 
+-- Inserts em motivo
+INSERT INTO motivo (idmotivo, nome) VALUES
+('MOT0001', 'Desrespeito'),
+('MOT0002', 'Propaganda enganosa'),
+('MOT0003', 'Não recebimento do produto');
 
 --fazer inserts da tabela motivo, denuncia, avaliação e usuario_has_causa
 

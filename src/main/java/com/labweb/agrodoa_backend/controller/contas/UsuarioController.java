@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +15,16 @@ import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
+import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 import com.labweb.agrodoa_backend.service.contas.UsuarioService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +49,9 @@ public class UsuarioController {
     private ContaDetailsService contaService;
 
     @Autowired
+    private DenunciaService denunciaService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @GetMapping
@@ -66,7 +74,17 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @GetMapping("/meu_perfil")
+    @PostMapping("/ver_perfil/{idUser}/denunciar")
+    public ResponseEntity<?> denunciarUsuario(@PathVariable String idUser, @RequestBody DenunciaRequestDTO denunciaDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        String idDenunciante = contaService.findIdByEmail(userDetails.getUsername());
+
+        denunciaService.criarDenuncia(idDenunciante, idUser, denunciaDTO.getNomeMotivo());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/meu_perfil") 
     public ResponseEntity<UsuarioRespostaDTO> exibirMeuPerfil(@AuthenticationPrincipal UserDetails userDetails) {
 
         String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
@@ -113,6 +131,7 @@ public class UsuarioController {
         
         return ResponseEntity.ok(userAtualizado);
     }
+    
 
     //reativar_conta
     //bloquear conta usuario >> para os ADMs
