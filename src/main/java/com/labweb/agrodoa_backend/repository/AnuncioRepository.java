@@ -12,7 +12,8 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, String>, JpaSp
     boolean existsByIdAnuncio(String idAnuncio);
     ArrayList <Anuncio> findAll();
     Optional<Anuncio> findByIdAnuncio(String idAnuncio);  //usado no acesso a um unico anuncio, para finalizar ou desativar
-
+    //criar query para retornar a quantidade de negociantes
+    
     // @Query(value = "SELECT * FROM anuncio WHERE tipo_anuncio = :tipoAnuncio;", nativeQuery = true) //ver aqui como vai associar o item do enum a um caracter 'V' ou 'D'
     // ArrayList<Anuncio> findByTipoAnuncio(TipoAnuncio tipoAnuncio); //venda ou doação
 
