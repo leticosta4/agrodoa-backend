@@ -72,7 +72,7 @@ public class AnuncioController {
        return ResponseEntity.ok(salvou);
     }
 
-    @PostMapping("/{idAnuncio}/inicar_negociacao") //ainda falta desenvolver
+    @PostMapping("/{idAnuncio}/iniciar_negociacao") //ainda falta desenvolver
     public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
         String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
         RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO);

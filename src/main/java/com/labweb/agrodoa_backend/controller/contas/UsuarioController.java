@@ -1,12 +1,15 @@
 package com.labweb.agrodoa_backend.controller.contas;
 
 import java.net.URI;
+import java.time.Duration;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,13 +17,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
-import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
-import com.labweb.agrodoa_backend.model.Anuncio;
-import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -30,7 +30,6 @@ import com.labweb.agrodoa_backend.service.RelacaoBeneficiarioService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 import com.labweb.agrodoa_backend.service.contas.UsuarioService;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -61,7 +60,7 @@ public class UsuarioController {
     private RelacaoBeneficiarioService relacaoBenefService;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtUtil jwt;
 
     @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
@@ -115,12 +114,19 @@ public class UsuarioController {
     } 
 
     @PostMapping({"/cadastrar_usuario"})
-    public ResponseEntity<LoginRespostaDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
+    public ResponseEntity<UsuarioLoginDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
         Usuario userSalvo = userService.cadastrarUsuario(userDTO);
-        String token = jwtUtil.geraToken(userSalvo.getEmail());
+        String token = jwt.geraToken(userSalvo.getEmail());
 
+        ResponseCookie cookie = ResponseCookie.from("jwt", token)
+        .httpOnly(true)
+        .secure(false) //mudar p true dps
+        .path("/")
+        .maxAge(Duration.ofHours(2))
+        .sameSite("Lax")
+        .build();
+        
         UsuarioLoginDTO usuarioDados = new UsuarioLoginDTO(userSalvo);
-        LoginRespostaDTO respostaLogin = new LoginRespostaDTO(token, usuarioDados);
 
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
@@ -128,7 +134,7 @@ public class UsuarioController {
             .buildAndExpand(userSalvo.getIdConta())
             .toUri();
 
-        return ResponseEntity.created(location).body(respostaLogin);
+        return ResponseEntity.created(location).header(HttpHeaders.SET_COOKIE,cookie.toString()).body(usuarioDados);
     }
 
     @PutMapping("/meu_perfil/editar")

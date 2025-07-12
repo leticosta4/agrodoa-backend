@@ -95,3 +95,8 @@ update tipo set nome = 'hibrido' where idtipo = 'TIP0003';
 --nova coluna na tabela usuatio pq vamos desativar a conta dele
 alter table usuario add column situacao varchar(7) not null;
 update usuario set situacao = 'ATIVO';
+
+--pra testar a rota de iniciar negociacao
+UPDATE anuncio 
+SET data_expiracao = '2025-08-10' 
+WHERE idanuncio = 'ANU0009';
