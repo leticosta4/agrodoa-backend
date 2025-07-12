@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.labweb.agrodoa_backend.dto.AvaliacaoDTO;
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioResumidoDTO;
+import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoDTO;
 import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 

@@ -14,12 +14,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
-import com.labweb.agrodoa_backend.dto.AvaliacaoDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
+import com.labweb.agrodoa_backend.service.AvalaicaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
@@ -58,6 +59,9 @@ public class UsuarioController {
     private RelacaoBeneficiarioService relacaoBenefService;
 
     @Autowired
+    private AvalaicaoService avalaicaoService;
+
+    @Autowired
     private JwtUtil jwt;
 
     @GetMapping
@@ -90,15 +94,15 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // @PostMapping("/ver_perfil/{idUser}/avaliar")
-    // public ResponseEntity<?> avaliarUsuario(@PathVariable String idUser, @RequestBody AvaliacaoDTO avaliacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
+    @PostMapping("/ver_perfil/{idUser}/avaliar")
+    public ResponseEntity<?> avaliarUsuario(@PathVariable String idUser, @RequestBody AvaliacaoRequestDTO avaliacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
 
-    //     String idAvaliador = contaService.findIdByEmail(userDetails.getUsername());
+        String idAvaliador = contaService.findIdByEmail(userDetails.getUsername());
 
-    //     avalaicaoService.criarDenuncia(idAvaliador, idUser, avaliacaoDTO.getNomeMotivo());
+        avalaicaoService.criarAvaliacao(idAvaliador, idUser, avaliacaoDTO);
 
-    //     return ResponseEntity.status(HttpStatus.CREATED).build();
-    // }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
     @GetMapping("/meu_perfil") 
     public ResponseEntity<UsuarioRespostaDTO> exibirMeuPerfil(@AuthenticationPrincipal UserDetails userDetails) {
