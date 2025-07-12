@@ -70,10 +70,10 @@ public class DenunciaService {
         Denuncia denuncia = denunciaRepository.findById(idDenuncia)
                 .orElseThrow(() -> new EntityNotFoundException("Denúncia não encontrada com o ID: " + idDenuncia));
 
-        StatusDenuncia novoStatus = StatusDenuncia.valueOf(avaliacaoDTO.getStatus().toUpperCase());
+        StatusDenuncia novoStatus = StatusDenuncia.valueOf(avaliacaoDTO.getNomeStatus().toUpperCase());
         denuncia.setStatus(novoStatus);
 
-        denunciaRepository.save(denuncia);
+        denunciaRepository.saveAndFlush(denuncia);
 
         // Verifica se a denúncia foi aprovada para então notificar o usuário
         if (novoStatus == StatusDenuncia.APROVADA) {

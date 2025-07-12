@@ -37,10 +37,11 @@ public class DenunciaController {
     }
 
     // @PatchMapping("/{idDenuncia}/avaliar")
-    @PostMapping("/{idDenuncia}/avaliar")
-    public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia, @Valid @RequestBody String avaliacaoDTO) {
-        AvaliacaoDenunciaDTO teste = new AvaliacaoDenunciaDTO(avaliacaoDTO);
-        denunciaService.avaliarDenuncia(idDenuncia, teste);
-        return ResponseEntity.ok().build(); 
+    @PatchMapping("/{idDenuncia}/avaliarDenuncia")
+    public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia, @Valid @RequestBody AvaliacaoDenunciaDTO avaliacaoDTO) {
+        
+        denunciaService.avaliarDenuncia(idDenuncia, avaliacaoDTO);
+
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,19 +1,25 @@
 package com.labweb.agrodoa_backend.dto.denuncia;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor 
+// @Getter
+// @Setter
+// @NoArgsConstructor 
 public class AvaliacaoDenunciaDTO {
 
     @NotBlank(message = "O campo 'status' é obrigatório.")
-    private String status; 
+    // @NotNull(message = "O campo 'status' não pode ser nulo.")
+    private String nomeStatus; 
 
-    public AvaliacaoDenunciaDTO(String s){
-        this.status = s;
+    public String getNomeStatus(){
+        return nomeStatus;
+    }
+
+    public void setNomeStatus(String nomeStatus){
+        this.nomeStatus = nomeStatus;
     }
 }
