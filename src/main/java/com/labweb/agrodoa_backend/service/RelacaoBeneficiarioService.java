@@ -1,5 +1,6 @@
 package com.labweb.agrodoa_backend.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
+import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
@@ -36,8 +38,15 @@ public class RelacaoBeneficiarioService {
         Anuncio anuncio = anuncioRepo.findByIdAnuncio(idAnuncio)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anúncio não encontrado com ID: " + idAnuncio + "!\n"));
 
-        if(tipoRelacao == TipoRelacaoBenef.NEGOCIANDO){
-            //chamar funcao auxiliar para ver quantidade de negociantes
+        if(anuncio.getStatus() != StatusAnuncio.ATIVO || anuncio.getDataExpiracao().isBefore(LocalDate.now())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Não é possível negociar com este anúncio, pois ele não está ativo ou já expirou.");
+        }
+
+        if (tipoRelacao == TipoRelacaoBenef.NEGOCIANDO) {
+            if(rbRepo.countByAnuncioIdAndTipoRelacao(idAnuncio, TipoRelacaoBenef.NEGOCIANDO) == 5){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Este anúncio já atingiu o limite de 5 negociantes.");
+            }
+            
         }
 
         Usuario beneficiario = userRepo.findUsuarioByIdConta(idBeneficiario)
