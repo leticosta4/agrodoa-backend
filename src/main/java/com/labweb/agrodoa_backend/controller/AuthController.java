@@ -38,9 +38,11 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginDTO.getEmail(), loginDTO.getSenha()));
+                loginDTO.getEmail(), loginDTO.getSenha()));
+
         Conta contaAutenticada = (Conta) authentication.getPrincipal();
         String token = jwt.geraToken(contaAutenticada.getEmail());
+
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
         .httpOnly(true)
         .secure(false)
@@ -48,12 +50,14 @@ public class AuthController {
         .maxAge(Duration.ofHours(2))
         .sameSite("Lax")
         .build();
+
         if (contaAutenticada instanceof Usuario) { //token e dados do usuário.
             UsuarioLoginDTO usuarioDados = new UsuarioLoginDTO((Usuario) contaAutenticada);
             LoginRespostaDTO respostaCompleta = new LoginRespostaDTO(token, usuarioDados);
 
             System.out.println("\n\nLogin de USUÁRIO: " + contaAutenticada.getEmail() + "\n\n");
-                return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(respostaCompleta.getUserLogin());
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(respostaCompleta.getUserLogin());
+        
         } else if (contaAutenticada instanceof Administrador) { //so token
             Map<String, String> tokenAdm = Map.of("token", token);
             

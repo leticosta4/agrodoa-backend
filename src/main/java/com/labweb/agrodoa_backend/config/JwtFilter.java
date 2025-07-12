@@ -33,7 +33,6 @@ public class JwtFilter extends OncePerRequestFilter{ //filtro que deixa as requi
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-          
             String email = null; //equivalente ao email?
             String jwt = null;
             
