@@ -64,12 +64,11 @@ public class SecurityConfig {
 
             //endpoints adm
             .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
-
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/avaliar", "/usuarios/ver_perfil/requerir_tipo_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/avaliar", "/usuarios/ver_perfil/requerir_tipo_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //testar de novo as de denunciar e avaliar
             .requestMatchers(HttpMethod.PATCH, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PUT, "/usuarios/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
