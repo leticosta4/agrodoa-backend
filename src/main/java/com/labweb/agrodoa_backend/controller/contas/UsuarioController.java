@@ -4,7 +4,6 @@ import java.net.URI;
 import java.security.Principal;
 import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
-import com.labweb.agrodoa_backend.dto.RequisicaoTipoDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
@@ -25,8 +23,6 @@ import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
 import com.labweb.agrodoa_backend.service.AvaliacaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
-import com.labweb.agrodoa_backend.model.RequisicaoTrocaTipo;
-import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
@@ -78,19 +74,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-
-
-    @PostMapping({"/ver_perfil/requerir_tipo_perfil"})
-    public ResponseEntity<?> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
-
-        String idUser = contaService.findIdByEmail(userDetails.getUsername());
-        userService.trocaTipoUsuario(idUser);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-
-
     @PostMapping("/ver_perfil/{idUser}/denunciar")
     public ResponseEntity<?> denunciarUsuario(@PathVariable String idUser, @RequestBody DenunciaRequestDTO denunciaDTO, @AuthenticationPrincipal UserDetails userDetails) {
         String idDenunciante = contaService.findIdByEmail(userDetails.getUsername());
@@ -117,6 +100,14 @@ public class UsuarioController {
         return ResponseEntity.ok(responseDTO);
     }
 
+    @PostMapping({"/meu_perfil/requerir_tipo_perfil"})
+    public ResponseEntity<?> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String idUser = contaService.findIdByEmail(userDetails.getUsername());
+        userService.trocaTipoUsuario(idUser);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
     @PatchMapping({"/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){
