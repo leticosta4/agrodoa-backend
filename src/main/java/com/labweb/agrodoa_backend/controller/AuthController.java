@@ -21,7 +21,6 @@ import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.model.contas.*;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

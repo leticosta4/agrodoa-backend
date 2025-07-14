@@ -1,7 +1,6 @@
 package com.labweb.agrodoa_backend.dto.avaliacao;
 
 import com.labweb.agrodoa_backend.model.Avaliacao;
-import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;
