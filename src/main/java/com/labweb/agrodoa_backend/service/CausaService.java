@@ -29,7 +29,7 @@ public class CausaService {
 
     @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
 
-    @Autowired Cloudinary cloudinary;
+    @Autowired CloudinaryService cloudinary;
 
     @Transactional(readOnly = true)
     public List<CausaRespostaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) {
@@ -57,20 +57,12 @@ public class CausaService {
                 .orElseThrow(() -> new EntityNotFoundException("Causa não encontrada com o ID: " + idCausa));
     }
 
-     public String uploadImagem(MultipartFile file) {
-        try {
-            Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-            return (String) uploadResult.get("secure_url");
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao fazer upload da imagem", e);
-        }
-    }
+
     
     @Transactional
     public Causa criarCausa(CausaDTO causaDTO, MultipartFile imagem) {
-        String urlImagem = uploadImagem(imagem);
+        String urlImagem = cloudinary.uploadImagem(imagem);
         causaDTO.setNomeArquivoFoto(urlImagem);
-
         Causa novaCausa = causaDTO.transformaParaObjeto();
         novaCausa.setIdCausa(GeradorIdCustom.gerarIdComPrefixo("CAU", causaRepo, "idCausa"));
         Causa causaSalva = causaRepo.saveAndFlush(novaCausa);
