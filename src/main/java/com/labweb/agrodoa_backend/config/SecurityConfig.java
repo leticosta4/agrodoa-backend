@@ -45,15 +45,15 @@ public class SecurityConfig {
                             "/administradores",
                             "/causas",
                             "/causas/*",
+                            "/causas/criar_causa",
                             "/estados",
                             "/estados/*/cidades",
                             "/usuarios/cadastrar_usuario",
                             //"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo
                             "/usuarios/ver_perfil/*",
                             "/anuncios",
-
+                            "/usuarios",
                             "/anuncios/*",
-              
                             "/error",
 
                             "/v3/api-docs/**",
