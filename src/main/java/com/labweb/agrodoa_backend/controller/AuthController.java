@@ -3,11 +3,13 @@ package com.labweb.agrodoa_backend.controller;
 import org.springframework.http.HttpHeaders;
 
 import java.time.Duration;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,11 +47,12 @@ public class AuthController {
 
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
         .httpOnly(true)
-        .secure(false)
+        .secure(false) //depois mudar pra true
         .path("/")
         .maxAge(Duration.ofHours(2))
         .sameSite("Lax")
         .build();
+
 
         if (contaAutenticada instanceof Usuario) { //token e dados do usuário.
             UsuarioLoginDTO usuarioDados = new UsuarioLoginDTO((Usuario) contaAutenticada);
@@ -57,7 +60,7 @@ public class AuthController {
 
             System.out.println("\n\nLogin de USUÁRIO: " + contaAutenticada.getEmail() + "\n\n");
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(respostaCompleta.getUserLogin());
-        
+            
         } else if (contaAutenticada instanceof Administrador) { //so token
             Map<String, String> tokenAdm = Map.of("token", token);
             
