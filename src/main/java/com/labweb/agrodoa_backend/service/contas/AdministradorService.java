@@ -11,8 +11,7 @@ import com.labweb.agrodoa_backend.repository.contas.AdministradorRepository;
 
 @Service
 public class AdministradorService {
-    @Autowired
-    private AdministradorRepository admRepo;
+    @Autowired private AdministradorRepository admRepo;
 
     public ArrayList<AdministradorRespostaDTO> listarTodos() { //o certo é usar qual? 
         ArrayList<Administrador> admins =  admRepo.findAll();

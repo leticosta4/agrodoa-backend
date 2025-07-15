@@ -26,11 +26,8 @@ import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private JwtFilter jwtFilter;
-
-    @Autowired
-    private ContaDetailsService contaDetailsService;
+    @Autowired private JwtFilter jwtFilter;
+    @Autowired private ContaDetailsService contaDetailsService;
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -64,9 +61,8 @@ public class SecurityConfig {
 
             //endpoints adm
             .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
-            .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.POST, "/causas/criar_causa", "/denuncias/*/avaliar").hasRole("ADMINISTRADOR")
             
-            .requestMatchers(HttpMethod.POST, "/denuncias/*/avaliar").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")

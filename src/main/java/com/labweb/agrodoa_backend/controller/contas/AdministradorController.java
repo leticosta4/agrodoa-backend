@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping("/administradores")
 public class AdministradorController {
-    @Autowired
-    private AdministradorService admService;
+    @Autowired private AdministradorService admService;
 
     @GetMapping
     public ResponseEntity<ArrayList<AdministradorRespostaDTO>> exibirAdms() { 

@@ -25,25 +25,19 @@ import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
-import com.labweb.agrodoa_backend.service.GeradorIdCustom;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository userRepo;
-    @Autowired
-    TipoRepository tipoRepo;
-    @Autowired
-    CidadeRepository cidadeRepo;
-    @Autowired
-    private RequisicaoTrocaTipoRepository requisicaoTipoRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private ContaRepository contaRepo;
+    @Autowired private UsuarioRepository userRepo;
+    @Autowired private TipoRepository tipoRepo;
+    @Autowired private CidadeRepository cidadeRepo;
+    @Autowired private RequisicaoTrocaTipoRepository requisicaoTipoRepo;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private ContaRepository contaRepo;
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo, String situacao){
         Specification<Usuario> spec = Specification
@@ -182,7 +176,7 @@ public class UsuarioService {
 
     public UsuarioLoginDTO logarComToken(String emailUsuario){
         
-    Optional<Conta> contaOptional = contaRepo.findByEmail(emailUsuario);
+        Optional<Conta> contaOptional = contaRepo.findByEmail(emailUsuario);
 
         if (!contaOptional.isPresent()) {
             System.err.println("Erro no serviço: Conta com email " + emailUsuario + " não encontrada na tabela base de contas.");

@@ -1,16 +1,14 @@
 package com.labweb.agrodoa_backend.service;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.labweb.agrodoa_backend.dto.causa.*;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.observer.CausaCriadaEvent;
 import com.labweb.agrodoa_backend.repository.CausaRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.CloudinaryService;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.CausaSpecification;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +22,8 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CausaService {
-
     @Autowired CausaRepository causaRepo;
-
     @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
-
     @Autowired CloudinaryService cloudinary;
 
     @Transactional(readOnly = true)

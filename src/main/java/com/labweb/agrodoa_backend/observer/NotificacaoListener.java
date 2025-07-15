@@ -16,7 +16,7 @@ import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
-import com.labweb.agrodoa_backend.service.EmailService;
+import com.labweb.agrodoa_backend.service.auxiliares.EmailService;
 
 //OBSERVER
 @Component

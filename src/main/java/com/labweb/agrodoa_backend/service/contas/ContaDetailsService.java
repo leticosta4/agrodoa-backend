@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 
 @Service
-public class ContaDetailsService implements UserDetailsService{
-    //classe chamada automaticamaente pelo spring secutiry quando algm tenta se autenticar
-    @Autowired
-    private ContaRepository contaRepo;
+public class ContaDetailsService implements UserDetailsService{  //classe chamada automaticamaente pelo spring secutiry quando algm tenta se autenticar
+    @Autowired private ContaRepository contaRepo;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException { //seria tipo loadByEmail

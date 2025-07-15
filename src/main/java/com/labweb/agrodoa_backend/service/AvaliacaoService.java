@@ -8,19 +8,15 @@ import com.labweb.agrodoa_backend.model.Avaliacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.repository.AvaliacaoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
 public class AvaliacaoService {
-
-    // Injeção dos repositórios necessários para acessar o banco de dados.
-    @Autowired
-    private AvaliacaoRepository avaliacaoRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository; // Supondo que você tenha um repositório para a entidade Usuario
+    @Autowired private AvaliacaoRepository avaliacaoRepository;
+    @Autowired private UsuarioRepository usuarioRepository; // Supondo que você tenha um repositório para a entidade Usuario
 
 
     @Transactional

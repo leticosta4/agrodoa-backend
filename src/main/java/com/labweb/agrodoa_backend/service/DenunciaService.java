@@ -13,30 +13,21 @@ import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Motivo;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusDenuncia;
-import com.labweb.agrodoa_backend.observer.CausaCriadaEvent;
 import com.labweb.agrodoa_backend.observer.DenunciaAprovadaEvent;
 import com.labweb.agrodoa_backend.repository.DenunciaRepository;
 import com.labweb.agrodoa_backend.repository.MotivoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
 public class DenunciaService {
-
-    @Autowired
-    private DenunciaRepository denunciaRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private MotivoRepository motivoRepository;
-
-    @Autowired 
-    private ApplicationEventPublisher eventPublisher;
-
+    @Autowired private DenunciaRepository denunciaRepository;
+    @Autowired private UsuarioRepository usuarioRepository;
+    @Autowired private MotivoRepository motivoRepository;
+    @Autowired private ApplicationEventPublisher eventPublisher;
 
     public List<DenunciaRespostaDTO> listarTodas() {
 
@@ -47,7 +38,6 @@ public class DenunciaService {
     
     @Transactional
     public void criarDenuncia(String idDenunciante, String idDenunciado, String nomeMotivo) {
-
         Usuario denunciante = usuarioRepository.findById(idDenunciante)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário denunciante não encontrado com o ID: " + idDenunciante));
 

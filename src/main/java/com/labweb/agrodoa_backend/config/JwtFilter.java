@@ -22,12 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtFilter extends OncePerRequestFilter{ //filtro que deixa as requisições autenticadas e autorizadas a acesar endpoints protegidos
     //faz tb a validação do token dps de ver se ele tá presente
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private ContaDetailsService contaDetailsService;
+    @Autowired private JwtUtil jwtUtil;
+    @Autowired private ContaDetailsService contaDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

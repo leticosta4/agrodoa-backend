@@ -1,13 +1,9 @@
 package com.labweb.agrodoa_backend.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,15 +16,12 @@ import com.labweb.agrodoa_backend.service.DenunciaService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
 
 
 @RestController
 @RequestMapping("/denuncias")
 public class DenunciaController {
-
-    @Autowired
-    private DenunciaService denunciaService;
+    @Autowired private DenunciaService denunciaService;
 
     @GetMapping
     public ResponseEntity<List<DenunciaRespostaDTO>> listarDenuncias() {
@@ -36,8 +29,7 @@ public class DenunciaController {
         return ResponseEntity.ok(listaDenuncias);
     }
 
-    // @PatchMapping("/{idDenuncia}/avaliar")
-    @PostMapping("/{idDenuncia}/avaliar")
+    @PatchMapping("/{idDenuncia}/avaliar")
     public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia, @Valid @RequestBody String avaliacaoDTO) {
         AvaliacaoDenunciaDTO teste = new AvaliacaoDenunciaDTO(avaliacaoDTO);
         denunciaService.avaliarDenuncia(idDenuncia, teste);

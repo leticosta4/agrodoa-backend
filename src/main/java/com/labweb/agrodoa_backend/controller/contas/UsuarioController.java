@@ -4,7 +4,6 @@ import java.net.URI;
 import java.time.Duration;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
