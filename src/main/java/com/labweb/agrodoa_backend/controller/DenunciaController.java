@@ -10,13 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.labweb.agrodoa_backend.dto.denuncia.AvaliacaoDenunciaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRespostaDTO;
 import com.labweb.agrodoa_backend.service.DenunciaService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import jakarta.validation.Valid;
-
 
 @RestController
 @RequestMapping("/denuncias")
@@ -29,10 +24,15 @@ public class DenunciaController {
         return ResponseEntity.ok(listaDenuncias);
     }
 
-    @PatchMapping("/{idDenuncia}/avaliar")
-    public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia, @Valid @RequestBody String avaliacaoDTO) {
-        AvaliacaoDenunciaDTO teste = new AvaliacaoDenunciaDTO(avaliacaoDTO);
-        denunciaService.avaliarDenuncia(idDenuncia, teste);
+    @PatchMapping("/{idDenuncia}/aprovar")
+    public ResponseEntity<Void> aprovarDenuncia(@PathVariable String idDenuncia){
+        denunciaService.avaliarDenuncia(idDenuncia, "APROVADA");
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{idDenuncia}/reprovar")
+    public ResponseEntity<Void> reprovarDenuncia(@PathVariable String idDenuncia) {
+        denunciaService.avaliarDenuncia(idDenuncia, "REPROVADA");
         return ResponseEntity.ok().build(); 
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import com.labweb.agrodoa_backend.dto.denuncia.AvaliacaoDenunciaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRespostaDTO;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Motivo;
@@ -56,11 +55,15 @@ public class DenunciaService {
     }
 
     @Transactional
-    public void avaliarDenuncia(String idDenuncia, AvaliacaoDenunciaDTO avaliacaoDTO) {
+    public void avaliarDenuncia(String idDenuncia, String avaliacao) {
         Denuncia denuncia = denunciaRepository.findById(idDenuncia)
                 .orElseThrow(() -> new EntityNotFoundException("Denúncia não encontrada com o ID: " + idDenuncia));
 
-        StatusDenuncia novoStatus = StatusDenuncia.valueOf(avaliacaoDTO.getStatus().toUpperCase());
+        if(denuncia.getStatus() != StatusDenuncia.AGUARDANDO){
+            throw new IllegalArgumentException("Essa denúncia já foi avaliada anteriormente.");
+        }
+
+        StatusDenuncia novoStatus = StatusDenuncia.valueOf(avaliacao.toUpperCase());
         denuncia.setStatus(novoStatus);
 
         denunciaRepository.save(denuncia);
