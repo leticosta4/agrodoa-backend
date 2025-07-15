@@ -1,13 +1,10 @@
 package com.labweb.agrodoa_backend.controller;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
@@ -86,35 +81,20 @@ public class AnuncioController {
     }
 
     // Metodos CRUD
-    @PostMapping(value = "/criar_anuncio", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(
-        @RequestParam String titulo,
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataExpiracao,
-        @RequestParam int entregaPeloFornecedor,
-        @RequestParam String tipoAnuncio,
-        @RequestParam String cidadeId,
-        @RequestParam String produtoId,
-        @RequestParam(value = "imagem", required = false) MultipartFile imagem,
-        @AuthenticationPrincipal UserDetails userDetails
-    ) {
-        String idAnunciante = contaService.findIdByEmail(userDetails.getUsername());
 
-        AnuncioDTO dto = new AnuncioDTO();
-        dto.setTitulo(titulo);
-        dto.setDataExpiracao(dataExpiracao);
-        dto.setEntregaPeloFornecedor(entregaPeloFornecedor);
-        dto.setTipoAnuncio(tipoAnuncio);
-        dto.setCidadeId(cidadeId);
-        dto.setProdutoId(produtoId);
-     
-        Anuncio anuncioSalvo = anuncioService.criarAnuncio(dto, idAnunciante, imagem);
+    @PostMapping("/criar_anuncio")
+    public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(@Valid @RequestBody AnuncioDTO anuncioDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        
+        String idAnunciante = contaService.findIdByEmail(userDetails.getUsername());
+        Anuncio anuncioSalvo = anuncioService.criarAnuncio(anuncioDTO, idAnunciante);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{idAnuncio}")
-            .buildAndExpand(anuncioSalvo.getIdAnuncio())
-            .toUri();
+                .path("/{idAnuncio}")
+                .buildAndExpand(anuncioSalvo.getIdAnuncio()).toUri();
 
-        return ResponseEntity.created(location).body(new AnuncioRespostaDTO(anuncioSalvo));
+        AnuncioRespostaDTO respostaDTO = new AnuncioRespostaDTO(anuncioSalvo);
+
+        return ResponseEntity.created(location).body(respostaDTO);
     }
 
     @PostMapping("/criar_anuncio/criar_produto")
