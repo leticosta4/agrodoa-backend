@@ -38,6 +38,9 @@ public class Anuncio {
     @Column(name = "titulo")
     private String titulo;
 
+    @Column(name = "descricao")
+    private String descricao;
+
     @Column(name = "nome_arquivo_foto")
     private String nomeArquivoFoto;
 
@@ -94,8 +97,9 @@ public class Anuncio {
     }
     */
 
-    public Anuncio(String titulo, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto) {
+    public Anuncio(String titulo, String descricao, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto) {
         this.titulo = titulo;
+        this.descricao = descricao;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
         this.tipo = tipo;

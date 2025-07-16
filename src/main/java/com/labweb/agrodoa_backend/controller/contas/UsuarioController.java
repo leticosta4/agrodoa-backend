@@ -23,7 +23,6 @@ import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
 import com.labweb.agrodoa_backend.service.AvaliacaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
-import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
@@ -101,7 +100,7 @@ public class UsuarioController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @PostMapping({"/meu_perfil/requerir_tipo_perfil"})
+    @PatchMapping({"/meu_perfil/requerir_tipo_perfil"})
     public ResponseEntity<?> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
 
         String idUser = contaService.findIdByEmail(userDetails.getUsername());
@@ -110,7 +109,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PatchMapping({"/desativar_conta"})
+    @PatchMapping({"/meu_perfil/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){
         String idUser = contaService.findIdByEmail(userDetails.getUsername());
 

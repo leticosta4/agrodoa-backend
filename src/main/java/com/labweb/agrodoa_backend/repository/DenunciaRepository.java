@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.labweb.agrodoa_backend.model.Denuncia;
-import com.labweb.agrodoa_backend.model.Motivo;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 
 public interface DenunciaRepository extends JpaRepository<Denuncia, String>{

@@ -59,18 +59,19 @@ INSERT INTO labweb_project.produto (idproduto, nome, quantidade, data_validade, 
 ('PRO0009', 'Óleo de Milho Salada 900ml', 25, '2024-09-25', NULL);
 
 INSERT INTO labweb_project.anuncio (
-  idanuncio, titulo, nome_arquivo_foto, data_expiracao, status, tipo_anuncio, 
+  idanuncio, titulo, descricao, nome_arquivo_foto, data_expiracao, status, tipo_anuncio, 
   entrega_pelo_fornecedor, cidade_idcidade, produto_idproduto, id_anunciante
 ) VALUES
-('ANU0001', 'Arroz Integral Tio João - Promoção', 'arroz_tiojoao.jpg', '2025-06-30', 'ATIVO', 'VENDA', 1, 'CID0001', 'PRO0001', 'CON0007'),
-('ANU0002', 'Feijão Kicaldo - Qualidade Garantida', 'feijao_kicaldo.jpg', '2024-07-15', 'EXPIRADO', 'VENDA', 0, 'CID0001', 'PRO0002', 'CON0007'),
-('ANU0003', 'Doação de Óleo Liza para Instituições', 'oleo_liza.jpg', '2025-05-20', 'FINALIZADO', 'DOACAO', 1, 'CID0001', 'PRO0003', 'CON0007'),
-('ANU0004', 'Arroz Prato Fino - Atacado', 'arroz_pratofino.jpg', '2025-04-10', 'FINALIZADO', 'VENDA', 1, 'CID0004', 'PRO0004', 'CON0008'),
-('ANU0005', 'Feijão Camil - Ofertas para Restaurantes', 'feijao_camil.jpg', '2025-06-25', 'ATIVO', 'VENDA', 1, 'CID0004', 'PRO0005', 'CON0008'),
-('ANU0006', 'Óleo Soya para Comunidades Carentes', 'oleo_soya.jpg', '2024-07-30', 'EXPIRADO', 'DOACAO', 0, 'CID0004', 'PRO0006', 'CON0008'),
-('ANU0007', 'Arroz Uncle Ben’s - Importado', 'arroz_unclebens.jpg', '2024-09-15', 'EXPIRADO', 'VENDA', 0, 'CID0005', 'PRO0007', 'CON0009'),
-('ANU0008', 'Feijão Preto Kero Coco - Tradicional', 'feijao_preto.jpg', '2024-08-05', 'FINALIZADO', 'VENDA', 1, 'CID0005', 'PRO0008', 'CON0009'),
-('ANU0009', 'Doação de Óleo Salada para Escolas', 'oleo_salada.jpg', '2025-06-10', 'ATIVO', 'DOACAO', 1, 'CID0005', 'PRO0009', 'CON0009');
+('ANU0001', 'Arroz Integral Tio João - Promoção', 'Pacote de 1kg, produto orgânico e saudável.', 'arroz_tiojoao.jpg', '2025-06-30', 'ATIVO', 'VENDA', 1, 'CID0001', 'PRO0001', 'CON0007'),
+('ANU0002', 'Feijão Kicaldo - Qualidade Garantida', 'Feijão tipo 1, embalado a vácuo, ideal para o dia a dia.', 'feijao_kicaldo.jpg', '2024-07-15', 'EXPIRADO', 'VENDA', 0, 'CID0001', 'PRO0002', 'CON0007'),
+('ANU0003', 'Doação de Óleo Liza para Instituições', 'Óleo de soja Liza 900ml para doação a entidades sociais.', 'oleo_liza.jpg', '2025-05-20', 'FINALIZADO', 'DOACAO', 1, 'CID0001', 'PRO0003', 'CON0007'),
+('ANU0004', 'Arroz Prato Fino - Atacado', 'Venda em grandes quantidades com preços especiais.', 'arroz_pratofino.jpg', '2025-04-10', 'FINALIZADO', 'VENDA', 1, 'CID0004', 'PRO0004', 'CON0008'),
+('ANU0005', 'Feijão Camil - Ofertas para Restaurantes', 'Feijão ideal para estabelecimentos comerciais.', 'feijao_camil.jpg', '2025-06-25', 'ATIVO', 'VENDA', 1, 'CID0004', 'PRO0005', 'CON0008'),
+('ANU0006', 'Óleo Soya para Comunidades Carentes', 'Doação de óleo vegetal para famílias em situação de vulnerabilidade.', 'oleo_soya.jpg', '2024-07-30', 'EXPIRADO', 'DOACAO', 0, 'CID0004', 'PRO0006', 'CON0008'),
+('ANU0007', 'Arroz Uncle Ben’s - Importado', 'Arroz premium importado dos EUA, em embalagem de 1kg.', 'arroz_unclebens.jpg', '2024-09-15', 'EXPIRADO', 'VENDA', 0, 'CID0005', 'PRO0007', 'CON0009'),
+('ANU0008', 'Feijão Preto Kero Coco - Tradicional', 'Feijão preto tipo 1, sabor tradicional e embalado a vácuo.', 'feijao_preto.jpg', '2024-08-05', 'FINALIZADO', 'VENDA', 1, 'CID0005', 'PRO0008', 'CON0009'),
+('ANU0009', 'Doação de Óleo Salada para Escolas', 'Óleo vegetal 900ml para doação a escolas públicas.', 'oleo_salada.jpg', '2025-06-10', 'ATIVO', 'DOACAO', 1, 'CID0005', 'PRO0009', 'CON0009');
+
 
 INSERT INTO labweb_project.requisicao (idrequisicao, usuario_conta_idconta, tipo_anterior) VALUES
 ('REQ0001', 'CON0010', 'TIP0001');
