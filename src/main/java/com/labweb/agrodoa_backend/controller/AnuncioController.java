@@ -89,6 +89,7 @@ public class AnuncioController {
     @PostMapping(value = "/criar_anuncio", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(
         @RequestParam String titulo,
+        @RequestParam String descricao,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataExpiracao,
         @RequestParam int entregaPeloFornecedor,
         @RequestParam String tipoAnuncio,
@@ -101,6 +102,7 @@ public class AnuncioController {
 
         AnuncioDTO dto = new AnuncioDTO();
         dto.setTitulo(titulo);
+        dto.setDescricao(descricao);
         dto.setDataExpiracao(dataExpiracao);
         dto.setEntregaPeloFornecedor(entregaPeloFornecedor);
         dto.setTipoAnuncio(tipoAnuncio);
