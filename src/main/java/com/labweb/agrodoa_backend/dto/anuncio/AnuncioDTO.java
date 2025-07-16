@@ -21,6 +21,8 @@ public class AnuncioDTO {
     @NotBlank(message = "O título do produto é obrigatório!")
     private String titulo;
 
+    private String descricao;
+
     private String nomeArquivoFoto;
 
     private LocalDate dataExpiracao;
@@ -40,6 +42,6 @@ public class AnuncioDTO {
     //o Usuario anunciante ja vai ser a pessoa logada e esses que tem ID seria o front que mandaria
 
     public Anuncio transformaParaObjeto(TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto){ //precisa disso? esses parametros sao temporarios
-        return new Anuncio(titulo, nomeArquivoFoto, dataExpiracao, entregaPeloFornecedor, tipo, cidade, anunciante, produto);
+        return new Anuncio(titulo, descricao, nomeArquivoFoto, dataExpiracao, entregaPeloFornecedor, tipo, cidade, anunciante, produto);
     }
 }
