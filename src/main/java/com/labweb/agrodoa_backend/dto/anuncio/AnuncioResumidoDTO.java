@@ -13,7 +13,7 @@ public class AnuncioResumidoDTO { //sem o anunciante para evitar loop de import
     private ProdutoRespostaDTO produto;
 
     public AnuncioResumidoDTO(Anuncio a) {
-        this.idAnuncio = a.getIdAnuncio(); // Supondo que você tenha um getIdAnuncio()
+        this.idAnuncio = a.getIdAnuncio();
         this.titulo = a.getTitulo();
         this.nomeArquivoFoto = a.getNomeArquivoFoto();
         this.produto = new ProdutoRespostaDTO(a.getProduto());

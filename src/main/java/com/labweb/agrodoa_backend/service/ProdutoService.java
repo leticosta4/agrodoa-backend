@@ -4,21 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
-import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.repository.ProdutoRepository;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService {
-
     @Autowired private ProdutoRepository produtoRepo;
     @Autowired private ContaRepository contaRepo;
 
     @Transactional
-    public ProdutoRespostaDTO criarProduto(ProdutoDTO dto) {
+    public Produto criarProduto(ProdutoDTO dto) {
         String novoId = GeradorIdCustom.gerarIdComPrefixo("PRO", produtoRepo, "idProduto");
 
         Produto produto = dto.transformaParaObjeto();
@@ -26,6 +25,6 @@ public class ProdutoService {
 
         Produto produtoSalvo = produtoRepo.save(produto);
 
-        return new ProdutoRespostaDTO(produtoSalvo);
+        return produtoSalvo;
     }
 }

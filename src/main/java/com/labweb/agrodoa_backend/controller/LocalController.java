@@ -19,11 +19,8 @@ import com.labweb.agrodoa_backend.repository.local.EstadoRepository;
 @RestController
 @RequestMapping("/estados")
 public class LocalController {
-    @Autowired
-    EstadoRepository estadoRepo;
-
-    @Autowired
-    CidadeRepository cidadeRepo;
+    @Autowired EstadoRepository estadoRepo;
+    @Autowired CidadeRepository cidadeRepo;
 
     @GetMapping
     public ResponseEntity<List<EstadoDTO>> listarEstados() {

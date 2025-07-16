@@ -12,27 +12,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
+import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.model.RequisicaoTrocaTipo;
 import com.labweb.agrodoa_backend.model.Tipo;
+import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.repository.RequisicaoTrocaTipoRepository;
 import com.labweb.agrodoa_backend.repository.TipoRepository;
+import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
-import com.labweb.agrodoa_backend.service.GeradorIdCustom;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository userRepo;
-    @Autowired
-    TipoRepository tipoRepo;
-    @Autowired
-    CidadeRepository cidadeRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Autowired private UsuarioRepository userRepo;
+    @Autowired private TipoRepository tipoRepo;
+    @Autowired private CidadeRepository cidadeRepo;
+    @Autowired private RequisicaoTrocaTipoRepository requisicaoTipoRepo;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private ContaRepository contaRepo;
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo, String situacao){
         Specification<Usuario> spec = Specification
@@ -74,6 +79,28 @@ public class UsuarioService {
         return new UsuarioRespostaDTO(user);
     }
 
+    public void trocaTipoUsuario(String idUser) { 
+        Usuario user = userRepo.findUsuarioByIdConta(idUser)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com o ID: " + idUser));
+
+        Tipo tipoHibrido = tipoRepo.findByNome("hibrido");
+                
+
+        if (user.getTipoUsuario().equals(tipoHibrido)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O usuário já possui o tipo de perfil 'hibrido'.");
+        }
+        
+        RequisicaoTrocaTipo novaRequisicao = new RequisicaoTrocaTipo(user);
+
+        String novoId = GeradorIdCustom.gerarIdComPrefixo("REQ", requisicaoTipoRepo, "idRequisicaoTrocaTipo");
+        novaRequisicao.setIdRequisicaoTrocaTipo(novoId);
+
+        requisicaoTipoRepo.save(novaRequisicao);
+
+        user.setTipoUsuario(tipoHibrido);
+        userRepo.save(user);
+    }
+
     public boolean alterarSituacao(String idUser, SituacaoUsuario novaSituacao){
         Optional<Usuario> user = userRepo.findUsuarioByIdConta(idUser);
         if (user.isEmpty()) { return false; }
@@ -86,11 +113,7 @@ public class UsuarioService {
         userRepo.save(usuario);
         return true;
     }
-    
 
-    public void editarPerfilUser(String idUser){
-        //...
-    }
 
     public Usuario cadastrarUsuario(UsuarioDTO userDTO){
         if (!userDTO.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userDTO.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
@@ -117,5 +140,64 @@ public class UsuarioService {
         tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
 
         return userRepo.save(tempUser);
+    }
+
+
+    public UsuarioRespostaDTO editarPerfilUser(String idUser, UsuarioDTO userRecebido){
+        if (!userRecebido.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userRecebido.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Os tipos permitido para cadastro são apenas 'fornecedor' e 'beneficiario'.");
+        }
+
+        Tipo tipoUsuario = tipoRepo.findByNome(userRecebido.getTipoUsuario());
+        Cidade cidade = cidadeRepo.findByIdCidade(userRecebido.getIdCidade());
+
+        if (tipoUsuario == null || cidade == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário ou cidade inválida.");
+        }
+
+
+        Usuario tempUser = userRepo.findUsuarioByIdConta(idUser)
+        .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com o ID: " + idUser));
+
+
+        tempUser.setNome(userRecebido.getNome());
+        tempUser.setEmail(userRecebido.getEmail());
+        tempUser.setSenha(passwordEncoder.encode(userRecebido.getSenha())); //criptografa a senha aqui e ja salva o hash no banco
+        tempUser.setCpfOuCnpj(userRecebido.getCpfOuCnpj());
+        tempUser.setTelefone(userRecebido.getTelefone());
+        tempUser.setNomeArquivoFoto(userRecebido.getNomeArquivoFoto());
+        tempUser.setCidade(cidade);
+        tempUser.setTipoUsuario(tipoUsuario);
+        tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
+
+        userRepo.save(tempUser);
+        return new UsuarioRespostaDTO(tempUser);
+    }
+
+    public UsuarioLoginDTO logarComToken(String emailUsuario){
+        
+        Optional<Conta> contaOptional = contaRepo.findByEmail(emailUsuario);
+
+        if (!contaOptional.isPresent()) {
+            System.err.println("Erro no serviço: Conta com email " + emailUsuario + " não encontrada na tabela base de contas.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Conta não encontrada.");
+        }
+
+        Conta conta = contaOptional.get();
+
+        if (!(conta instanceof Usuario)) {
+            System.err.println("Erro no serviço: Conta autenticada com email " + emailUsuario + " não é do tipo Usuário.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado: Tipo de conta inválido para este perfil.");
+        }
+
+        Optional<Usuario> usuarioCompletoOptional = userRepo.findById(conta.getIdConta());
+
+        if (!usuarioCompletoOptional.isPresent()) {
+            System.err.println("Erro no serviço: Detalhes completos do Usuário com ID " + conta.getIdConta() + " não encontrados na tabela de usuários.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Detalhes do usuário não encontrados.");
+        }
+        Usuario usuarioCompleto = usuarioCompletoOptional.get();
+
+        return new UsuarioLoginDTO(usuarioCompleto);
     }
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioResumidoDTO;
+import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoDTO;
 import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 
@@ -13,7 +14,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UsuarioRespostaDTO { 
+public class UsuarioRespostaDTO { //vai ser o exibido ao clicar em perfil
+    private String idUser;
     private String nome;
     private String email;
     String cpfOuCnpj;
@@ -23,8 +25,10 @@ public class UsuarioRespostaDTO {
     private LocalDTO local;
     private List<AnuncioResumidoDTO> anunciosPostados;
     private List<RelacaoBeneficiarioDTO> relacoesAnuncios;
+    private List<AvaliacaoDTO> avaliacoes;
     
     public UsuarioRespostaDTO(Usuario user){
+        this.idUser = user.getIdConta();
         this.nome = user.getNome();
         this.email = user.getEmail();
         this.cpfOuCnpj = user.getCpfOuCnpj();
@@ -45,6 +49,13 @@ public class UsuarioRespostaDTO {
                                         .stream()
                                         .map(RelacaoBeneficiarioDTO::new)
                                         .collect(Collectors.toList());
+        }
+
+        if(user.getAvaliacoes() != null){
+            this.avaliacoes = user.getAvaliacoes()
+                                    .stream()
+                                    .map(AvaliacaoDTO::new)
+                                    .collect(Collectors.toList());
         }
     }
 }

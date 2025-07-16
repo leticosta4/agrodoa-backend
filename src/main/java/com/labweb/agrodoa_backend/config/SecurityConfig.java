@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,11 +25,8 @@ import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private JwtFilter jwtFilter;
-
-    @Autowired
-    private ContaDetailsService contaDetailsService;
+    @Autowired private JwtFilter jwtFilter;
+    @Autowired private ContaDetailsService contaDetailsService;
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,13 +41,15 @@ public class SecurityConfig {
                             "/administradores",
                             "/causas",
                             "/causas/*",
+                            "/causas/criar_causa",
                             "/estados",
                             "/estados/*/cidades",
                             "/usuarios/cadastrar_usuario",
-                            "/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar
+                            ////"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo - so se der tempo
                             "/usuarios/ver_perfil/*",
                             "/anuncios",
-                            //"/anuncios/*",  //NAO FUNCIONA AINDA
+                            "/usuarios",
+                            "/anuncios/*",
                             "/error",
 
                             "/v3/api-docs/**",
@@ -61,16 +59,28 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
+            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.PATCH, "/denuncias/*/aprovar", "/denuncias/*/reprovar").hasRole("ADMINISTRADOR")
+
+            
 
             //endpoints user geral
-            .requestMatchers(HttpMethod.PATCH, "/usuarios/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/avaliar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.PUT, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.PATCH, "/usuarios/meu_perfil/requerir_tipo_perfil", "/usuarios/meu_perfil/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+
 
             //endpoints fornecedor
             .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
             .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
             .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
+
+            //endpoints beneficiario
+            .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil/meus_salvos", "/usuarios/meu_perfil/minhas_negociacoes").hasRole("BENEFICIARIO")
+            .requestMatchers(HttpMethod.POST, "/anuncios/*/salvar", "/anuncios/*/iniciar_negociacao").hasRole("BENEFICIARIO") //ainda falta testar a de iniciar negociacao
 
             .anyRequest().authenticated()
             )
@@ -97,8 +107,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //return new BCryptPasswordEncoder();
-        return NoOpPasswordEncoder.getInstance(); //só um teste
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

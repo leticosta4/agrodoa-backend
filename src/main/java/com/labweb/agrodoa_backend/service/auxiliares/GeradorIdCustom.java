@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.service;
+package com.labweb.agrodoa_backend.service.auxiliares;
 
 import java.lang.reflect.Field;
 import java.util.List;
