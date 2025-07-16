@@ -24,8 +24,6 @@ public class ProdutoDTO { //precisa de um atributo id?
 
     private LocalDate dataValidade;
 
-    @Positive(message = "O preço da unidade do produto deve ser um valor positivo!")
-    @NotNull(message = "O preço da unidade do produto é obrigatório!")
     private Double precoUnidade;
 
     public Produto transformaParaObjeto(){ //precisa disso?
