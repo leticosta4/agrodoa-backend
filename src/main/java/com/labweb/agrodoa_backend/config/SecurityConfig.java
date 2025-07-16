@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -67,6 +66,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasRole("ADMINISTRADOR")
 
             //endpoints user geral
+            .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/avaliar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PUT, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
@@ -107,8 +107,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //return new BCryptPasswordEncoder();
-        return NoOpPasswordEncoder.getInstance(); //só um teste
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
