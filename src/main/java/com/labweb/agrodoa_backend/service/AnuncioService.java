@@ -23,6 +23,8 @@ import com.labweb.agrodoa_backend.repository.ProdutoRepository;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.CloudinaryService;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.AnuncioSpecification;
 
 import jakarta.persistence.EntityNotFoundException;

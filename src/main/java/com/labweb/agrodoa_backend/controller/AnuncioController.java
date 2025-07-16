@@ -44,7 +44,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/anuncios")
 public class AnuncioController {
-
     @Autowired private AnuncioService anuncioService;
     @Autowired private ContaDetailsService contaService;
     @Autowired private ProdutoService produtoService;

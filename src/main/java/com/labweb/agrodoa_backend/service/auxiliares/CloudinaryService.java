@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.service;
+package com.labweb.agrodoa_backend.service.auxiliares;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -10,12 +10,7 @@ import java.util.Map;
 
 @Service
 public class CloudinaryService {
-
-    private final Cloudinary cloudinary;
-
-    public CloudinaryService(Cloudinary cloudinary) {
-        this.cloudinary = cloudinary;
-    }
+    private Cloudinary cloudinary;
 
     public String uploadImagem(MultipartFile file) {
         try {

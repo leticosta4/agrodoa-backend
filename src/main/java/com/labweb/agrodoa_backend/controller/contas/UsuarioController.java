@@ -1,8 +1,8 @@
 package com.labweb.agrodoa_backend.controller.contas;
 
 import java.net.URI;
-import java.security.Principal;
 import java.time.Duration;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

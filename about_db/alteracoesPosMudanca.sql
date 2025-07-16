@@ -106,3 +106,12 @@ WHERE idanuncio = 'ANU0009';
 --anuncio na verdade tem o campo descricao também
 ALTER TABLE labweb_project.anuncio ADD COLUMN descricao TEXT;
 
+UPDATE labweb_project.anuncio SET descricao = 'Pacote de 1kg, produto orgânico e saudável.' WHERE idanuncio = 'ANU0001';
+UPDATE labweb_project.anuncio SET descricao = 'Feijão tipo 1, embalado a vácuo, ideal para o dia a dia.' WHERE idanuncio = 'ANU0002';
+UPDATE labweb_project.anuncio SET descricao = 'Óleo de soja Liza 900ml para doação a entidades sociais.' WHERE idanuncio = 'ANU0003';
+UPDATE labweb_project.anuncio SET descricao = 'Venda em grandes quantidades com preços especiais.' WHERE idanuncio = 'ANU0004';
+UPDATE labweb_project.anuncio SET descricao = 'Feijão ideal para estabelecimentos comerciais.' WHERE idanuncio = 'ANU0005';
+UPDATE labweb_project.anuncio SET descricao = 'Doação de óleo vegetal para famílias em situação de vulnerabilidade.' WHERE idanuncio = 'ANU0006';
+UPDATE labweb_project.anuncio SET descricao = 'Arroz premium importado dos EUA, em embalagem de 1kg.' WHERE idanuncio = 'ANU0007';
+UPDATE labweb_project.anuncio SET descricao = 'Feijão preto tipo 1, sabor tradicional e embalado a vácuo.' WHERE idanuncio = 'ANU0008';
+UPDATE labweb_project.anuncio SET descricao = 'Óleo vegetal 900ml para doação a escolas públicas.' WHERE idanuncio = 'ANU0009';
