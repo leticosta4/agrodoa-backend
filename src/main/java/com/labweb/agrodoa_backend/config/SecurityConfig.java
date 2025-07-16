@@ -75,6 +75,7 @@ public class SecurityConfig {
 
             //endpoints fornecedor
             .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
             .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
 
             //endpoints beneficiario
