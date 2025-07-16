@@ -14,32 +14,30 @@ import org.springframework.web.server.ResponseStatusException;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
+import com.labweb.agrodoa_backend.model.RequisicaoTrocaTipo;
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
+import com.labweb.agrodoa_backend.repository.RequisicaoTrocaTipoRepository;
 import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
-import com.labweb.agrodoa_backend.service.GeradorIdCustom;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository userRepo;
-    @Autowired
-    TipoRepository tipoRepo;
-    @Autowired
-    CidadeRepository cidadeRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private ContaRepository contaRepo;
+    @Autowired private UsuarioRepository userRepo;
+    @Autowired private TipoRepository tipoRepo;
+    @Autowired private CidadeRepository cidadeRepo;
+    @Autowired private RequisicaoTrocaTipoRepository requisicaoTipoRepo;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private ContaRepository contaRepo;
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo, String situacao){
         Specification<Usuario> spec = Specification
@@ -79,6 +77,28 @@ public class UsuarioService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "\n\n\nUsuário não encontrado com o ID: " + idUser + "!\n\n"));
 
         return new UsuarioRespostaDTO(user);
+    }
+
+    public void trocaTipoUsuario(String idUser) { 
+        Usuario user = userRepo.findUsuarioByIdConta(idUser)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com o ID: " + idUser));
+
+        Tipo tipoHibrido = tipoRepo.findByNome("hibrido");
+                
+
+        if (user.getTipoUsuario().equals(tipoHibrido)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O usuário já possui o tipo de perfil 'hibrido'.");
+        }
+        
+        RequisicaoTrocaTipo novaRequisicao = new RequisicaoTrocaTipo(user);
+
+        String novoId = GeradorIdCustom.gerarIdComPrefixo("REQ", requisicaoTipoRepo, "idRequisicaoTrocaTipo");
+        novaRequisicao.setIdRequisicaoTrocaTipo(novoId);
+
+        requisicaoTipoRepo.save(novaRequisicao);
+
+        user.setTipoUsuario(tipoHibrido);
+        userRepo.save(user);
     }
 
     public boolean alterarSituacao(String idUser, SituacaoUsuario novaSituacao){
@@ -155,7 +175,7 @@ public class UsuarioService {
     }
 
     public UsuarioLoginDTO logarComToken(String emailUsuario){
-
+        
         Optional<Conta> contaOptional = contaRepo.findByEmail(emailUsuario);
 
         if (!contaOptional.isPresent()) {

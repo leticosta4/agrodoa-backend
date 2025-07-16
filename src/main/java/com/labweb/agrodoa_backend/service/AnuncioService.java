@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
@@ -22,6 +23,8 @@ import com.labweb.agrodoa_backend.repository.ProdutoRepository;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.CloudinaryService;
+import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.AnuncioSpecification;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -34,6 +37,7 @@ public class AnuncioService {
     @Autowired private ProdutoRepository produtoRepo;
     @Autowired private UsuarioRepository userRepo; // Para buscar o anunciante
     @Autowired private ContaRepository contaRepo; // Para buscar o anunciante, se necessário
+    @Autowired private CloudinaryService cloudnary;
 
     private Specification<Anuncio> criarSpecification(AnuncioFiltroDTO dto) {
         return Specification
@@ -73,8 +77,8 @@ public class AnuncioService {
     }
 
     @Transactional
-    public Anuncio criarAnuncio(AnuncioDTO dto, String idAnunciante) {
-
+    public Anuncio criarAnuncio(AnuncioDTO dto, String idAnunciante, MultipartFile imagem) {
+        dto.setNomeArquivoFoto(cloudnary.uploadImagem(imagem));
         Cidade cidade = cidadeRepo.findById(dto.getCidadeId())
                 .orElseThrow(() -> new EntityNotFoundException("Cidade não encontrada com o ID: " + dto.getCidadeId()));
         Produto produto = produtoRepo.findById(dto.getProdutoId())

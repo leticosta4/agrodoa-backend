@@ -4,7 +4,6 @@ import java.net.URI;
 import java.time.Duration;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,10 +16,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.config.JwtUtil;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
+import com.labweb.agrodoa_backend.service.AvaliacaoService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -47,20 +48,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    @Autowired
-    private UsuarioService userService;
-
-    @Autowired
-    private ContaDetailsService contaService;
-
-    @Autowired
-    private DenunciaService denunciaService;
-
-    @Autowired
-    private RelacaoBeneficiarioService relacaoBenefService;
-
-    @Autowired
-    private JwtUtil jwt;
+    @Autowired private UsuarioService userService;
+    @Autowired private ContaDetailsService contaService;
+    @Autowired private DenunciaService denunciaService;
+    @Autowired private RelacaoBeneficiarioService relacaoBenefService;
+    @Autowired private JwtUtil jwt;
+    @Autowired private AvaliacaoService avaliacaoService;
 
     @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
@@ -84,7 +77,6 @@ public class UsuarioController {
 
     @PostMapping("/ver_perfil/{idUser}/denunciar")
     public ResponseEntity<?> denunciarUsuario(@PathVariable String idUser, @RequestBody DenunciaRequestDTO denunciaDTO, @AuthenticationPrincipal UserDetails userDetails) {
-
         String idDenunciante = contaService.findIdByEmail(userDetails.getUsername());
 
         denunciaService.criarDenuncia(idDenunciante, idUser, denunciaDTO.getNomeMotivo());
@@ -92,14 +84,31 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PostMapping("/ver_perfil/{idUser}/avaliar")
+    public ResponseEntity<?> avaliarUsuario(@PathVariable String idUser, @RequestBody AvaliacaoRequestDTO avaliacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        String idAvaliador = contaService.findIdByEmail(userDetails.getUsername());
+
+        avaliacaoService.criarAvaliacao(idAvaliador, idUser, avaliacaoDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @GetMapping("/meu_perfil") 
         public ResponseEntity<UsuarioLoginDTO> exibirMeuPerfil(Principal principal) {
-            String emailUsuario = principal.getName();
-            UsuarioLoginDTO responseDTO = userService.logarComToken(emailUsuario);
-
+        String emailUsuario = principal.getName();
+        UsuarioLoginDTO responseDTO = userService.logarComToken(emailUsuario);
         return ResponseEntity.ok(responseDTO);
     }
 
+    @PostMapping({"/meu_perfil/requerir_tipo_perfil"})
+    public ResponseEntity<?> requerirTipo(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String idUser = contaService.findIdByEmail(userDetails.getUsername());
+        userService.trocaTipoUsuario(idUser);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
     @PatchMapping({"/desativar_conta"})
     public ResponseEntity<Void> desativarContaUser(@AuthenticationPrincipal UserDetails userDetails){

@@ -1,34 +1,22 @@
 package com.labweb.agrodoa_backend.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.labweb.agrodoa_backend.dto.denuncia.AvaliacaoDenunciaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRespostaDTO;
 import com.labweb.agrodoa_backend.service.DenunciaService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-
 
 @RestController
 @RequestMapping("/denuncias")
 public class DenunciaController {
-
-    @Autowired
-    private DenunciaService denunciaService;
+    @Autowired private DenunciaService denunciaService;
 
     @GetMapping
     public ResponseEntity<List<DenunciaRespostaDTO>> listarDenuncias() {
@@ -36,12 +24,15 @@ public class DenunciaController {
         return ResponseEntity.ok(listaDenuncias);
     }
 
-    // @PatchMapping("/{idDenuncia}/avaliar")
-    @PatchMapping("/{idDenuncia}/avaliarDenuncia")
-    public ResponseEntity<Void> avaliarDenuncia(@PathVariable String idDenuncia, @Valid @RequestBody AvaliacaoDenunciaDTO avaliacaoDTO) {
-        
-        denunciaService.avaliarDenuncia(idDenuncia, avaliacaoDTO);
-
+    @PatchMapping("/{idDenuncia}/aprovar")
+    public ResponseEntity<Void> aprovarDenuncia(@PathVariable String idDenuncia){
+        denunciaService.avaliarDenuncia(idDenuncia, "APROVADA");
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{idDenuncia}/reprovar")
+    public ResponseEntity<Void> reprovarDenuncia(@PathVariable String idDenuncia) {
+        denunciaService.avaliarDenuncia(idDenuncia, "REPROVADA");
+        return ResponseEntity.ok().build(); 
     }
 }

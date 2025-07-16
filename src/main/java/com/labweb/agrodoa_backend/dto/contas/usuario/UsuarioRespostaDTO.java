@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioResumidoDTO;
+import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoDTO;
 import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 
@@ -24,6 +25,7 @@ public class UsuarioRespostaDTO { //vai ser o exibido ao clicar em perfil
     private LocalDTO local;
     private List<AnuncioResumidoDTO> anunciosPostados;
     private List<RelacaoBeneficiarioDTO> relacoesAnuncios;
+    private List<AvaliacaoDTO> avaliacoes;
     
     public UsuarioRespostaDTO(Usuario user){
         this.idUser = user.getIdConta();
@@ -47,6 +49,13 @@ public class UsuarioRespostaDTO { //vai ser o exibido ao clicar em perfil
                                         .stream()
                                         .map(RelacaoBeneficiarioDTO::new)
                                         .collect(Collectors.toList());
+        }
+
+        if(user.getAvaliacoes() != null){
+            this.avaliacoes = user.getAvaliacoes()
+                                    .stream()
+                                    .map(AvaliacaoDTO::new)
+                                    .collect(Collectors.toList());
         }
     }
 }

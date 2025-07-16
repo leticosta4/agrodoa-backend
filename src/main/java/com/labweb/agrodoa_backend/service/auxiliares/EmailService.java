@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.service;
+package com.labweb.agrodoa_backend.service.auxiliares;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
