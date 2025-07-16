@@ -1,5 +1,7 @@
 -- caso ja tenha criado as tabelas, rodar isso:
 
+ALTER TABLE labweb_project.causa MODIFY COLUMN descricao TEXT;
+
 -- colunas de adm com varchar maior
 alter table administrador modify github varchar(255);
 alter table administrador modify linkedin varchar(255);
@@ -100,3 +102,7 @@ update usuario set situacao = 'ATIVO';
 UPDATE anuncio 
 SET data_expiracao = '2025-08-10' 
 WHERE idanuncio = 'ANU0009';
+
+--anuncio na verdade tem o campo descricao também
+ALTER TABLE labweb_project.anuncio ADD COLUMN descricao TEXT;
+

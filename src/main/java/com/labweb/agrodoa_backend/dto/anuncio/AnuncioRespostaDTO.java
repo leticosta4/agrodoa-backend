@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class AnuncioRespostaDTO {
     private String idAnuncio;
     private String titulo;
+    private String descricao;
     private String nomeArquivoFoto;
     private LocalDate dataExpiracao;
     private int entregaPeloFornecedor; //talvez mudar para boolean
@@ -29,6 +30,7 @@ public class AnuncioRespostaDTO {
     public AnuncioRespostaDTO(Anuncio a){
         this.idAnuncio = a.getIdAnuncio();
         this.titulo = a.getTitulo();
+        this.descricao = a.getDescricao();
         this.nomeArquivoFoto = a.getNomeArquivoFoto();
         this.dataExpiracao = a.getDataExpiracao();
         this.entregaPeloFornecedor = a.getEntregaPeloFornecedor();

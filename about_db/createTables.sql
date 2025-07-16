@@ -104,6 +104,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`anuncio` (
   `idanuncio` VARCHAR(7) NOT NULL,
   `titulo` VARCHAR(60) NOT NULL,
+  `descricao` TEXT,
   `nome_arquivo_foto` VARCHAR(60) NOT NULL,
   `data_expiracao` DATE NOT NULL,
   `status` VARCHAR(20) NOT NULL,
@@ -141,7 +142,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `idcausa` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
-  `descricao` TEXT(150) NOT NULL,
+  `descricao` TEXT NOT NULL,
   `meta` DECIMAL(7,2) NOT NULL,
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,

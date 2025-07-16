@@ -108,6 +108,7 @@ public class AnuncioService {
         TipoAnuncio tipo = TipoAnuncio.valueOf(dto.getTipoAnuncio().toUpperCase());
         
         anuncio.setTitulo(dto.getTitulo());
+        anuncio.setDescricao(dto.getDescricao());
         anuncio.setNomeArquivoFoto(dto.getNomeArquivoFoto());
         anuncio.setDataExpiracao(dto.getDataExpiracao());
         anuncio.setEntregaPeloFornecedor(dto.getEntregaPeloFornecedor());
