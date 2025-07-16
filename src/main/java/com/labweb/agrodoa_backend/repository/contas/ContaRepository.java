@@ -11,7 +11,9 @@ import org.springframework.data.repository.query.Param;
 public interface ContaRepository extends JpaRepository<Conta, String>{
   boolean existsByIdConta(String idConta);
   Optional<Conta> findByEmail(String email);
-  String findEmailByIdConta(String idConta);
+  
+  @Query("SELECT c.email FROM Conta c WHERE c.idConta = :idConta")
+    String findEmailByIdConta(@Param("idConta") String idConta);
 
   @Query("SELECT c.idConta FROM Conta c WHERE c.email = :email")
   String findIdContaByEmail(@Param("email") String email);

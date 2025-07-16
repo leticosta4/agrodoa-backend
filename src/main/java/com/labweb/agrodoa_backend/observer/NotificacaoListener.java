@@ -87,6 +87,7 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
             "Informamos que uma denúncia registrada contra você em nossa plataforma foi analisada e aprovada por nossa equipe de moderação.\n\n" +
             "Motivo da Denúncia: %s\n\n" +
             "Ações cabíveis poderão ser tomadas de acordo com nossos termos de serviço.\n\n" +
+            "Atenção: Caso sua conta atinja o limite de 3 denúncias aprovadas, ela será automaticamente suspensa.\n\n" +
             "Atenciosamente,\nEquipe Agrodoa.",
             usuarioDenunciado.getNome(),
             denunciaAprovada.getMotivo().getNome()

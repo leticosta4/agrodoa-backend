@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,15 @@ public class DenunciaService {
         Motivo motivo = motivoRepository.findByNomeIgnoreCase(nomeMotivo)
                 .orElseThrow(() -> new EntityNotFoundException("Motivo da denúncia não encontrado com o nome: '" + nomeMotivo + "'"));
 
+        if (denunciante.equals(denunciado)) {
+                throw new IllegalArgumentException("O usuário não pode denunciar a si mesmo.");
+        }
+
+        Denuncia denunciaExistente = denunciaRepository.findByDenuncianteAndDenunciado(denunciante, denunciado);
+        if (denunciaExistente != null) {
+            throw new IllegalArgumentException("Esta denúncia já existe para este usuário, denunciado e motivo.");
+        }
+
         String novoIdDenuncia = GeradorIdCustom.gerarIdComPrefixo("DEN", denunciaRepository, "idDenuncia");
         
         Denuncia novaDenuncia = new Denuncia(motivo, denunciante, denunciado);
@@ -68,9 +78,8 @@ public class DenunciaService {
 
         denunciaRepository.saveAndFlush(denuncia);
 
-        // Verifica se a denúncia foi aprovada para então notificar o usuário
         if (novoStatus == StatusDenuncia.APROVADA) {
-        //     eventPublisher.publishEvent(new DenunciaAprovadaEvent(denuncia));
+            eventPublisher.publishEvent(new DenunciaAprovadaEvent(denuncia));
         }
     }
 }
