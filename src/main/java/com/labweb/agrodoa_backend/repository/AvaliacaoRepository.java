@@ -14,6 +14,8 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, String>{
     ArrayList <Avaliacao> findAllByAvaliado(Usuario avaliado);
     Avaliacao findByIdAvaliacao(String idAvaliacao); //para poder editar
 
+    Avaliacao findByAvaliadorAndAvaliado(Usuario avaliador, Usuario avaliado);
+
     //precisa:?
     // Avaliacao findAllByIdAvaliacaoAndIdAvaliado(String idAvaliacao, String idAvaliado);
     // Avaliacao findAllByAvaliadorId(String idAvaliador);

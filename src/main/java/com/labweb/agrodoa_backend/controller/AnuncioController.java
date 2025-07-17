@@ -81,7 +81,7 @@ public class AnuncioController {
         String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
         RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO);
 
-       return ResponseEntity.ok(negociacaoIniciada);
+        return ResponseEntity.ok(negociacaoIniciada);
     }
 
     // Metodos CRUD
