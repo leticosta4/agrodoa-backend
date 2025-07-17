@@ -48,7 +48,6 @@ public class SecurityConfig {
                             ////"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo - so se der tempo
                             "/usuarios/ver_perfil/*",
                             "/anuncios",
-                            "/usuarios",
                             "/anuncios/*",
                             "/error",
 
