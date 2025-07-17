@@ -9,7 +9,7 @@ INSERT INTO labweb_project.conta (idconta, nome, senha, email) VALUES
 ('CON0007', 'FornecedoraAlimentos1', 'fornecedora123', 'leti.almeida0221@gmail.com'),
 ('CON0008', 'FornecedoraALimentos2', 'fornecedora456', 'melcostaoa@gmail.com'),
 ('CON0009', 'AlimentosSaudaveis', 'alimentos123', 'alyssonoliveira4567@gmail.com'),
-('CON0010', 'Alizon Anjos', 'rafael123', 'alyssonoliveira45678@gmail.com');
+('CON0010', 'Alizon Anjos', 'Alizon123', 'alyssonoliveira45678@gmail.com');
 --- 4 a 6 p beneficiario, 7 a  p fornecedor, 10 p virar hibrido
 
 -- em adm
@@ -28,7 +28,7 @@ INSERT INTO labweb_project.usuario (conta_idconta, cpf_ou_cnpj, nome_arquivo_fot
 ('CON0004', '12345678909', 'foto_sophia.png', '71997172280', 'CID0001', 'TIP0001', 'ATIVO'),
 ('CON0005', '98765432100', 'foto_brunna.png', '71997456739', 'CID0001', 'TIP0001', 'ATIVO'),
 ('CON0006', '11122233396', 'foto_kaik.png', '71987664532', 'CID0002', 'TIP0001', 'ATIVO'),
-('CON0010', '55544477735', 'foto_rafael.png', '7199443567', 'CID0003','TIP0003', 'ATIVO'),
+('CON0010', '55544477735', 'foto_Alizon.png', '7199443567', 'CID0003','TIP0003', 'ATIVO'),
 ('CON0007', '12345678000195', 'foto_fornecedora1.png', '71912345678', 'CID0001', 'TIP0002', 'ATIVO'),
 ('CON0008', '98765432000146', 'foto_fornecedora2.png', '21987654321', 'CID0004', 'TIP0002', 'ATIVO'),
 ('CON0009', '55444333000122', 'foto_aliimentos.png', '2134567890', 'CID0005', 'TIP0002', 'ATIVO');
@@ -47,46 +47,46 @@ INSERT INTO labweb_project.estado (idestado, nome) VALUES
 ('EST0003', 'Rio de Janeiro');
 
 
-INSERT INTO labweb_project.produto (idproduto, nome, quantidade, data_validade, preco_unidade) VALUES
-('PRO0001', 'Arroz Integral 5kg', 50, '2024-12-31', 6.50),
-('PRO0002', 'Feijão Carioca 1kg', 100, '2025-06-30', 8.50),
-('PRO0003', 'Óleo de Soja 900ml', 30, '2024-10-15', NULL),
-('PRO0004', 'Arroz Branco Prato Fino 5kg', 40, '2025-01-15', 5.80),  
-('PRO0005', 'Feijão Camil 1kg', 80, '2025-07-20', 8.50),             
-('PRO0006', 'Óleo de Girassol Soya 1L', 20, '2024-11-30', NULL),
-('PRO0007', 'Arroz Parboilizado Uncle Ben’s 5kg', 60, '2025-03-10', 12.90),
-('PRO0008', 'Feijão Preto Kero Coco 1kg', 70, '2025-08-05', 10.50),          
-('PRO0009', 'Óleo de Milho Salada 900ml', 25, '2024-09-25', NULL);
+INSERT INTO labweb_project.produto (idproduto, nome, quantidade, data_validade) VALUES
+('PRO0001', 'Arroz Integral 5kg', 50, '2024-12-31'),
+('PRO0002', 'Feijão Carioca 1kg', 100, '2025-06-30'),
+('PRO0003', 'Óleo de Soja 900ml', 30, '2024-10-15'),
+('PRO0004', 'Arroz Branco Prato Fino 5kg', 40, '2025-01-15'),  
+('PRO0005', 'Feijão Camil 1kg', 80, '2025-07-20'),             
+('PRO0006', 'Óleo de Girassol Soya 1L', 20, '2024-11-30'),
+('PRO0007', 'Arroz Parboilizado Uncle Ben’s 5kg', 60, '2025-03-10'),
+('PRO0008', 'Feijão Preto Kero Coco 1kg', 70, '2025-08-05'),          
+('PRO0009', 'Óleo de Milho Salada 900ml', 25, '2024-09-25');
 
 INSERT INTO labweb_project.anuncio (
-  idanuncio, titulo, descricao, nome_arquivo_foto, data_expiracao, status, tipo_anuncio, 
+  idanuncio, titulo, descricao, nome_arquivo_foto, data_expiracao, status, 
   entrega_pelo_fornecedor, cidade_idcidade, produto_idproduto, id_anunciante
 ) VALUES
-('ANU0001', 'Arroz Integral Tio João - Promoção', 'Pacote de 1kg, produto orgânico e saudável.', 'arroz_tiojoao.jpg', '2025-06-30', 'ATIVO', 'VENDA', 1, 'CID0001', 'PRO0001', 'CON0007'),
-('ANU0002', 'Feijão Kicaldo - Qualidade Garantida', 'Feijão tipo 1, embalado a vácuo, ideal para o dia a dia.', 'feijao_kicaldo.jpg', '2024-07-15', 'EXPIRADO', 'VENDA', 0, 'CID0001', 'PRO0002', 'CON0007'),
-('ANU0003', 'Doação de Óleo Liza para Instituições', 'Óleo de soja Liza 900ml para doação a entidades sociais.', 'oleo_liza.jpg', '2025-05-20', 'FINALIZADO', 'DOACAO', 1, 'CID0001', 'PRO0003', 'CON0007'),
-('ANU0004', 'Arroz Prato Fino - Atacado', 'Venda em grandes quantidades com preços especiais.', 'arroz_pratofino.jpg', '2025-04-10', 'FINALIZADO', 'VENDA', 1, 'CID0004', 'PRO0004', 'CON0008'),
-('ANU0005', 'Feijão Camil - Ofertas para Restaurantes', 'Feijão ideal para estabelecimentos comerciais.', 'feijao_camil.jpg', '2025-06-25', 'ATIVO', 'VENDA', 1, 'CID0004', 'PRO0005', 'CON0008'),
-('ANU0006', 'Óleo Soya para Comunidades Carentes', 'Doação de óleo vegetal para famílias em situação de vulnerabilidade.', 'oleo_soya.jpg', '2024-07-30', 'EXPIRADO', 'DOACAO', 0, 'CID0004', 'PRO0006', 'CON0008'),
-('ANU0007', 'Arroz Uncle Ben’s - Importado', 'Arroz premium importado dos EUA, em embalagem de 1kg.', 'arroz_unclebens.jpg', '2024-09-15', 'EXPIRADO', 'VENDA', 0, 'CID0005', 'PRO0007', 'CON0009'),
-('ANU0008', 'Feijão Preto Kero Coco - Tradicional', 'Feijão preto tipo 1, sabor tradicional e embalado a vácuo.', 'feijao_preto.jpg', '2024-08-05', 'FINALIZADO', 'VENDA', 1, 'CID0005', 'PRO0008', 'CON0009'),
-('ANU0009', 'Doação de Óleo Salada para Escolas', 'Óleo vegetal 900ml para doação a escolas públicas.', 'oleo_salada.jpg', '2025-06-10', 'ATIVO', 'DOACAO', 1, 'CID0005', 'PRO0009', 'CON0009');
+('ANU0001', 'Arroz Integral Tio João - Promoção', 'Pacote de 1kg, produto orgânico e saudável.', 'arroz_tiojoao.jpg', '2025-06-30', 'ATIVO', 1, 'CID0001', 'PRO0001', 'CON0007'),
+('ANU0002', 'Feijão Kicaldo - Qualidade Garantida', 'Feijão tipo 1, embalado a vácuo, ideal para o dia a dia.', 'feijao_kicaldo.jpg', '2024-07-15', 'EXPIRADO', 0, 'CID0001', 'PRO0002', 'CON0007'),
+('ANU0003', 'Doação de Óleo Liza para Instituições', 'Óleo de soja Liza 900ml para doação a entidades sociais.', 'oleo_liza.jpg', '2025-05-20', 'FINALIZADO', 1, 'CID0001', 'PRO0003', 'CON0007'),
+('ANU0004', 'Arroz Prato Fino - Atacado', 'Venda em grandes quantidades com preços especiais.', 'arroz_pratofino.jpg', '2025-04-10', 'FINALIZADO', 1, 'CID0004', 'PRO0004', 'CON0008'),
+('ANU0005', 'Feijão Camil - Ofertas para Restaurantes', 'Feijão ideal para estabelecimentos comerciais.', 'feijao_camil.jpg', '2025-06-25', 'ATIVO', 1, 'CID0004', 'PRO0005', 'CON0008'),
+('ANU0006', 'Óleo Soya para Comunidades Carentes', 'Doação de óleo vegetal para famílias em situação de vulnerabilidade.', 'oleo_soya.jpg', '2024-07-30', 'EXPIRADO', 0, 'CID0004', 'PRO0006', 'CON0008'),
+('ANU0007', 'Arroz Uncle Ben’s - Importado', 'Arroz premium importado dos EUA, em embalagem de 1kg.', 'arroz_unclebens.jpg', '2024-09-15', 'EXPIRADO', 0, 'CID0005', 'PRO0007', 'CON0009'),
+('ANU0008', 'Feijão Preto Kero Coco - Tradicional', 'Feijão preto tipo 1, sabor tradicional e embalado a vácuo.', 'feijao_preto.jpg', '2024-08-05', 'FINALIZADO', 1, 'CID0005', 'PRO0008', 'CON0009'),
+('ANU0009', 'Doação de Óleo Salada para Escolas', 'Óleo vegetal 900ml para doação a escolas públicas.', 'oleo_salada.jpg', '2025-06-10', 'ATIVO', 1, 'CID0005', 'PRO0009', 'CON0009');
 
 
-INSERT INTO labweb_project.requisicao (idrequisicao, usuario_conta_idconta, tipo_anterior) VALUES
-('REQ0001', 'CON0010', 'TIP0001');
+INSERT INTO labweb_project.requisicao (idrequisicao, usuario_conta_idconta) VALUES
+('REQ0001', 'CON0010');
 
 -- o tipo da relação pode ser Negociando ou Salvou
 --para anuncios expirados
 INSERT INTO labweb_project.relacao_beneficiario 
 (anuncio_idanuncio, usuario_conta_idconta, tipo_relacao_interessado) VALUES
 ('ANU0002', 'CON0006', 'SALVOU'),  -- Kaik interessado no feijão
-('ANU0007', 'CON0010', 'SALVOU');  -- Rafael interessado no arroz importado
+('ANU0007', 'CON0010', 'SALVOU');  -- Alizon interessado no arroz importado
 
 --para anuncios finalizados
 INSERT INTO labweb_project.relacao_beneficiario 
 (anuncio_idanuncio, usuario_conta_idconta, tipo_relacao_interessado) VALUES
-('ANU0003', 'CON0010', 'NEGOCIANDO'), -- Rafael aprovado na doação de óleo
+('ANU0003', 'CON0010', 'NEGOCIANDO'), -- Alizon aprovado na doação de óleo
 ('ANU0004', 'CON0005', 'NEGOCIANDO'),  -- Brunna aprovada no arroz
 ('ANU0008', 'CON0004', 'NEGOCIANDO');  -- Sophia aprovada no feijão preto
 
@@ -97,22 +97,22 @@ INSERT INTO labweb_project.relacao_beneficiario
 ('ANU0001', 'CON0005', 'SALVOU'),  -- Brunna também interessada
 ('ANU0005', 'CON0004', 'SALVOU'),  -- Sophia interessada no feijão
 ('ANU0005', 'CON0006', 'SALVOU'),  -- Kaik também interessado
-('ANU0009', 'CON0010', 'SALVOU');  -- Rafael interessado na doação de óleo
+('ANU0009', 'CON0010', 'SALVOU');  -- Alizon interessado na doação de óleo
 
 INSERT INTO `labweb_project`.`negociacao` 
-(`negociacao_idnegociacao`, `valor_pago`, `quantidade`, `id_anuncio`, `id_beneficiario`, `status_negociacao`) VALUES
+(`negociacao_idnegociacao`, `quantidade`, `id_anuncio`, `id_beneficiario`, `status_negociacao`) VALUES
 
-('NEG0001', NULL, 5, 'ANU0003', 'CON0010', 'FINALIZADA'),  -- Negociação 1: Doação de óleo (anúncio 3) para Rafael >>> Doação não tem valor_pago
-('NEG0002', 23.20, 4, 'ANU0004', 'CON0005', 'FINALIZADA'),  -- Negociação 2: Compra de arroz (anúncio 4) por Brunna >>> 4 unidades x R$5.80 (preço do produto 4)
-('NEG0003', 10.50, 1, 'ANU0008', 'CON0004', 'FINALIZADA');  -- Negociação 3: Compra de feijão (anúncio 8) por Sophia >>> 1 unidade x R$10.50 (preço do produto 8)
+('NEG0001', 5, 'ANU0003', 'CON0010', 'FINALIZADA'),
+('NEG0002', 4, 'ANU0004', 'CON0005', 'FINALIZADA'),
+('NEG0003', 1, 'ANU0008', 'CON0004', 'FINALIZADA');
 
 INSERT INTO labweb_project.causa 
-(idcausa, nome, descricao, meta, prazo, nome_arquivo_foto, status_causa, valor_arrecadado) VALUES
-('CAU0001', 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', 5000.00, '2024-12-20', 'natal_sem_fome.jpg', 'CONCLUIDA', 5000),
-('CAU0002', 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', 3000.00, '2025-07-31', 'kit_escolar.jpg', 'ABERTA', 0.0),
-('CAU0003', 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', 10000.00, '2024-11-30', 'sos_enchentes.jpg', 'CONCLUIDA', 5000),
-('CAU0004', 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', 15000.00, '2025-08-15', 'inclusao_digital.jpg', 'CONCLUIDA', 13000),
-('CAU0005', 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', 8000.00, '2024-09-30', 'feira_agro.jpg', 'CONCLUIDA', 5000);
+(idcausa, nome, descricao, prazo, nome_arquivo_foto, status_causa) VALUES
+('CAU0001', 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', '2024-12-20', 'natal_sem_fome.jpg', 'CONCLUIDA'),
+('CAU0002', 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', '2025-07-31', 'kit_escolar.jpg', 'ABERTA'),
+('CAU0003', 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', '2024-11-30', 'sos_enchentes.jpg', 'CONCLUIDA'),
+('CAU0004', 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', '2025-08-15', 'inclusao_digital.jpg', 'CONCLUIDA'),
+('CAU0005', 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', '2024-09-30', 'feira_agro.jpg', 'CONCLUIDA');
 
 INSERT INTO motivo (idmotivo, nome) VALUES
 ('MOT0001', 'Desrespeito'),

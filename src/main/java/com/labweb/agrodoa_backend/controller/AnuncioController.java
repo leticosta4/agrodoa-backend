@@ -104,7 +104,6 @@ public class AnuncioController {
         dto.setDescricao(descricao);
         dto.setDataExpiracao(dataExpiracao);
         dto.setEntregaPeloFornecedor(entregaPeloFornecedor);
-        dto.setTipoAnuncio(tipoAnuncio);
         dto.setCidadeId(cidadeId);
         dto.setProdutoId(produtoId);
      

@@ -27,17 +27,11 @@ public class CausaService {
     @Autowired CloudinaryService cloudinary;
 
     @Transactional(readOnly = true)
-    public List<CausaRespostaDTO> buscarComFiltros(String nome, Double metaMin, Double metaMax) {
+    public List<CausaRespostaDTO> buscarComFiltros(String nome) {
         Specification<Causa> spec = Specification.where(null);
 
         if (nome != null && !nome.isEmpty()) {
             spec = spec.and(CausaSpecification.filtrarPorNome(nome));
-        }
-        if (metaMin != null) {
-            spec = spec.and(CausaSpecification.filtrarPorMetaMin(metaMin));
-        }
-        if (metaMax != null) {
-            spec = spec.and(CausaSpecification.filtrarPorMetaMax(metaMax));
         }
 
         List<Causa> causas = causaRepo.findAll(spec);

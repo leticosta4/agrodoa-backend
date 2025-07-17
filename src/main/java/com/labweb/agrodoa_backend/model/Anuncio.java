@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 
@@ -67,10 +66,6 @@ public class Anuncio {
     }
     */
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_anuncio")
-    private TipoAnuncio tipo;
-
     @ManyToOne
     @JoinColumn(name = "cidade_idcidade", referencedColumnName = "idcidade")
     private Cidade cidade;
@@ -97,12 +92,11 @@ public class Anuncio {
     }
     */
 
-    public Anuncio(String titulo, String descricao, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto) {
+    public Anuncio(String titulo, String descricao, String nomeArquivoFoto, LocalDate dataExpiracao, int entregaPeloFornecedor, Cidade cidade, Usuario anunciante, Produto produto) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.nomeArquivoFoto = nomeArquivoFoto;
         this.entregaPeloFornecedor = entregaPeloFornecedor;
-        this.tipo = tipo;
         this.cidade = cidade;
         this.anunciante = anunciante;
         this.produto = produto;

@@ -1,5 +1,13 @@
 -- caso ja tenha criado as tabelas, rodar isso:
 
+-- tirando algumas colunas de preço de algumas tabelas REFATORAÇÃO
+alter table anuncio drop column tipo_anuncio;
+alter table produto drop column preco_unidade;
+alter table negociacao drop column valor_pago;
+alter table usuario_has_causa drop column valor_doado;
+alter table causa drop column valor_arrecadado;
+alter table causa drop column meta;
+
 ALTER TABLE labweb_project.causa MODIFY COLUMN descricao TEXT;
 
 -- colunas de adm com varchar maior
@@ -54,14 +62,6 @@ WHERE idconta = 'CON0009';
 -- automaticamente pelo hibernate quando compilei o projeto (erro na modelagel)
 -- o comando basicamente é:
 --  ALTER TABLE {nome_da_tabela} DROP COLUMN {nome_da_coluna};
-
-
--- em algumas tabelas, algumas colunas que deveriam ser DECIMAL(5,2) estão com double ou float, então rodar:
--- mas VERFICAR ANTES COM:   describe {nome_da_tabela};
-alter table produto modify preco_unidade DECIMAL(5,2);
-alter table causa modify meta DECIMAL(9,2);
-alter table causa modify valor_arrecadado DECIMAL(5,2);
-alter table usuario_has_causa modify valor_doado DECIMAL(5,2);
 
 
 --mudando a estrutura dos nossos ids

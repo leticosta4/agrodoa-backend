@@ -16,13 +16,11 @@ public class ProdutoRespostaDTO {
     private String nome;
     private int quantidade;
     private LocalDate dataValidade;
-    private Double precoUnidade;
 
     public ProdutoRespostaDTO(Produto p){
         this.idProduto = p.getIdProduto();
         this.nome = p.getNome();
         this.quantidade = p.getQuantidade();
         this.dataValidade = p.getDataValidade();
-        this.precoUnidade = p.getPrecoUnidade();
     }
 }

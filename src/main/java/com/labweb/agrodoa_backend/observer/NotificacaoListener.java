@@ -40,8 +40,7 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                 "Uma nova causa foi cadastrada em nossa plataforma e pode ser do seu interesse.\n\n" +
                 "Nome da Causa: %s\n" +
                 "Descrição: %s\n" +
-                "Meta: R$ %.2f\n" +
-                "Prazo Final para Doações: %s\n\n" +
+                "Prazo final para se voluntariar: %s\n\n" +
                 "Sua ajuda pode fazer a diferença! Acesse nosso site para saber mais.\n\n" +
                 "Atenciosamente,\nEquipe Agrodoa.";
 
@@ -59,7 +58,6 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                         user.getNome(),
                         causaCriada.getNome(),
                         causaCriada.getDescricao(),
-                        causaCriada.getMeta(),
                         causaCriada.getPrazo().format(FORMATADOR_DATA)
                 );
 

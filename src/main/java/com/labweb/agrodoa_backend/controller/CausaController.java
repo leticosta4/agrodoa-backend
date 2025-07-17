@@ -32,12 +32,8 @@ public class CausaController {
     private final CausaService causaService;
 
     @GetMapping
-    public ResponseEntity<List<CausaRespostaDTO>> buscarComFiltros(
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) Double metaMin,
-            @RequestParam(required = false) Double metaMax) {
-        
-        List<CausaRespostaDTO> causas = causaService.buscarComFiltros(nome, metaMin, metaMax);
+    public ResponseEntity<List<CausaRespostaDTO>> buscarComFiltros(@RequestParam(required = false) String nome) {
+        List<CausaRespostaDTO> causas = causaService.buscarComFiltros(nome);
         return ResponseEntity.ok(causas);
     }
 
@@ -53,13 +49,11 @@ public class CausaController {
     public ResponseEntity<CausaRespostaDTO> criarCausa(
         @RequestParam String nome,
         @RequestParam String descricao,
-        @RequestParam double meta,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate prazo,
         @RequestParam("imagem") MultipartFile imagemFile) {
         CausaDTO dto = new CausaDTO();
         dto.setNome(nome);
         dto.setDescricao(descricao);
-        dto.setMeta(meta);
         dto.setPrazo(prazo);
    
         Causa causaSalva = causaService.criarCausa(dto, imagemFile);

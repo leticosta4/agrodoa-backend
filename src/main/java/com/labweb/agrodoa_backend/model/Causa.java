@@ -30,31 +30,21 @@ public class Causa {
     @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "meta")
-    private double meta;
-
     @Column(name = "prazo")
     private LocalDate prazo;
 
     @Column(name = "nome_arquivo_foto")
     private String nomeArquivoFoto;
 
-    @Column(name = "valor_arrecadado")
-    private double valorArrecadado;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status_causa")
     private StatusCausa status;
    
-    public Causa(String nome, String descricao, double meta, LocalDate prazo, String nomeArquivoFoto) {
+    public Causa(String nome, String descricao, LocalDate prazo, String nomeArquivoFoto) {
         this.nome = nome;
         this.descricao = descricao;
-        this.meta = meta;
         this.prazo = prazo;
         this.nomeArquivoFoto = nomeArquivoFoto;
-
-        //valores pdrao
-        this.valorArrecadado = 0.0;
         this.status = StatusCausa.ABERTA; //valor padrao
     }
 }

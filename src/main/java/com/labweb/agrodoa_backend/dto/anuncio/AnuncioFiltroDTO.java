@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,18 +28,7 @@ public class AnuncioFiltroDTO {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataExpiracao;
 
-    private String tipo;
     private String status;
-
-    
-
-     public TipoAnuncio getTipoEnum() {
-        try {
-            return tipo == null ? null : TipoAnuncio.valueOf(tipo.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
 
      public StatusAnuncio getStatusEnum() {
         try {

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 
 public class AnuncioSpecification { //falta diminuir os repositories com specifications que a gente já tem
 
@@ -44,15 +43,6 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
                 return cb.conjunction();
             }
             return cb.lessThanOrEqualTo(root.get("produto").get("precoUnidade"), precoMax);
-        };
-    }
-
-    public static Specification<Anuncio> filtrarPorTipo(TipoAnuncio tipo) {  //doação ou venda
-        return (root, query, cb) -> {
-            if (tipo == null) {
-                return cb.conjunction();
-            }
-            return cb.equal(root.get("tipo"), tipo);
         };
     }
 

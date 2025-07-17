@@ -15,25 +15,4 @@ public class CausaSpecification {
             return cb.like(cb.lower(root.get("nome")), "%" + nome.toLowerCase() + "%");
         };
     }
-
-    public static Specification<Causa> filtrarPorMetaMin(Double metaMin) {
-        return (root, query, cb) -> {
-            if (metaMin == null) {
-                return cb.conjunction(); 
-            }
-
-            return cb.greaterThanOrEqualTo(root.get("meta"), metaMin);
-        };
-    }
-
-    public static Specification<Causa> filtrarPorMetaMax(Double metaMax) {
-        return (root, query, cb) -> {
-            if (metaMax == null) {
-                return cb.conjunction();
-            }
-
-            return cb.lessThanOrEqualTo(root.get("meta"), metaMax);
-        };
-    }
-
 }   

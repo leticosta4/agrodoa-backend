@@ -16,13 +16,11 @@ public class CausaDTO {
 
     private String descricao;
 
-    private double meta;
-
     private LocalDate prazo; //mudar a forma de exibição para DD/MM/AAAA
 
     private String nomeArquivoFoto;
 
     public Causa transformaParaObjeto(){
-        return new Causa(nome, descricao, meta, prazo, nomeArquivoFoto);
+        return new Causa(nome, descricao, prazo, nomeArquivoFoto);
     }
 }
