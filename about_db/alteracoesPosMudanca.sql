@@ -17,7 +17,6 @@ alter table administrador modify linkedin varchar(255);
 -- caso ja tenha criado algumas colunas com tabelas que armazenam só um caracter para indicar tipo, status, etc:
 -- estamos adaptando para string para lidar de forma mais facil com os enums
 -- rodar:
-ALTER table anuncio MODIFY tipo_anuncio VARCHAR(20) NOT NULL;
 ALTER table anuncio MODIFY status VARCHAR(20) NOT NULL;
 ALTER table causa MODIFY status_causa VARCHAR(20) NOT NULL;
 ALTER table relacao_beneficiario MODIFY tipo_relacao_interessado VARCHAR(20) NOT NULL;
@@ -28,8 +27,6 @@ ALTER table denuncia MODIFY status_denuncia VARCHAR(20) NOT NULL;
 UPDATE anuncio SET status = 'ATIVO' WHERE status = 'A';
 UPDATE anuncio SET status = 'EXPIRADO' WHERE status = 'E';
 UPDATE anuncio SET status = 'FINALIZADO' WHERE status = 'F';
-UPDATE anuncio SET tipo_anuncio = 'VENDA' WHERE tipo_anuncio = 'V';
-UPDATE anuncio SET tipo_anuncio = 'DOACAO' WHERE tipo_anuncio = 'D';
 UPDATE causa SET status_causa = 'ABERTA' WHERE status_causa = 'A';
 UPDATE causa SET status_causa = 'CONCLUIDA' WHERE status_causa = 'C';
 UPDATE negociacao SET status_negociacao = 'FINALIZADA' WHERE status_negociacao = 'F';
@@ -69,10 +66,6 @@ alter table avaliacao modify idavaliacao VARCHAR(7);
 alter table denuncia modify iddenuncia VARCHAR(7);
 ALTER TABLE negociacao MODIFY COLUMN negociacao_idnegociacao VARCHAR(7);
 ALTER TABLE requisicao MODIFY COLUMN idrequisicao VARCHAR(7);
-
--- Mudanca de 45 para 60 no linkedin do Administrador
-ALTER TABLE administrador MODIFY linkedin VARCHAR(255);
-ALTER TABLE administrador MODIFY github VARCHAR(255);
 
 --alterando as tabelas que ja estavam preenchidas antes
 update requisicao set idrequisicao = CONCAT('REQ', LPAD(idrequisicao, 4, '0')); -- esse LPAD é preenchimento à esquerda 

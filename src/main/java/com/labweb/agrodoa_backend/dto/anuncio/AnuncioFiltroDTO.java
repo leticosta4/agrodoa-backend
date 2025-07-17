@@ -19,12 +19,6 @@ public class AnuncioFiltroDTO {
     private String nome;
     private String cidade;
 
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    private BigDecimal precoMin;
-
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    private BigDecimal precoMax;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataExpiracao;
 

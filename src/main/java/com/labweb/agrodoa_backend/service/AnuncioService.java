@@ -42,8 +42,6 @@ public class AnuncioService {
         return Specification
             .where(AnuncioSpecification.filtrarPorNome(dto.getNome()))
             .and(AnuncioSpecification.filtrarPorCidade(dto.getCidade()))
-            .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()))
-            .and(AnuncioSpecification.filtrarPorPrecoMax(dto.getPrecoMax()))
             .and(AnuncioSpecification.filtrarPorDataExpiracao(dto.getDataExpiracao()))
             .and(AnuncioSpecification.filtrarPorStatus(dto.getStatusEnum()));
     }

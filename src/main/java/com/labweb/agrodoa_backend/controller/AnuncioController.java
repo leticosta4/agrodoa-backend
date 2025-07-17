@@ -91,7 +91,6 @@ public class AnuncioController {
         @RequestParam String descricao,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataExpiracao,
         @RequestParam int entregaPeloFornecedor,
-        @RequestParam String tipoAnuncio,
         @RequestParam String cidadeId,
         @RequestParam String produtoId,
         @RequestParam(value = "imagem", required = false) MultipartFile imagem,
