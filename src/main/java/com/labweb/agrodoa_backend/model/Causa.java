@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDate;
 
+import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 
 import jakarta.persistence.Column;
@@ -9,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,12 +42,26 @@ public class Causa {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_causa")
     private StatusCausa status;
-   
-    public Causa(String nome, String descricao, LocalDate prazo, String nomeArquivoFoto) {
+
+    @Column(name = "meta_assinatura")
+    private int metaAssinatura;
+
+    private int assinaturasFeitas;
+
+    @ManyToOne
+    @JoinColumn(name = "conta_idconta")
+    private Conta criador;
+
+    public Causa(String nome, String descricao, LocalDate prazo, String nomeArquivoFoto, int metaAssinatura, Conta criador) {
         this.nome = nome;
         this.descricao = descricao;
         this.prazo = prazo;
         this.nomeArquivoFoto = nomeArquivoFoto;
-        this.status = StatusCausa.ABERTA; //valor padrao
+        this.metaAssinatura = metaAssinatura;
+        this.criador = criador;
+
+        //valores padrao
+        this.status = StatusCausa.ABERTA;
+        this.assinaturasFeitas = 0;
     }
 }

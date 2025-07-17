@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.observer;
+package com.labweb.agrodoa_backend.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

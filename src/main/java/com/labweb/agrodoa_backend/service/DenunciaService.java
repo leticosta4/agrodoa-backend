@@ -8,11 +8,11 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRespostaDTO;
+import com.labweb.agrodoa_backend.events.DenunciaAprovadaEvent;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Motivo;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusDenuncia;
-import com.labweb.agrodoa_backend.observer.DenunciaAprovadaEvent;
 import com.labweb.agrodoa_backend.repository.DenunciaRepository;
 import com.labweb.agrodoa_backend.repository.MotivoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
