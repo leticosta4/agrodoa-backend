@@ -73,7 +73,7 @@ INSERT INTO labweb_project.anuncio (
 ('ANU0009', 'Doação de Óleo Salada para Escolas', 'Óleo vegetal 900ml para doação a escolas públicas.', 'oleo_salada.jpg', '2025-06-10', 'ATIVO', 1, 'CID0005', 'PRO0009', 'CON0009');
 
 
-INSERT INTO labweb_project.requisicao (idrequisicao, usuario_conta_idconta) VALUES
+INSERT INTO labweb_project.requisicao_tipo_perfil (idrequisicao, usuario_conta_idconta) VALUES
 ('REQ0001', 'CON0010');
 
 -- o tipo da relação pode ser Negociando ou Salvou
@@ -107,12 +107,12 @@ INSERT INTO `labweb_project`.`negociacao`
 ('NEG0003', 1, 'ANU0008', 'CON0004', 'FINALIZADA');
 
 INSERT INTO labweb_project.causa 
-(idcausa, nome, descricao, prazo, nome_arquivo_foto, status_causa) VALUES
-('CAU0001', 'Natal Sem Fome', 'Arrecadação de alimentos para famílias em situação de vulnerabilidade durante o período natalino', '2024-12-20', 'natal_sem_fome.jpg', 'CONCLUIDA'),
-('CAU0002', 'Kit Escolar Solidário', 'Doação de materiais escolares para crianças de baixa renda no início do ano letivo', '2025-07-31', 'kit_escolar.jpg', 'ABERTA'),
-('CAU0003', 'SOS Enchentes Bahia', 'Arrecadação emergencial para vítimas das enchentes no sul da Bahia', '2024-11-30', 'sos_enchentes.jpg', 'CONCLUIDA'),
-('CAU0004', 'Conectando Futuros', 'Captação de recursos para montar laboratórios de informática em escolas públicas', '2025-08-15', 'inclusao_digital.jpg', 'CONCLUIDA'),
-('CAU0005', 'Feira AgroSolidária', 'Financiamento coletivo para compra direta de produtores rurais familiares e doação a comunidades', '2024-09-30', 'feira_agro.jpg', 'CONCLUIDA');
+(idcausa, nome, descricao, prazo, nome_arquivo_foto, status_causa, meta_assinatura, conta_idconta) VALUES
+('CAU0001', 'Combate à Fome', 'Campanha para arrecadação de alimentos.', '2025-12-31', 'fome.jpg', 'ABERTA', 1000, 'CON0001'),
+('CAU0002', 'Educação para Todos', 'Financiamento de materiais escolares.', '2025-11-30', 'educacao.jpg', 'ABERTA', 800, 'CON0001'),
+('CAU0003', 'Meio Ambiente', 'Plantio de árvores em áreas urbanas.', '2025-05-15', 'meioambiente.jpg', 'CONCLUIDA', 500, 'CON0001'),
+('CAU0004', 'Saúde da Mulher', 'Campanha de exames preventivos gratuitos.', '2025-09-20', 'saude.jpg', 'ABERTA', 1200, 'CON0001'),
+('CAU0005', 'Abrigo Animal', 'Construção de canis e gatis para animais resgatados.', '2025-08-31', 'abrigo.jpg', 'ABERTA', 600, 'CON0001');
 
 INSERT INTO motivo (idmotivo, nome) VALUES
 ('MOT0001', 'Desrespeito'),

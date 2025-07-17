@@ -1,4 +1,4 @@
-package com.labweb.agrodoa_backend.observer;
+package com.labweb.agrodoa_backend.service.auxiliares;
 
 import java.time.format.DateTimeFormatter;
 
@@ -11,6 +11,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.labweb.agrodoa_backend.events.CausaCriadaEvent;
+import com.labweb.agrodoa_backend.events.DenunciaAprovadaEvent;
+import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.Denuncia;
@@ -18,7 +21,6 @@ import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
-import com.labweb.agrodoa_backend.service.auxiliares.EmailService;
 
 //OBSERVER
 @Component
@@ -42,7 +44,8 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                 "Uma nova causa foi cadastrada em nossa plataforma e pode ser do seu interesse.\n\n" +
                 "Nome da Causa: %s\n" +
                 "Descrição: %s\n" +
-                "Prazo final para se voluntariar: %s\n\n" +
+                "Prazo final para se participar e contribuir: %s\n" +
+                "Meta de assinaturas: %d\n\n" +
                 "Sua ajuda pode fazer a diferença! Acesse nosso site para saber mais.\n\n" +
                 "Atenciosamente,\nEquipe Agrodoa.";
 
@@ -60,7 +63,8 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                         user.getNome(),
                         causaCriada.getNome(),
                         causaCriada.getDescricao(),
-                        causaCriada.getPrazo().format(FORMATADOR_DATA)
+                        causaCriada.getPrazo().format(FORMATADOR_DATA),
+                        causaCriada.getMetaAssinatura()
                 );
 
 
