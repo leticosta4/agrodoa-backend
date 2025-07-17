@@ -2,6 +2,7 @@ package com.labweb.agrodoa_backend.model;
 
 import java.time.LocalDate;
 
+import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 
@@ -61,7 +62,8 @@ public class Causa {
         this.criador = criador;
 
         //valores padrao
-        this.status = StatusCausa.ABERTA;
         this.assinaturasFeitas = 0;
+        this.status = (this.criador instanceof Usuario) ? StatusCausa.AGUARDANDO : StatusCausa.ABERTA;
+
     }
 }
