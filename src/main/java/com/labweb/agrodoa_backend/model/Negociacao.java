@@ -21,11 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Negociacao { //nossa negociacao confirmada fechada já com algum beneficiario => venda ou doação, por isso esse nome em vez de pagamento
+public class Negociacao { //nossa negociacao (doação) confirmada fechada já com algum beneficiario
     @Id
     @Column(name = "negociacao_idnegociacao")
     private String idNegociacao;
-    private double valorPago;
     private int quantidade;
 
     @Enumerated(EnumType.STRING)
@@ -39,10 +38,9 @@ public class Negociacao { //nossa negociacao confirmada fechada já com algum be
     })
     private RelacaoBeneficiario relacao;
 
-    public Negociacao(double valorPago, int quantidade, RelacaoBeneficiario relacao){
+    public Negociacao(int quantidade, RelacaoBeneficiario relacao){
         this.relacao = relacao;
         //valores padrão
-        this.valorPago = this.relacao.getAnuncio().getProduto().getPrecoUnidade();
         this.quantidade = 1;
         this.status = StatusNegociacao.AGUARDANDO;
     }

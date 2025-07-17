@@ -6,7 +6,7 @@ import java.util.List;
 import com.labweb.agrodoa_backend.model.Tipo;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
 import com.labweb.agrodoa_backend.model.local.Cidade;
-import com.labweb.agrodoa_backend.model.relacoes.DoacaoCausa;
+import com.labweb.agrodoa_backend.model.relacoes.Voluntariado;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Anuncio;
@@ -64,7 +64,7 @@ public class Usuario extends Conta{
     private List<Avaliacao> avaliacoes; 
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DoacaoCausa> doacoesCausas;
+    private List<Voluntariado> doacoesCausas;
 
     @OneToMany(mappedBy = "anunciante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Anuncio> listaAnunciosPostados = new ArrayList<>(); //caso seja fornecedor ou hibrido

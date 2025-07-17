@@ -16,7 +16,6 @@ import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.repository.ProdutoRepository;
@@ -45,7 +44,6 @@ public class AnuncioService {
             .and(AnuncioSpecification.filtrarPorCidade(dto.getCidade()))
             .and(AnuncioSpecification.filtrarPorPrecoMin(dto.getPrecoMin()))
             .and(AnuncioSpecification.filtrarPorPrecoMax(dto.getPrecoMax()))
-            .and(AnuncioSpecification.filtrarPorTipo(dto.getTipoEnum()))
             .and(AnuncioSpecification.filtrarPorDataExpiracao(dto.getDataExpiracao()))
             .and(AnuncioSpecification.filtrarPorStatus(dto.getStatusEnum()));
     }
@@ -86,12 +84,9 @@ public class AnuncioService {
         Usuario anunciante = userRepo.findById(idAnunciante)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário anunciante não encontrado."));
 
-
-        TipoAnuncio tipo = TipoAnuncio.valueOf(dto.getTipoAnuncio().toUpperCase());
-
         String novoId = GeradorIdCustom.gerarIdComPrefixo("ANU", anuncioRepo, "idAnuncio");
         
-        Anuncio novoAnuncio = dto.transformaParaObjeto(tipo, cidade, anunciante, produto);
+        Anuncio novoAnuncio = dto.transformaParaObjeto(cidade, anunciante, produto);
         novoAnuncio.setIdAnuncio(novoId);
 
         return anuncioRepo.saveAndFlush(novoAnuncio);
@@ -107,14 +102,12 @@ public class AnuncioService {
                 .orElseThrow(() -> new EntityNotFoundException("Cidade não encontrada com o ID: " + dto.getCidadeId()));
         Produto produto = produtoRepo.findById(dto.getProdutoId())
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: " + dto.getProdutoId()));
-        TipoAnuncio tipo = TipoAnuncio.valueOf(dto.getTipoAnuncio().toUpperCase());
         
         anuncio.setTitulo(dto.getTitulo());
         anuncio.setDescricao(dto.getDescricao());
         anuncio.setNomeArquivoFoto(dto.getNomeArquivoFoto());
         anuncio.setDataExpiracao(dto.getDataExpiracao());
         anuncio.setEntregaPeloFornecedor(dto.getEntregaPeloFornecedor());
-        anuncio.setTipo(tipo);
         anuncio.setCidade(cidade);
         anuncio.setProduto(produto);
 

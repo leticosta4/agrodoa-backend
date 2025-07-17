@@ -26,12 +26,7 @@ public class RequisicaoTrocaTipo {
     @JoinColumn(name = "usuario_conta_idconta")
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_anterior")
-    private Tipo tipoAnterior;
-
     public RequisicaoTrocaTipo(Usuario usuario){
         this.usuario = usuario;
-        this.tipoAnterior = this.usuario.getTipoUsuario();
     }
 }

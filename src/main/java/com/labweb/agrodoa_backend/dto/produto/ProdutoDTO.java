@@ -24,9 +24,7 @@ public class ProdutoDTO { //precisa de um atributo id?
 
     private LocalDate dataValidade;
 
-    private Double precoUnidade;
-
     public Produto transformaParaObjeto(){ //precisa disso?
-        return new Produto(nome, quantidade, dataValidade, precoUnidade);
+        return new Produto(nome, quantidade, dataValidade);
     }
 }

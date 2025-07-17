@@ -7,7 +7,6 @@ import com.labweb.agrodoa_backend.dto.local.LocalDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,6 @@ public class AnuncioRespostaDTO {
     private LocalDate dataExpiracao;
     private int entregaPeloFornecedor; //talvez mudar para boolean
     private StatusAnuncio status;
-    private TipoAnuncio tipo;
     private UsuarioResumidoDTO anunciante; //restrição do tipo ainda
     private ProdutoRespostaDTO produto;
     private LocalDTO local;
@@ -35,7 +33,6 @@ public class AnuncioRespostaDTO {
         this.dataExpiracao = a.getDataExpiracao();
         this.entregaPeloFornecedor = a.getEntregaPeloFornecedor();
         this.status = a.getStatus();
-        this.tipo = a.getTipo();
         this.anunciante = new UsuarioResumidoDTO(a.getAnunciante());
         this.produto = new ProdutoRespostaDTO(a.getProduto());
         this.local = new LocalDTO(a.getCidade());

@@ -18,12 +18,6 @@ public interface CausaRepository extends JpaRepository<Causa, String> , JpaSpeci
     @Query(value = "SELECT * FROM causa WHERE LOWER(nome) LIKE CONCAT('%', :pesquisa, '%') AND status_causa = 'A';", nativeQuery = true)
     ArrayList<Causa> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar talvez
 
-    @Query(value = "SELECT * FROM causa WHERE meta < :meta AND status_causa = 'A';", nativeQuery = true)
-    ArrayList<Causa> findByMetaMenorQue(Double meta); 
-
-    @Query(value = "SELECT * FROM causa WHERE meta > :meta AND status_causa = 'A';", nativeQuery = true)
-    ArrayList<Causa> findByMetaMaiorQue(Double meta);
-
     @Query(value = "SELECT * FROM causa WHERE status_causa = 'C';", nativeQuery = true)
     ArrayList<Causa> findAllBystatus(); //causas concluidas (caso sirva)
 }

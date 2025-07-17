@@ -3,7 +3,6 @@ package com.labweb.agrodoa_backend.model.relacoes;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -19,9 +18,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuario_has_causa")
-public class DoacaoCausa {
+public class Voluntariado {
     @EmbeddedId
-    private IdDoacaoCausa idDoacao = new IdDoacaoCausa();
+    private IdVoluntariado idDoacao = new IdVoluntariado();
     
     @ManyToOne
     @MapsId("usuarioId")
@@ -33,12 +32,8 @@ public class DoacaoCausa {
     @JoinColumn(name = "causa_idcausa")
     private Causa causa;
 
-    @Column(name = "valor_doado")
-    private float valorDoado;
-
-    public DoacaoCausa(Usuario usuario, Causa causa, float valorDoado){
+    public Voluntariado(Usuario usuario, Causa causa){
         this.usuario = usuario;
         this.causa = causa;
-        this.valorDoado = valorDoado;
     }
 }

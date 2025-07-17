@@ -13,11 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode  //precisa p o embeddable funcionar
-public class IdDoacaoCausa implements Serializable{  //revisar se precisa fazer assim mesm
+public class IdVoluntariado implements Serializable{  //revisar se precisa fazer assim mesm
     private String usuarioId;
     private String causaId;
 
-    public IdDoacaoCausa(String usuarioId, String causaId) {
+    public IdVoluntariado(String usuarioId, String causaId) {
         this.usuarioId = usuarioId;
         this.causaId = causaId;
     }

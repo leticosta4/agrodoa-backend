@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
-import com.labweb.agrodoa_backend.model.enums.TipoAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 
 import jakarta.validation.constraints.NotBlank;
@@ -30,9 +29,6 @@ public class AnuncioDTO {
     @NotNull(message = "É obrigatório informar se a entrega é feita pelo anunciante!")
     private int entregaPeloFornecedor; //talvez mudar para boolean
 
-    @NotNull(message = "O tipo de anúncio é obrigatório!")
-    private String tipoAnuncio;
-
     @NotBlank(message = "O ID da cidade é obrigatório!")
     private String cidadeId;
 
@@ -41,7 +37,7 @@ public class AnuncioDTO {
 
     //o Usuario anunciante ja vai ser a pessoa logada e esses que tem ID seria o front que mandaria
 
-    public Anuncio transformaParaObjeto(TipoAnuncio tipo, Cidade cidade, Usuario anunciante, Produto produto){ //precisa disso? esses parametros sao temporarios
-        return new Anuncio(titulo, descricao, nomeArquivoFoto, dataExpiracao, entregaPeloFornecedor, tipo, cidade, anunciante, produto);
+    public Anuncio transformaParaObjeto(Cidade cidade, Usuario anunciante, Produto produto){ //precisa disso? esses parametros sao temporarios
+        return new Anuncio(titulo, descricao, nomeArquivoFoto, dataExpiracao, entregaPeloFornecedor, cidade, anunciante, produto);
     }
 }

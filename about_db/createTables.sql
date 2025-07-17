@@ -92,7 +92,6 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`produto` (
   `nome` VARCHAR(60) NOT NULL,
   `quantidade` INT(3) NOT NULL,
   `data_validade` DATE NOT NULL,
-  `preco_unidade` DECIMAL(5,2) NULL,
   PRIMARY KEY (`idproduto`),
   UNIQUE INDEX `idproduto_UNIQUE` (`idproduto` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -143,11 +142,9 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `idcausa` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   `descricao` TEXT NOT NULL,
-  `meta` DECIMAL(7,2) NOT NULL,
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
   `status_causa` VARCHAR(20) NOT NULL,
-  `valor_arrecadado` DECIMAL(7,2) NULL,
   PRIMARY KEY (`idcausa`),
   UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -228,7 +225,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`usuario_has_causa` (
   `usuario_conta_idconta` VARCHAR(7) NOT NULL,
   `causa_idcausa` VARCHAR(7) NOT NULL,
-  `valor_doado` DECIMAL(7,2) NOT NULL,
   PRIMARY KEY (`usuario_conta_idconta`, `causa_idcausa`),
   INDEX `fk_usuario_has_causa_causa1_idx` (`causa_idcausa` ASC) VISIBLE,
   INDEX `fk_usuario_has_causa_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
@@ -273,7 +269,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `labweb_project`.`negociacao` (
   `negociacao_idnegociacao` VARCHAR(7) NOT NULL,
-  `valor_pago` DECIMAL(5,2) NULL,
   `quantidade` INT NOT NULL,
   `status_negociacao` VARCHAR(20) NOT NULL,
   `id_anuncio` VARCHAR(7) NOT NULL,
@@ -295,19 +290,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`requisicao` (
    `idrequisicao` VARCHAR(7) NOT NULL,
   `usuario_conta_idconta` VARCHAR(7) NOT NULL,
-  `tipo_anterior` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idrequisicao`),
   UNIQUE INDEX `idrequisicao_UNIQUE` (`idrequisicao` ASC) VISIBLE,
   INDEX `fk_requisicao_usuario1_idx` (`usuario_conta_idconta` ASC) VISIBLE,
-  INDEX `fk_requisicao_tipo1_idx` (`tipo_anterior` ASC) VISIBLE,
   CONSTRAINT `fk_requisicao_usuario1`
     FOREIGN KEY (`usuario_conta_idconta`)
     REFERENCES `labweb_project`.`usuario` (`conta_idconta`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_requisicao_tipo1`
-    FOREIGN KEY (`tipo_anterior`)
-    REFERENCES `labweb_project`.`tipo` (`idtipo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

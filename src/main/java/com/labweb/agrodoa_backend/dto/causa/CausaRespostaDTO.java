@@ -11,8 +11,6 @@ public class CausaRespostaDTO {
     private String idCausa;
     private String nome;
     private String descricao;
-    private double meta;
-    private double valorArrecadado;
     private LocalDate prazo; //mudar a forma de exibição para DD/MM/AAAA
     private String nomeArquivoFoto;
 
@@ -21,8 +19,6 @@ public class CausaRespostaDTO {
         this.idCausa = c.getIdCausa();
         this.nome = c.getNome();
         this.descricao = c.getDescricao();
-        this.meta = c.getMeta();
-        this.valorArrecadado = c.getValorArrecadado();
         this.prazo = c.getPrazo();
         this.nomeArquivoFoto = c.getNomeArquivoFoto();
     }
