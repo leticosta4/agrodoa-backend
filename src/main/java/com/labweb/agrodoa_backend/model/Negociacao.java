@@ -41,7 +41,7 @@ public class Negociacao { //nossa negociacao (doação) confirmada fechada já c
     public Negociacao(int quantidade, RelacaoBeneficiario relacao){
         this.relacao = relacao;
         //valores padrão
-        this.quantidade = 1;
+        this.quantidade = quantidade;
         this.status = StatusNegociacao.AGUARDANDO;
     }
 }

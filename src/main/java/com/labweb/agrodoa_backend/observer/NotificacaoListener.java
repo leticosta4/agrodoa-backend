@@ -11,8 +11,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.Denuncia;
+import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
@@ -104,4 +106,62 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                               paginacao.getPageNumber() + 1,
                               intermedPage.getTotalPages());
     }
+
+    @Async // Garante que o envio de e-mail não trave a thread principal da requisição
+@EventListener
+public void aoIniciadaNegociacao(NegociacaoIniciadaEvent evento) {
+    try {
+        // Objeto principal do evento
+        Negociacao negociacao = evento.getNegociacao();
+
+        Anuncio anuncio = negociacao.getRelacao().getAnuncio();
+        Usuario interessado = negociacao.getRelacao().getBeneficiario(); 
+        Usuario anunciante = anuncio.getAnunciante(); 
+
+        
+        String destinatario = anunciante.getEmail();
+        
+        String assunto = "Você recebeu uma nova proposta para o anúncio: " + anuncio.getTitulo();
+
+        String corpoTemplate = """
+                Olá, %s!
+
+                Um usuário da plataforma Agrodoa demonstrou interesse no seu anúncio e enviou uma proposta de negociação.
+
+                --- Detalhes da Proposta ---
+                Anúncio: %s
+                Quantidade Ofertada: %d
+
+                --- Informações de Contato do Interessado ---
+                Nome: %s
+                E-mail: %s
+                Telefone: %s
+
+                Sugerimos que você entre em contato para dar continuidade à negociação.
+
+                Atenciosamente,
+                Equipe Agrodoa.
+                """;
+
+        String corpoPersonalizado = String.format(
+                corpoTemplate,
+                anunciante.getNome(),
+                anuncio.getTitulo(),
+                negociacao.getQuantidade(),
+                interessado.getNome(),
+                interessado.getEmail(),
+                interessado.getTelefone()
+        );
+
+        // Envia o e-mail
+        emailService.enviarEmail(destinatario, assunto, corpoPersonalizado);
+
+        System.out.println("\n\nE-mail de notificação de negociação enviado para: " + destinatario + "\n\n");
+
+    } catch (Exception e) {
+        // É uma boa prática logar qualquer erro que ocorra durante o processo assíncrono
+        System.err.println("Falha ao enviar e-mail de notificação de negociação: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
 }
