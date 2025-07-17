@@ -18,7 +18,7 @@ import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
-import com.labweb.agrodoa_backend.observer.NegociacaoIniciadaEvent;
+import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.repository.NegociacaoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
