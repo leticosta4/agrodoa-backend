@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.model.Avaliacao;
+import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.repository.AvaliacaoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
@@ -35,6 +36,15 @@ public class AvaliacaoService {
 
         Usuario avaliado = usuarioRepository.findUsuarioByIdConta(idAvaliado)
         .orElseThrow(() -> new EntityNotFoundException("Usuário avaliado não encontrado com o ID: " + idAvaliado));
+
+        if (avaliador.equals(avaliado)) {
+                throw new IllegalArgumentException("O usuário não pode avaliar a si mesmo.");
+        }
+
+        Avaliacao avaliacaoExistente = avaliacaoRepository.findByAvaliadorAndAvaliado(avaliador, avaliado);
+        if (avaliacaoExistente != null) {
+            throw new IllegalArgumentException("Esta avaliacao já existe para este usuário, avaliacao e motivo.");
+        }
 
         novaAvaliacao.setAvaliador(avaliador);
         novaAvaliacao.setAvaliado(avaliado);
