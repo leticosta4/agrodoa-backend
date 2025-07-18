@@ -1,5 +1,6 @@
 package com.labweb.agrodoa_backend.dto.auth;
 
+import com.labweb.agrodoa_backend.dto.contas.administrador.AdministradorRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 
 import lombok.AllArgsConstructor;
@@ -10,4 +11,5 @@ import lombok.Getter;
 public class LoginRespostaDTO { //saida
     private String token;
     private UsuarioLoginDTO userLogin;
+    private AdministradorRespostaDTO admLogin;
 }

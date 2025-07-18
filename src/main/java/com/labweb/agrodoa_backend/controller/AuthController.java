@@ -4,8 +4,6 @@ import org.springframework.http.HttpHeaders;
 
 import java.time.Duration;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.labweb.agrodoa_backend.config.JwtUtil;
 import com.labweb.agrodoa_backend.dto.auth.LoginDTO;
 import com.labweb.agrodoa_backend.dto.auth.LoginRespostaDTO;
+import com.labweb.agrodoa_backend.dto.contas.administrador.AdministradorRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.model.contas.*;
 
@@ -53,18 +52,17 @@ public class AuthController {
 
         if (contaAutenticada instanceof Usuario) { //token e dados do usuário.
             UsuarioLoginDTO usuarioDados = new UsuarioLoginDTO((Usuario) contaAutenticada);
-            LoginRespostaDTO respostaCompleta = new LoginRespostaDTO(token, usuarioDados);
+            LoginRespostaDTO respostaCompleta = new LoginRespostaDTO(token, usuarioDados, null);
 
             System.out.println("\n\nLogin de USUÁRIO: " + contaAutenticada.getEmail() + "\n\n");
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(respostaCompleta.getUserLogin());
             
-        } else if (contaAutenticada instanceof Administrador) { //so token
-            Map<String, String> tokenAdm = Map.of("token", token);
+        } else if (contaAutenticada instanceof Administrador) {
+            LoginRespostaDTO respostaCompleta = new LoginRespostaDTO(token, null, new AdministradorRespostaDTO((Administrador) contaAutenticada));
             
             System.out.println("\n\nLogin de ADMINISTRADOR: " + contaAutenticada.getEmail() + "\n\n");
-            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(tokenAdm);
-        }
-
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,cookie.toString()).body(respostaCompleta.getAdmLogin());
+        } 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errooo"); //so por segurança
     }
 

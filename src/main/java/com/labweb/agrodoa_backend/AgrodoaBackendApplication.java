@@ -1,9 +1,13 @@
 package com.labweb.agrodoa_backend;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
+
+import com.labweb.agrodoa_backend.service.CausaService;
 
 @SpringBootApplication
 @EnableAsync
@@ -14,4 +18,10 @@ public class AgrodoaBackendApplication {
 		SpringApplication.run(AgrodoaBackendApplication.class, args);
 	}
 
+	@Bean
+    public CommandLineRunner run(CausaService causaService) {
+        return args -> {
+            causaService.verificarPrazosEVoluntariosCausas();
+        };
+    }
 }

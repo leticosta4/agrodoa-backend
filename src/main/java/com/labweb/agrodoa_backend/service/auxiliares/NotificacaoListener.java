@@ -11,7 +11,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.labweb.agrodoa_backend.events.CausaCriadaEvent;
+import com.labweb.agrodoa_backend.events.CausaAbertaEvent;
 import com.labweb.agrodoa_backend.events.DenunciaAprovadaEvent;
 import com.labweb.agrodoa_backend.events.NegociacaoAceitaEvent;
 import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
@@ -21,6 +21,7 @@ import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
+import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 
@@ -35,19 +36,23 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
 
     @Async //o metodo pode rodar em outra thread
     @EventListener
-    public void aoCriarCausa(CausaCriadaEvent evento){  //em lote p n sobrecarregar
-        Causa causaCriada = evento.getCausa();
+    public void aoAbrirCausa(CausaAbertaEvent evento){  //em lote p n sobrecarregar
+        Causa causa = evento.getCausa();
         int tamLote = 20;
         Pageable paginacao = PageRequest.of(0, tamLote);
         Page<Usuario> paginaUsers;
 
-        String assunto = "Uma nova causa precisa da sua ajuda: " + causaCriada.getNome();
+        if(causa.getStatus() != StatusCausa.ABERTA){
+            throw new IllegalArgumentException("Essa causa ainda não foi aberta.");
+        }
+
+        String assunto = "Uma nova causa precisa da sua ajuda: " + causa.getNome();
         String corpoTemplate = "Olá, %s!\n\n" +
                 "Uma nova causa foi cadastrada em nossa plataforma e pode ser do seu interesse.\n\n" +
                 "Nome da Causa: %s\n" +
                 "Descrição: %s\n" +
                 "Prazo final para se participar e contribuir: %s\n" +
-                "Meta de assinaturas: %d\n\n" +
+                "Meta de voluntários: %d\n\n" +
                 "Sua ajuda pode fazer a diferença! Acesse nosso site para saber mais.\n\n" +
                 "Atenciosamente,\nEquipe Agrodoa.";
 
@@ -63,10 +68,10 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                 String corpoPersonalizado = String.format(
                         corpoTemplate, 
                         user.getNome(),
-                        causaCriada.getNome(),
-                        causaCriada.getDescricao(),
-                        causaCriada.getPrazo().format(FORMATADOR_DATA),
-                        causaCriada.getMetaAssinatura()
+                        causa.getNome(),
+                        causa.getDescricao(),
+                        causa.getPrazo().format(FORMATADOR_DATA),
+                        causa.getMetaVoluntarios()
                 );
 
 

@@ -1,10 +1,8 @@
 package com.labweb.agrodoa_backend.dto.anuncio;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 

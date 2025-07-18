@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
   `status_causa` VARCHAR(20) NOT NULL,
-  `meta_assinatura` BIGINT NOT NULL,
+  `meta_voluntarios` BIGINT NOT NULL,
   `conta_idconta` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idcausa`),
   UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE,

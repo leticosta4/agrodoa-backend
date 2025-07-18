@@ -37,19 +37,17 @@ public class SecurityConfig {
 
             //endpoints publicos
             .requestMatchers(
-                "/auth/login",
-                            "/administradores",
-                            "/causas",
-                            "/causas/*",
-                            "/causas/criar_causa",
-                            "/estados",
-                            "/estados/*/cidades",
+                "/auth/login", //ok 3 tipos de conta  -- mas ta funcionando com inativo
+                            "/administradores", //ok
+                            "/causas", //ok
+                            "/causas/*", //ok
+                            "/estados", //ok
+                            "/estados/*/cidades", //ok
                             "/usuarios/cadastrar_usuario",
                             ////"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo - so se der tempo
-                            "/usuarios/ver_perfil/*",
-                            "/anuncios",
-                            "/anuncios/*",
-                            "/error",
+                            "/usuarios/ver_perfil/*", //ok
+                            "/anuncios", //ok
+                            "/anuncios/*", //ok
 
                             "/v3/api-docs/**",
                             "/v3/api-docs/swagger-config",
@@ -58,31 +56,60 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
-            .requestMatchers(HttpMethod.PATCH, "/denuncias/*/aprovar", "/denuncias/*/reprovar").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR") //ok
+            .requestMatchers(HttpMethod.PATCH,
+            "/denuncias/*/aprovar", //ok
+                        "/denuncias/*/reprovar", //ok
+                        "/causas/*/aprovar_criacao_causa", //falta no front
+                        "causas/*/rejeitar_criacao_causa").hasRole("ADMINISTRADOR") //falta no front
 
             //endpoints CONTA geral
-            .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO") //ok 3 tipos de conta
+            .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO") //ok
+            .requestMatchers(HttpMethod.PATCH, "/causas/*/concluir").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO") //falta no front
 
             //endpoints USER geral
-            .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/avaliar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.PUT, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.PATCH, "/usuarios/meu_perfil/requerir_tipo_perfil", "/usuarios/meu_perfil/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.GET,
+            "/usuarios/meu_perfil", //ok
+                        "/usuarios/meu_perfil/minhas_causas", //falta no front
+                        "/usuarios/meu_perfil/causas_voluntarias").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
+            
+            .requestMatchers(HttpMethod.POST,
+            "/usuarios/ver_perfil/*/denunciar", //QUEBRADO
+                        "/usuarios/ver_perfil/*/avaliar",  //ok
+                        "/causas/*/virar_voluntario").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
 
+            .requestMatchers(HttpMethod.PUT, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
+            
+            .requestMatchers(HttpMethod.PATCH,
+                "/usuarios/meu_perfil/requerir_tipo_perfil", //falta no front
+                            "/usuarios/meu_perfil/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
 
             //endpoints fornecedor
-            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto", "/anuncios/*/listarNegociacoes").hasRole("FORNECEDOR")
-            .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
-            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar", "/anuncios/*/cancelarNegociacao").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
+            .requestMatchers(HttpMethod.GET, "/anuncios/*/negociacoes/listar").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.POST,
+                "/anuncios/criar_anuncio", //ok
+                            "/anuncios/criar_anuncio/criar_produto",
+                            "/anuncios/*/negociacoes/listar").hasRole("FORNECEDOR") //ok
+
+            .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR") //falta no front
+            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/negociacoes/*/aceitar").hasRole("FORNECEDOR") //falta no front
+            .requestMatchers(HttpMethod.PATCH,
+                            "/anuncios/*/cancelar",
+                            "anuncios/*/negociacoes/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR") //ok
 
             //endpoints beneficiario
-            .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil/meus_salvos", "/usuarios/meu_perfil/minhas_negociacoes").hasRole("BENEFICIARIO")
-            .requestMatchers(HttpMethod.POST, "/anuncios/*/salvar", "/anuncios/*/iniciar_negociacao").hasRole("BENEFICIARIO") //ainda falta testar a de iniciar negociacao
+            .requestMatchers(HttpMethod.GET,
+                "/usuarios/meu_perfil/meus_salvos",  //ok
+                            "/usuarios/meu_perfil/minhas_negociacoes").hasRole("BENEFICIARIO") //falta no front
+
+            .requestMatchers(HttpMethod.POST,
+                            "/anuncios/*/salvar", //ok
+                            "/anuncios/*/iniciar_negociacao").hasRole("BENEFICIARIO") //falta barrar por data
 
             .anyRequest().authenticated()
             )
+
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

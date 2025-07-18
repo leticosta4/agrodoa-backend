@@ -25,11 +25,9 @@ import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
-import com.labweb.agrodoa_backend.dto.negociacao.NegociacaoRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
-import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.service.AnuncioService;
@@ -51,7 +49,7 @@ public class AnuncioController {
     @Autowired private ContaDetailsService contaService;
     @Autowired private ProdutoService produtoService;
     @Autowired private RelacaoBeneficiarioService relBenefService;
-    @Autowired private NegociacaoService negociacaoService;
+    @Autowired private NegociacaoService negociacaoService; //talvez não precise mais
 
     @GetMapping
     public ResponseEntity<List<AnuncioRespostaDTO>> listarAnunciosFiltro(@ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
