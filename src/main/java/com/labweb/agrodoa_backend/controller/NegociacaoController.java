@@ -25,13 +25,13 @@ import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/anuncios")
+@RequestMapping("/anuncios/{idAnuncio}")
 public class NegociacaoController {
     @Autowired private ContaDetailsService contaService;
     @Autowired private RelacaoBeneficiarioService relBenefService;
     @Autowired private NegociacaoService negociacaoService;
 
-    @GetMapping("/{idAnuncio}/listar_negociacoes")
+    @GetMapping("/negociacoes/listar")
     public ResponseEntity<List<Map<String, Object>>> listarNegociacoes(@PathVariable String idAnuncio) {
         
         List<Map<String, Object>> negociacoes = relBenefService.listarNegociacoesAtivasPorAnuncio(idAnuncio);
@@ -41,7 +41,7 @@ public class NegociacaoController {
         return ResponseEntity.ok(negociacoes);
     }
 
-    @PostMapping("/{idAnuncio}/iniciar_negociacao") 
+    @PostMapping("/iniciar_negociacao") //p o beneficiario
     public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @Valid @RequestBody NegociacaoRespostaDTO negociacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
         String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
 
@@ -51,13 +51,13 @@ public class NegociacaoController {
         return ResponseEntity.ok(negociacaoIniciada);
     }
 
-    @PatchMapping("/{idNegociacao}/aceitar_negociacao")
+    @PatchMapping("/negociacoes/{idNegociacao}/aceitar") //p o anunciante fornecedor
     public ResponseEntity<Map<String, Object>> aceitarNegociacao(@PathVariable String idNegociacao) {
         Map<String, Object> resposta = negociacaoService.aceitarNeg(idNegociacao);
         return ResponseEntity.ok(resposta);
     }
 
-    @PatchMapping("/{idNegociacao}/cancelar_negociacao")
+    @PatchMapping("/negociacoes/{idNegociacao}/cancelar") //p o anunciante fornecedor
     public ResponseEntity<Map<String, Object>> cancelarNegociacao(@PathVariable String idNegociacao) {
         Map<String, Object> resposta = negociacaoService.cancelarNeg(idNegociacao);
         return ResponseEntity.ok(resposta);
