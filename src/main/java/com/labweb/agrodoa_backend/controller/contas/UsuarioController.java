@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,6 +36,7 @@ import com.labweb.agrodoa_backend.service.contas.UsuarioService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -128,9 +130,30 @@ public class UsuarioController {
         return ResponseEntity.notFound().build(); //404 - acho que não precisa
     } 
 
-    @PostMapping({"/cadastrar_usuario"})
-    public ResponseEntity<UsuarioLoginDTO> cadastrar(@RequestBody @Valid UsuarioDTO userDTO) {
-        Usuario userSalvo = userService.cadastrarUsuario(userDTO);
+    @PostMapping(value = "/cadastrar_usuario", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<UsuarioLoginDTO> cadastrar(
+        //RequestBody @Valid UsuarioDTO userDTO
+        @RequestParam String nome,
+        @RequestParam String email,
+        @RequestParam String senha,
+        @RequestParam String cpfOuCnpj,
+        @RequestParam String telefone,
+        @RequestParam String estado,
+        @RequestParam String idCidade,
+        @RequestParam String tipoUsuario,
+        @RequestParam(value = "nomeArquivoFoto", required = false) MultipartFile nomeArquivoFoto) {
+        
+        UsuarioDTO userDTO = new UsuarioDTO();
+        userDTO.setNome(nome);
+        userDTO.setEmail(email);
+        userDTO.setSenha(senha);
+        userDTO.setCpfOuCnpj(cpfOuCnpj);
+        userDTO.setTelefone(telefone);
+        userDTO.setEstado(estado);
+        userDTO.setIdCidade(idCidade);
+        userDTO.setTipoUsuario(tipoUsuario);
+
+        Usuario userSalvo = userService.cadastrarUsuario(userDTO, nomeArquivoFoto);
         String token = jwt.geraToken(userSalvo.getEmail());
 
         ResponseCookie cookie = ResponseCookie.from("jwt", token)

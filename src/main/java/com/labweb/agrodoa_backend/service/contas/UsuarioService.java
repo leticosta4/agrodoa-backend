@@ -9,8 +9,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
@@ -25,6 +25,7 @@ import com.labweb.agrodoa_backend.repository.TipoRepository;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
+import com.labweb.agrodoa_backend.service.auxiliares.CloudinaryService;
 import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 import com.labweb.agrodoa_backend.specification.UsuarioSpecification;
 
@@ -38,6 +39,7 @@ public class UsuarioService {
     @Autowired private RequisicaoTrocaTipoRepository requisicaoTipoRepo;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private ContaRepository contaRepo;
+    @Autowired private CloudinaryService cloudnary;
 
     public List<UsuarioRespostaDTO> buscarUsuarioFiltro(String tipo, String situacao){
         Specification<Usuario> spec = Specification
@@ -115,7 +117,8 @@ public class UsuarioService {
     }
 
 
-    public Usuario cadastrarUsuario(UsuarioDTO userDTO){
+    public Usuario cadastrarUsuario(UsuarioDTO userDTO, MultipartFile imagem){
+        userDTO.setNomeArquivoFoto(cloudnary.uploadImagem(imagem));
         if (!userDTO.getTipoUsuario().equalsIgnoreCase("fornecedor") && !userDTO.getTipoUsuario().equalsIgnoreCase("beneficiario")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Os tipos permitido para cadastro são apenas 'fornecedor' e 'beneficiario'.");
         }
@@ -138,6 +141,7 @@ public class UsuarioService {
         tempUser.setCidade(cidade);
         tempUser.setTipoUsuario(tipoUsuario);
         tempUser.setSituacaoUser(SituacaoUsuario.ATIVO);
+        tempUser.setNomeArquivoFoto(userDTO.getNomeArquivoFoto());
 
         return userRepo.save(tempUser);
     }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.repository.ProdutoRepository;
-import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.service.auxiliares.GeradorIdCustom;
 
 import jakarta.transaction.Transactional;
@@ -14,7 +13,6 @@ import jakarta.transaction.Transactional;
 @Service
 public class ProdutoService {
     @Autowired private ProdutoRepository produtoRepo;
-    @Autowired private ContaRepository contaRepo;
 
     @Transactional
     public Produto criarProduto(ProdutoDTO dto) {
