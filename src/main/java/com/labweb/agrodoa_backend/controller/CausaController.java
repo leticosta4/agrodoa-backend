@@ -54,7 +54,7 @@ public class CausaController {
         @RequestParam String nome,
         @RequestParam String descricao,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate prazo,
-        @RequestParam("imagem") MultipartFile imagemFile,
+        @RequestParam("nomeArquivoFoto") MultipartFile imagemFile,
         @AuthenticationPrincipal UserDetails userDetails) {
         String idConta = contaService.findIdByEmail(userDetails.getUsername());
         CausaDTO dto = new CausaDTO();
@@ -77,7 +77,7 @@ public class CausaController {
     }
 
 
-    @PatchMapping(value = "/{idCausa}/aprovar_criacao_causa}")
+    @PatchMapping(value = "/{idCausa}/aprovar_criacao_causa")
     public ResponseEntity<Void> aprovarCriarCausa(@PathVariable String idCausa) {
         causaService.aprovarCriarCausa(idCausa);
 

@@ -150,7 +150,7 @@ public class CausaService {
     public List<CausaRespostaDTO> minhasCausasCriadas(String idUsuario) {
     Usuario user = verificaPossivelVoluntario(idUsuario);
 
-    return causaRepo.findAllByIdCriador(idUsuario).stream()
+    return causaRepo.findAllByCriador_IdConta(idUsuario).stream()
         .map(causa -> new CausaRespostaDTO(causa)) // converte direto
         .collect(Collectors.toList());
 }

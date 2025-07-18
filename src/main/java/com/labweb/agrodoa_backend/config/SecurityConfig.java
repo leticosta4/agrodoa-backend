@@ -37,19 +37,17 @@ public class SecurityConfig {
 
             //endpoints publicos
             .requestMatchers(
-                "/auth/login",
-                            "/administradores",
-                            "/causas",
-                            "/causas/*",
-                            "/causas/criar_causa",
-                            "/estados",
-                            "/estados/*/cidades",
+                "/auth/login", //ok 3 tipos de conta  -- mas ta funcionando com inativo
+                            "/administradores", //ok
+                            "/causas", //ok
+                            "/causas/*", //ok
+                            "/estados", //ok
+                            "/estados/*/cidades", //ok
                             "/usuarios/cadastrar_usuario",
                             ////"/usuarios/reativar_conta", //vai ter que fazer o login dnv dps que reativar - so se der tempo - so se der tempo
-                            "/usuarios/ver_perfil/*",
-                            "/anuncios",
-                            "/anuncios/*",
-                            "/error",
+                            "/usuarios/ver_perfil/*", //ok
+                            "/anuncios", //ok
+                            "/anuncios/*", //ok
 
                             "/v3/api-docs/**",
                             "/v3/api-docs/swagger-config",
@@ -58,22 +56,40 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR")  //ta um pouco bugado no filtro de situacao
-            .requestMatchers(HttpMethod.PATCH, "/denuncias/*/aprovar", "/denuncias/*/reprovar", "/causas/*/aprovar_criacao_causa", "causas/*/rejeitar_criacao_causa").hasRole("ADMINISTRADOR")
+            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR") //ok
+            .requestMatchers(HttpMethod.PATCH,
+            "/denuncias/*/aprovar", //ok
+                        "/denuncias/*/reprovar", //ok
+                        "/causas/*/aprovar_criacao_causa",
+                        "causas/*/rejeitar_criacao_causa").hasRole("ADMINISTRADOR")
 
             //endpoints CONTA geral
-            .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO") //ok 3 tipos de conta
             .requestMatchers(HttpMethod.POST, "/causas/criar_causa").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
             .requestMatchers(HttpMethod.PATCH, "/causas/*/concluir").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO")
 
             //endpoints USER geral
-            .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil", "/usuarios/meu_perfil/minhas_causas", "/usuarios/meu_perfil/causas_voluntarias").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.POST, "/usuarios/ver_perfil/*/denunciar", "/usuarios/ver_perfil/*/avaliar", "/causas/*/virar_voluntario").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            .requestMatchers(HttpMethod.GET,
+            "/usuarios/meu_perfil",
+                        "/usuarios/meu_perfil/minhas_causas",
+                        "/usuarios/meu_perfil/causas_voluntarias").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            
+            .requestMatchers(HttpMethod.POST,
+            "/usuarios/ver_perfil/*/denunciar",
+                        "/usuarios/ver_perfil/*/avaliar",
+                        "/causas/*/virar_voluntario").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+
             .requestMatchers(HttpMethod.PUT, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
-            .requestMatchers(HttpMethod.PATCH, "/usuarios/meu_perfil/requerir_tipo_perfil", "/usuarios/meu_perfil/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
+            
+            .requestMatchers(HttpMethod.PATCH,
+                "/usuarios/meu_perfil/requerir_tipo_perfil",
+                            "/usuarios/meu_perfil/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO")
 
             //endpoints fornecedor
-            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.POST,
+                "/anuncios/criar_anuncio",
+                            "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
+
             .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
             .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
 
@@ -83,6 +99,7 @@ public class SecurityConfig {
 
             .anyRequest().authenticated()
             )
+            
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //usar token em vez de session
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

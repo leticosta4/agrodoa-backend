@@ -52,6 +52,7 @@ public class AuthController {
 
 
         if (contaAutenticada instanceof Usuario) { //token e dados do usuário.
+            //adicionar verificação p ver se a conta n ta inativa
             UsuarioLoginDTO usuarioDados = new UsuarioLoginDTO((Usuario) contaAutenticada);
             LoginRespostaDTO respostaCompleta = new LoginRespostaDTO(token, usuarioDados);
 

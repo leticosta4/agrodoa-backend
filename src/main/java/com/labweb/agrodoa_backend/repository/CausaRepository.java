@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,13 +12,13 @@ import com.labweb.agrodoa_backend.model.Causa;
 public interface CausaRepository extends JpaRepository<Causa, String> , JpaSpecificationExecutor<Causa>{
     boolean existsByIdCausa(String idCausa);
     Optional<Causa> findByIdCausa(String idCausa); //p ver causa específica e finalizar a causa
-    ArrayList <Causa> findAll();
-    ArrayList <Causa> findAllByIdCausa(String idCausa);
-    ArrayList <Causa> findAllByIdCriador(String idCriador);
+    List <Causa> findAll();
+    List <Causa> findAllByIdCausa(String idCausa);
+    List<Causa> findAllByCriador_IdConta(String idCriador);
 
     @Query(value = "SELECT * FROM causa WHERE LOWER(nome) LIKE CONCAT('%', :pesquisa, '%') AND status_causa = 'A';", nativeQuery = true)
-    ArrayList<Causa> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar talvez
+    List<Causa> findByTituloContaining(String pesquisa); //barra de pesquisa mas precisa refinar talvez
 
     @Query(value = "SELECT * FROM causa WHERE status_causa = :status;", nativeQuery = true)
-    ArrayList<Causa> findAllByStatus(String status); //causas concluidas (caso sirva)
+    List<Causa> findAllByStatus(String status); //causas concluidas (caso sirva)
 }

@@ -1,6 +1,6 @@
 package com.labweb.agrodoa_backend.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import com.labweb.agrodoa_backend.model.Anuncio;
 
 public interface AnuncioRepository extends JpaRepository<Anuncio, String>, JpaSpecificationExecutor<Anuncio>{
     boolean existsByIdAnuncio(String idAnuncio);
-    ArrayList <Anuncio> findAll();
+    List <Anuncio> findAll();
     Optional<Anuncio> findByIdAnuncio(String idAnuncio);  //usado no acesso a um unico anuncio, para finalizar ou desativar
     //criar query para retornar a quantidade de negociantes
 
