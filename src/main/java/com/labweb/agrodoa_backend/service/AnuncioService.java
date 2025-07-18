@@ -19,7 +19,6 @@ import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.local.Cidade;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.repository.ProdutoRepository;
-import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 import com.labweb.agrodoa_backend.repository.local.CidadeRepository;
 import com.labweb.agrodoa_backend.service.auxiliares.CloudinaryService;
@@ -35,7 +34,6 @@ public class AnuncioService {
     @Autowired private CidadeRepository cidadeRepo;
     @Autowired private ProdutoRepository produtoRepo;
     @Autowired private UsuarioRepository userRepo; // Para buscar o anunciante
-    @Autowired private ContaRepository contaRepo; // Para buscar o anunciante, se necessário
     @Autowired private CloudinaryService cloudnary;
 
     private Specification<Anuncio> criarSpecification(AnuncioFiltroDTO dto) {

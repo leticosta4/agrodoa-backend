@@ -25,7 +25,7 @@ public class AnuncioFiltroDTO {
      public StatusAnuncio getStatusEnum() {
         try {
             return status == null ? StatusAnuncio.ATIVO : StatusAnuncio.valueOf(status.toUpperCase());
-        } catch (IllegalArgumentException e) {
+        } catch(IllegalArgumentException e) {
             return StatusAnuncio.ATIVO;
         }
     }

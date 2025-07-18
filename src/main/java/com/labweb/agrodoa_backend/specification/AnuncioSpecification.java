@@ -1,6 +1,5 @@
 package com.labweb.agrodoa_backend.specification;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -28,30 +27,12 @@ public class AnuncioSpecification { //falta diminuir os repositories com specifi
         };
     }
 
-    public static Specification<Anuncio> filtrarPorPrecoMin(BigDecimal precoMin) {
-        return (root, query, cb) -> {
-            if (precoMin == null) {
-                return cb.conjunction();
-            }
-            return cb.greaterThanOrEqualTo(root.get("produto").get("precoUnidade"), precoMin);
-        };
-    }
-
-    public static Specification<Anuncio> filtrarPorPrecoMax(BigDecimal precoMax){
-        return (root,query,cb) -> {
-            if(precoMax == null){
-                return cb.conjunction();
-            }
-            return cb.lessThanOrEqualTo(root.get("produto").get("precoUnidade"), precoMax);
-        };
-    }
-
-    public static Specification<Anuncio> filtrarPorStatus(StatusAnuncio status) {  //doação ou venda
+    public static Specification<Anuncio> filtrarPorStatus(StatusAnuncio status) {
         return (root, query, cb) -> {
             if (status == null ) {
                 return cb.conjunction();
             }
-            return cb.equal(root.get("status"), status);
+            return cb.equal(root.get("status"), status.name());
         };
     }
 

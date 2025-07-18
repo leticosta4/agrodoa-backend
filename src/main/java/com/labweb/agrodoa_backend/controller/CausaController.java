@@ -2,12 +2,12 @@ package com.labweb.agrodoa_backend.controller;
 
 import com.labweb.agrodoa_backend.dto.causa.*;
 import com.labweb.agrodoa_backend.model.Causa;
-import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 import com.labweb.agrodoa_backend.service.CausaService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,8 +38,8 @@ public class CausaController {
     private final ContaDetailsService contaService;
 
     @GetMapping
-    public ResponseEntity<List<CausaRespostaDTO>> buscarComFiltros(@RequestParam(required = false) String nome, StatusCausa statusCausa) {
-        List<CausaRespostaDTO> causas = causaService.buscarComFiltros(nome, statusCausa);
+    public ResponseEntity<List<CausaRespostaDTO>> buscarComFiltros(@ParameterObject @ModelAttribute CausaFiltroDTO filtro) {
+        List<CausaRespostaDTO> causas = causaService.buscarComFiltros(filtro);
         return ResponseEntity.ok(causas);
     }
 
