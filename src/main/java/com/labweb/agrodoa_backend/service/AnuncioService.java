@@ -105,6 +105,7 @@ public class AnuncioService {
         
         anuncio.setTitulo(dto.getTitulo());
         anuncio.setDescricao(dto.getDescricao());
+        anuncio.getProduto().setQuantidade(dto.getQuantidade());
         // anuncio.setNomeArquivoFoto(dto.getNomeArquivoFoto());
         anuncio.setDataExpiracao(dto.getDataExpiracao());
         anuncio.setEntregaPeloFornecedor(dto.getEntregaPeloFornecedor());

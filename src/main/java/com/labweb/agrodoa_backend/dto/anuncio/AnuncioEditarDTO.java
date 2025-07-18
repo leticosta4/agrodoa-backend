@@ -18,6 +18,8 @@ public class AnuncioEditarDTO {
 
     private String descricao;
 
+    private int quantidade;
+
     // private String nomeArquivoFoto;
 
     private LocalDate dataExpiracao;
