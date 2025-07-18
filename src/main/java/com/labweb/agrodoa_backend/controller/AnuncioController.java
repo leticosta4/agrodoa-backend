@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioEditarDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
@@ -138,7 +139,7 @@ public class AnuncioController {
 
     //isso aqui tem que ser restrito ao user que tá logado 
     @PutMapping("/{idAnuncio}/editar")
-    public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioDTO anuncioDTO) {
+    public ResponseEntity<AnuncioRespostaDTO> editarAnuncio(@PathVariable String idAnuncio, @Valid @RequestBody AnuncioEditarDTO anuncioDTO) {
         AnuncioRespostaDTO anuncioAtualizado = anuncioService.editarAnuncio(idAnuncio, anuncioDTO);
         return ResponseEntity.ok(anuncioAtualizado);
     }

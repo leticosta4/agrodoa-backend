@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
+import com.labweb.agrodoa_backend.dto.anuncio.AnuncioEditarDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroUsuarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
@@ -92,7 +93,7 @@ public class AnuncioService {
     }
 
     @Transactional
-    public AnuncioRespostaDTO editarAnuncio(String idAnuncio, AnuncioDTO dto) {
+    public AnuncioRespostaDTO editarAnuncio(String idAnuncio, AnuncioEditarDTO dto) {
         Anuncio anuncio = anuncioRepo.findById(idAnuncio)
                 .orElseThrow(() -> new EntityNotFoundException("Anúncio não encontrado com o ID: " + idAnuncio));
 
@@ -104,7 +105,7 @@ public class AnuncioService {
         
         anuncio.setTitulo(dto.getTitulo());
         anuncio.setDescricao(dto.getDescricao());
-        anuncio.setNomeArquivoFoto(dto.getNomeArquivoFoto());
+        // anuncio.setNomeArquivoFoto(dto.getNomeArquivoFoto());
         anuncio.setDataExpiracao(dto.getDataExpiracao());
         anuncio.setEntregaPeloFornecedor(dto.getEntregaPeloFornecedor());
         anuncio.setCidade(cidade);
