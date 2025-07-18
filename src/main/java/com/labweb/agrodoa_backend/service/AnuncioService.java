@@ -126,7 +126,7 @@ public class AnuncioService {
 
     public void verificarDatasAnuncios(){
         for(Anuncio a: anuncioRepo.findAll()){
-            if(a.getDataExpiracao().isAfter(LocalDate.now())){
+            if(a.getDataExpiracao().isBefore(LocalDate.now()) && a.getStatus() == StatusAnuncio.ATIVO){
                 a.setStatus(StatusAnuncio.EXPIRADO);
                 anuncioRepo.save(a);
             }

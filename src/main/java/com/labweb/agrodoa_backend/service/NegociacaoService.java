@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
-import com.labweb.agrodoa_backend.events.NegociacaoAceitaEvent;
-import com.labweb.agrodoa_backend.events.NegociacaoRecusadaEvent;
+import com.labweb.agrodoa_backend.events.negociacao.NegociacaoAceitaEvent;
+import com.labweb.agrodoa_backend.events.negociacao.NegociacaoRecusadaEvent;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;

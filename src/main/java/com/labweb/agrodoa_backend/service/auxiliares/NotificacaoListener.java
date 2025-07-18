@@ -11,11 +11,13 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.labweb.agrodoa_backend.events.CausaAbertaEvent;
 import com.labweb.agrodoa_backend.events.DenunciaAprovadaEvent;
-import com.labweb.agrodoa_backend.events.NegociacaoAceitaEvent;
-import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
-import com.labweb.agrodoa_backend.events.NegociacaoRecusadaEvent;
+import com.labweb.agrodoa_backend.events.causa.CausaAbertaEvent;
+import com.labweb.agrodoa_backend.events.causa.CausaAprovadaEvent;
+import com.labweb.agrodoa_backend.events.causa.CausaRejeitadaEvent;
+import com.labweb.agrodoa_backend.events.negociacao.NegociacaoAceitaEvent;
+import com.labweb.agrodoa_backend.events.negociacao.NegociacaoIniciadaEvent;
+import com.labweb.agrodoa_backend.events.negociacao.NegociacaoRecusadaEvent;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.Denuncia;
@@ -25,7 +27,7 @@ import com.labweb.agrodoa_backend.model.enums.StatusCausa;
 import com.labweb.agrodoa_backend.repository.contas.ContaRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 
-//OBSERVER
+
 @Component
 public class NotificacaoListener { //depois remodelar provavelmente ja q vão ter outros tipos de notificacao
     @Autowired private EmailService emailService;
@@ -84,40 +86,71 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
         System.out.println("Envio de notificações para usuários concluído.");
     }
 
-    @Async
+    @Async 
     @EventListener
-    public void aoAprovarDenuncia(DenunciaAprovadaEvent evento) {
-        System.out.println("Iniciando processo de notificação para denúncia aprovada...");
+    public void aoAprovarCriacaoCausa(CausaAprovadaEvent evento){
+        try {
+            Causa causaAp = evento.getCausa();
+            Usuario usuario = (Usuario) causaAp.getCriador();
+            String destinatario = usuario.getEmail();
 
-        Denuncia denunciaAprovada = evento.getDenuncia();
-        Usuario usuarioDenunciado = denunciaAprovada.getDenunciado();
+            String assunto = "Boas notícias! Sua causa foi aceita!";
+            String corpo = String.format(
+                """
+                Olá, %s!
 
-        String assunto = "Aviso: Uma denúncia contra você foi aprovada";
-        String corpo = String.format(
-            "Olá, %s.\n\n" +
-            "Informamos que uma denúncia registrada contra você em nossa plataforma foi analisada e aprovada por nossa equipe de moderação.\n\n" +
-            "Motivo da Denúncia: %s\n\n" +
-            "Ações cabíveis poderão ser tomadas de acordo com nossos termos de serviço.\n\n" +
-            "Atenção: Caso sua conta atinja o limite de 3 denúncias aprovadas, ela será automaticamente suspensa.\n\n" +
-            "Atenciosamente,\nEquipe Agrodoa.",
-            usuarioDenunciado.getNome(),
-            denunciaAprovada.getMotivo().getNome()
-        );
+                Sua proposta da causa "%s" foi APROVADA pelo sistema!
 
-        String emailDenunciado = contaRepo.findEmailByIdConta(usuarioDenunciado.getIdConta());
+                Parabéns! Agora vários usuários poderão se voluntariar ! :).
 
-        emailService.enviarEmail(emailDenunciado, assunto, corpo);
-
-        System.out.printf("\n\nE-mail de notificação de denúncia aprovada enviado para: %s\n\n", emailDenunciado);
+                Atenciosamente,
+                Equipe Agrodoa.
+                """,
+                usuario.getNome(),
+                causaAp.getNome()
+            );
+            emailService.enviarEmail(destinatario, assunto, corpo);
+            System.out.println("\n\nE-mail de ACEITAÇÃO de causa enviado para: " + destinatario + "\n\n");
+        } catch(Exception e) {
+            System.err.println("Falha ao enviar e-mail de notificação de causa aprovada: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private void informes(Page<Usuario> intermedPage, Pageable paginacao){
-        System.out.printf("Processando lote de %d usuários (Página %d de %d)%n",
-                              intermedPage.getNumberOfElements(),
-                              paginacao.getPageNumber() + 1,
-                              intermedPage.getTotalPages());
+    @Async 
+    @EventListener
+    public void aoRejeitarCriacaoCausa(CausaRejeitadaEvent evento){
+        try {
+            Causa causaRej = evento.getCausa();
+            Usuario usuario = (Usuario) causaRej.getCriador();
+            String destinatario = usuario.getEmail();
+
+            String assunto = "Más notícias! Sua causa não foi aceita :(";
+            String corpo = String.format(
+                """
+                Olá, %s!
+
+                Sua proposta da causa "%s" foi REJEITADA pelo sistema.
+                
+                Mas não desanime, muitas outras oportunidade virão!
+                E você aidna pode ser voluntário(a) em outras causas do nosso sistema! :).
+
+                Atenciosamente,
+                Equipe Agrodoa.
+                """,
+                usuario.getNome(),
+                causaRej.getNome()
+            );
+            emailService.enviarEmail(destinatario, assunto, corpo);
+            System.out.println("\n\nE-mail de REJEIÇÃO de causa enviado para: " + destinatario + "\n\n");
+        } catch(Exception e) {
+            System.err.println("Falha ao enviar e-mail de notificação de causa rejeitada: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
+
+    //////////////////////////// NEGOCIACAO ///////////////////////////////////////
     @Async 
     @EventListener
     public void aoIniciadaNegociacao(NegociacaoIniciadaEvent evento) {
@@ -213,9 +246,6 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
         }
     }
 
-    /**
-     * NOVO LISTENER: Notifica o BENEFICIÁRIO que sua proposta foi RECUSADA.
-     */
     @Async
     @EventListener
     public void aoRecusarNegociacao(NegociacaoRecusadaEvent evento) {
@@ -245,5 +275,43 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
         } catch (Exception e) {
             System.err.println("Falha ao enviar e-mail de recusa de negociação: " + e.getMessage());
         }
+    }
+
+
+
+    ////////////////////////////  DENUNCIA ///////////////////////////////////////
+    @Async
+    @EventListener
+    public void aoAprovarDenuncia(DenunciaAprovadaEvent evento) {
+        System.out.println("Iniciando processo de notificação para denúncia aprovada...");
+
+        Denuncia denunciaAprovada = evento.getDenuncia();
+        Usuario usuarioDenunciado = denunciaAprovada.getDenunciado();
+
+        String assunto = "Aviso: Uma denúncia contra você foi aprovada";
+        String corpo = String.format(
+            "Olá, %s.\n\n" +
+            "Informamos que uma denúncia registrada contra você em nossa plataforma foi analisada e aprovada por nossa equipe de moderação.\n\n" +
+            "Motivo da Denúncia: %s\n\n" +
+            "Ações cabíveis poderão ser tomadas de acordo com nossos termos de serviço.\n\n" +
+            "Atenção: Caso sua conta atinja o limite de 3 denúncias aprovadas, ela será automaticamente suspensa.\n\n" +
+            "Atenciosamente,\nEquipe Agrodoa.",
+            usuarioDenunciado.getNome(),
+            denunciaAprovada.getMotivo().getNome()
+        );
+
+        String emailDenunciado = contaRepo.findEmailByIdConta(usuarioDenunciado.getIdConta());
+
+        emailService.enviarEmail(emailDenunciado, assunto, corpo);
+
+        System.out.printf("\n\nE-mail de notificação de denúncia aprovada enviado para: %s\n\n", emailDenunciado);
+    }
+
+
+    private void informes(Page<Usuario> intermedPage, Pageable paginacao){
+        System.out.printf("Processando lote de %d usuários (Página %d de %d)%n",
+                              intermedPage.getNumberOfElements(),
+                              paginacao.getPageNumber() + 1,
+                              intermedPage.getTotalPages());
     }
 }
