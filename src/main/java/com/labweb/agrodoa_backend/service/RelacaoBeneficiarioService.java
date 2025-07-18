@@ -1,12 +1,16 @@
 package com.labweb.agrodoa_backend.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,6 +20,7 @@ import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
+import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
 import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
@@ -40,6 +45,52 @@ public class RelacaoBeneficiarioService {
                 .map(AnuncioRespostaDTO::new)
                 .collect(Collectors.toList());
     }
+
+
+
+    // public List<RelacaoBeneficiarioDTO> listarNegociacoesAtivasPorAnuncio(String idAnuncio) {
+
+    //     List<StatusNegociacao> statusAtivos = List.of(StatusNegociacao.AGUARDANDO);
+    //     List<RelacaoBeneficiario> relacoes = rbRepo.findNegociacoesAtivasPorAnuncio(idAnuncio, TipoRelacaoBenef.NEGOCIANDO,statusAtivos);
+
+    //     return relacoes.stream().map(RelacaoBeneficiarioDTO::new).collect(Collectors.toList());
+    // }
+
+    public List<Map<String, Object>> listarNegociacoesAtivasPorAnuncio(String idAnuncio) {
+
+        List<StatusNegociacao> statusAtivos = List.of(StatusNegociacao.AGUARDANDO);
+
+        // 1. Busca as negociações do banco de dados
+        List<Negociacao> negociacoes = negociacaoRepo.findNegociacoesAtivasPorAnuncio(
+            idAnuncio,
+            TipoRelacaoBenef.NEGOCIANDO,
+            statusAtivos
+        );
+
+        // 2. Transforma a lista de entidades em uma lista de mapas
+        List<Map<String, Object>> respostaFormatada = new ArrayList<>();
+        for (Negociacao neg : negociacoes) {
+            Map<String, Object> negociacaoMap = new HashMap<>();
+
+            // Extrai os objetos relacionados para facilitar a leitura
+            Anuncio anuncio = neg.getRelacao().getAnuncio();
+            Usuario pedinte = neg.getRelacao().getBeneficiario();
+
+            // 3. Preenche o mapa com os dados e nomes exatos que o frontend precisa
+            negociacaoMap.put("idNegociacao", neg.getIdNegociacao());
+            negociacaoMap.put("idAnuncio", anuncio.getIdAnuncio());
+            negociacaoMap.put("pedinte", pedinte.getNome());
+            negociacaoMap.put("quantidade", neg.getQuantidade());
+            negociacaoMap.put("anuncioNome", anuncio.getTitulo());
+            negociacaoMap.put("fotoBeneficiario", pedinte.getNomeArquivoFoto());
+            
+            respostaFormatada.add(negociacaoMap);
+        }
+
+        return respostaFormatada;
+    }
+
+
 
     public RelacaoBeneficiarioDTO criarRelacao(String idAnuncio, String idBeneficiario, TipoRelacaoBenef tipoRelacao, Integer quantidade) {
         Anuncio anuncio = anuncioRepo.findByIdAnuncio(idAnuncio)

@@ -73,9 +73,9 @@ public class SecurityConfig {
 
 
             //endpoints fornecedor
-            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.POST, "/anuncios/criar_anuncio", "/anuncios/criar_anuncio/criar_produto", "/anuncios/*/listarNegociacoes").hasRole("FORNECEDOR")
             .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR")
-            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
+            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/cancelar", "/anuncios/*/cancelarNegociacao").hasAnyRole("FORNECEDOR", "ADMINISTRADOR")
 
             //endpoints beneficiario
             .requestMatchers(HttpMethod.GET, "/usuarios/meu_perfil/meus_salvos", "/usuarios/meu_perfil/minhas_negociacoes").hasRole("BENEFICIARIO")

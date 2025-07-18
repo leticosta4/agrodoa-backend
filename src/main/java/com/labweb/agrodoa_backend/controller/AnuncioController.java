@@ -80,16 +80,18 @@ public class AnuncioController {
        return ResponseEntity.ok(salvou);
     }
 
-    @PostMapping("/{idAnuncio}/iniciar_negociacao") //vai receber uma quantidade
-    public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @Valid @RequestBody NegociacaoRespostaDTO negociacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
-        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
+    //Movido para NegociacaoController
+    
+    // @PostMapping("/{idAnuncio}/iniciar_negociacao") //vai receber uma quantidade
+    // public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @Valid @RequestBody NegociacaoRespostaDTO negociacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
+    //     String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
 
-        RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO, negociacaoDTO.getQuantidade());
+    //     RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO, negociacaoDTO.getQuantidade());
 
-        // Negociacao respostaDTO = negociacaoService.iniciarNegociacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.);
+    //     // Negociacao respostaDTO = negociacaoService.iniciarNegociacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.);
         
-        return ResponseEntity.ok(negociacaoIniciada);
-    }
+    //     return ResponseEntity.ok(negociacaoIniciada);
+    // }
 
     // Metodos CRUD
     @PostMapping(value = "/criar_anuncio", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

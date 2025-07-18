@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.labweb.agrodoa_backend.events.CausaCriadaEvent;
 import com.labweb.agrodoa_backend.events.DenunciaAprovadaEvent;
+import com.labweb.agrodoa_backend.events.NegociacaoAceitaEvent;
 import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
+import com.labweb.agrodoa_backend.events.NegociacaoRecusadaEvent;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.Denuncia;
@@ -111,61 +113,123 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                               intermedPage.getTotalPages());
     }
 
-    @Async // Garante que o envio de e-mail não trave a thread principal da requisição
-@EventListener
-public void aoIniciadaNegociacao(NegociacaoIniciadaEvent evento) {
-    try {
-        // Objeto principal do evento
-        Negociacao negociacao = evento.getNegociacao();
+    @Async 
+    @EventListener
+    public void aoIniciadaNegociacao(NegociacaoIniciadaEvent evento) {
+        try {
+            Negociacao negociacao = evento.getNegociacao();
 
-        Anuncio anuncio = negociacao.getRelacao().getAnuncio();
-        Usuario interessado = negociacao.getRelacao().getBeneficiario(); 
-        Usuario anunciante = anuncio.getAnunciante(); 
+            Anuncio anuncio = negociacao.getRelacao().getAnuncio();
+            Usuario interessado = negociacao.getRelacao().getBeneficiario(); 
+            Usuario anunciante = anuncio.getAnunciante(); 
 
-        
-        String destinatario = anunciante.getEmail();
-        
-        String assunto = "Você recebeu uma nova proposta para o anúncio: " + anuncio.getTitulo();
+            
+            String destinatario = anunciante.getEmail();
+            
+            String assunto = "Você recebeu uma nova proposta para o anúncio: " + anuncio.getTitulo();
 
-        String corpoTemplate = """
+            String corpoTemplate = """
+                    Olá, %s!
+
+                    Um usuário da plataforma Agrodoa demonstrou interesse no seu anúncio e enviou uma proposta de negociação.
+
+                    --- Detalhes da Proposta ---
+                    Anúncio: %s
+                    Quantidade: %d
+
+                    --- Informações de Contato do Interessado ---
+                    Nome: %s
+                    E-mail: %s
+                    Telefone: %s
+
+                    Sugerimos que você entre em contato para dar continuidade à negociação.
+
+                    Atenciosamente,
+                    Equipe Agrodoa.
+                    """;
+
+            String corpoPersonalizado = String.format(
+                    corpoTemplate,
+                    anunciante.getNome(),
+                    anuncio.getTitulo(),
+                    negociacao.getQuantidade(),
+                    interessado.getNome(),
+                    interessado.getEmail(),
+                    interessado.getTelefone()
+            );
+
+            emailService.enviarEmail(destinatario, assunto, corpoPersonalizado);
+
+            System.out.println("\n\nE-mail de notificação de negociação enviado para: " + destinatario + "\n\n");
+
+        } catch (Exception e) {
+            System.err.println("Falha ao enviar e-mail de notificação de negociação: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Async
+    @EventListener
+    public void aoAceitarNegociacao(NegociacaoAceitaEvent evento) {
+        try {
+            Negociacao negociacao = evento.getNegociacao();
+            Usuario interessado = negociacao.getRelacao().getBeneficiario(); // O destinatário é o beneficiário
+            Anuncio anuncio = negociacao.getRelacao().getAnuncio();
+
+            String destinatario = interessado.getEmail();
+            String assunto = "Boas notícias! Sua proposta foi aceita!";
+            String corpo = String.format(
+                """
                 Olá, %s!
 
-                Um usuário da plataforma Agrodoa demonstrou interesse no seu anúncio e enviou uma proposta de negociação.
+                Sua proposta para o anúncio "%s" foi ACEITA pelo anunciante.
 
-                --- Detalhes da Proposta ---
-                Anúncio: %s
-                Quantidade Ofertada: %d
-
-                --- Informações de Contato do Interessado ---
-                Nome: %s
-                E-mail: %s
-                Telefone: %s
-
-                Sugerimos que você entre em contato para dar continuidade à negociação.
+                Parabéns! Agora você pode entrar em contato com o anunciante para combinar os detalhes da entrega/retirada.
 
                 Atenciosamente,
                 Equipe Agrodoa.
-                """;
-
-        String corpoPersonalizado = String.format(
-                corpoTemplate,
-                anunciante.getNome(),
-                anuncio.getTitulo(),
-                negociacao.getQuantidade(),
+                """,
                 interessado.getNome(),
-                interessado.getEmail(),
-                interessado.getTelefone()
-        );
-
-        // Envia o e-mail
-        emailService.enviarEmail(destinatario, assunto, corpoPersonalizado);
-
-        System.out.println("\n\nE-mail de notificação de negociação enviado para: " + destinatario + "\n\n");
-
-    } catch (Exception e) {
-        // É uma boa prática logar qualquer erro que ocorra durante o processo assíncrono
-        System.err.println("Falha ao enviar e-mail de notificação de negociação: " + e.getMessage());
-        e.printStackTrace();
+                anuncio.getTitulo()
+            );
+            emailService.enviarEmail(destinatario, assunto, corpo);
+            System.out.println("\n\nE-mail de ACEITAÇÃO de negociação enviado para: " + destinatario + "\n\n");
+        } catch (Exception e) {
+            System.err.println("Falha ao enviar e-mail de aceitação de negociação: " + e.getMessage());
+        }
     }
-}
+
+    /**
+     * NOVO LISTENER: Notifica o BENEFICIÁRIO que sua proposta foi RECUSADA.
+     */
+    @Async
+    @EventListener
+    public void aoRecusarNegociacao(NegociacaoRecusadaEvent evento) {
+        try {
+            Negociacao negociacao = evento.getNegociacao();
+            Usuario interessado = negociacao.getRelacao().getBeneficiario();
+            Anuncio anuncio = negociacao.getRelacao().getAnuncio();
+
+            String destinatario = interessado.getEmail();
+            String assunto = "Atualização sobre sua proposta de negociação";
+            String corpo = String.format(
+                """
+                Olá, %s.
+
+                Gostaríamos de informar que sua proposta para o anúncio "%s" foi RECUSADA pelo anunciante neste momento.
+
+                Não desanime! Existem muitos outros anúncios em nossa plataforma que podem ser do seu interesse.
+
+                Atenciosamente,
+                Equipe Agrodoa.
+                """,
+                interessado.getNome(),
+                anuncio.getTitulo()
+            );
+            emailService.enviarEmail(destinatario, assunto, corpo);
+            System.out.println("\n\nE-mail de RECUSA de negociação enviado para: " + destinatario + "\n\n");
+        } catch (Exception e) {
+            System.err.println("Falha ao enviar e-mail de recusa de negociação: " + e.getMessage());
+        }
+    }
 }
