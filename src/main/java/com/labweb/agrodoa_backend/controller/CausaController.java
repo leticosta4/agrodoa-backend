@@ -53,6 +53,7 @@ public class CausaController {
     public ResponseEntity<CausaRespostaDTO> criarCausa(
         @RequestParam String nome,
         @RequestParam String descricao,
+        @RequestParam int metaVoluntarios,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate prazo,
         @RequestParam("nomeArquivoFoto") MultipartFile nomeArquivoFoto,
         @AuthenticationPrincipal UserDetails userDetails) {
@@ -61,6 +62,7 @@ public class CausaController {
 
         dto.setNome(nome);
         dto.setDescricao(descricao);
+        dto.setMetaVoluntarios(metaVoluntarios);
         dto.setPrazo(prazo);
    
         Causa causaSalva = causaService.criarCausa(dto, nomeArquivoFoto, idConta);
