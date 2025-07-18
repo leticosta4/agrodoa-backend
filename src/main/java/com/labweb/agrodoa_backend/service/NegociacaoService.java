@@ -16,18 +16,15 @@ import com.labweb.agrodoa_backend.events.NegociacaoAceitaEvent;
 import com.labweb.agrodoa_backend.events.NegociacaoRecusadaEvent;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Negociacao;
-import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.repository.NegociacaoRepository;
-import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class NegociacaoService {
-    @Autowired private UsuarioRepository userRepo;
     @Autowired private AnuncioRepository anuncioRepo;
     @Autowired private NegociacaoRepository negociacaoRepo;
     @Autowired private ApplicationEventPublisher eventPublisher;
@@ -61,7 +58,7 @@ public class NegociacaoService {
         List<Negociacao> negociacoesParaSalvar = new ArrayList<>();
         negociacoesParaSalvar.add(negociacao);
         
-        // --- 3. Lógica Condicional: Anúncio Esgotado ---
+        // Lógica Condicional: Anúncio Esgotado 
         if (novaQuantidade <= 0) {
             anuncio.setStatus(StatusAnuncio.FINALIZADO);
 
@@ -77,10 +74,8 @@ public class NegociacaoService {
         anuncioRepo.save(anuncio);
         negociacaoRepo.saveAll(negociacoesParaSalvar);
 
-        // --- 5. Envio de E-mail de Confirmação ---
         eventPublisher.publishEvent(new NegociacaoAceitaEvent(negociacao));
 
-        // --- 6. Resposta da API ---
         Map<String, Object> resposta = new HashMap<>();
         resposta.put("mensagem", "Negociação aceita com sucesso!");
         resposta.put("idNegociacao", negociacao.getIdNegociacao());
