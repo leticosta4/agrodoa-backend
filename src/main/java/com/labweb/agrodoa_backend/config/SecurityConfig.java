@@ -60,8 +60,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PATCH,
             "/denuncias/*/aprovar", //ok
                         "/denuncias/*/reprovar", //ok
-                        "/causas/*/aprovar_criacao_causa", //falta no front
-                        "causas/*/rejeitar_criacao_causa").hasRole("ADMINISTRADOR") //falta no front
+                        "/causas/*/aprovar_criacao_causa", //testar
+                        "causas/*/rejeitar_criacao_causa").hasRole("ADMINISTRADOR") //testar
 
             //endpoints CONTA geral
             .requestMatchers(HttpMethod.GET, "/auth/logout").hasAnyRole("ADMINISTRADOR", "FORNECEDOR", "BENEFICIARIO") //ok 3 tipos de conta
@@ -72,12 +72,12 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET,
             "/usuarios/meu_perfil", //ok
                         "/usuarios/meu_perfil/minhas_causas", //falta no front
-                        "/usuarios/meu_perfil/causas_voluntarias").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
+                        "/usuarios/meu_perfil/minhas_causas_voluntarias").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
             
             .requestMatchers(HttpMethod.POST,
-            "/usuarios/ver_perfil/*/denunciar", //QUEBRADO
+            "/usuarios/ver_perfil/*/denunciar", //ok
                         "/usuarios/ver_perfil/*/avaliar",  //ok
-                        "/causas/*/virar_voluntario").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
+                        "/causas/*/virar_voluntario").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //testar
 
             .requestMatchers(HttpMethod.PUT, "/usuarios/meu_perfil/editar").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
             
@@ -86,14 +86,14 @@ public class SecurityConfig {
                             "/usuarios/meu_perfil/desativar_conta").hasAnyRole("FORNECEDOR", "BENEFICIARIO") //falta no front
 
             //endpoints fornecedor
-            .requestMatchers(HttpMethod.GET, "/anuncios/*/negociacoes/listar").hasRole("FORNECEDOR")
+            .requestMatchers(HttpMethod.GET, "/anuncios/*/negociacoes/listar").hasRole("FORNECEDOR") //testar
             .requestMatchers(HttpMethod.POST,
                 "/anuncios/criar_anuncio", //ok
-                            "/anuncios/criar_anuncio/criar_produto",
+                            "/anuncios/criar_anuncio/criar_produto", //ok
                             "/anuncios/*/negociacoes/listar").hasRole("FORNECEDOR") //ok
 
-            .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR") //falta no front
-            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/negociacoes/*/aceitar").hasRole("FORNECEDOR") //falta no front
+            .requestMatchers(HttpMethod.PUT, "/anuncios/*/editar").hasRole("FORNECEDOR") //testar
+            .requestMatchers(HttpMethod.PATCH, "/anuncios/*/negociacoes/*/aceitar").hasRole("FORNECEDOR") //testar
             .requestMatchers(HttpMethod.PATCH,
                             "/anuncios/*/cancelar",
                             "anuncios/*/negociacoes/*/cancelar").hasAnyRole("FORNECEDOR", "ADMINISTRADOR") //ok
@@ -105,7 +105,7 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.POST,
                             "/anuncios/*/salvar", //ok
-                            "/anuncios/*/iniciar_negociacao").hasRole("BENEFICIARIO") //falta barrar por data
+                            "/anuncios/*/iniciar_negociacao").hasRole("BENEFICIARIO") //testar
 
             .anyRequest().authenticated()
             )

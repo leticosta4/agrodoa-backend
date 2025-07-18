@@ -177,7 +177,7 @@ public class UsuarioController {
         return ResponseEntity.ok(retorno);
     }
 
-    @GetMapping("/meu_perfil/causas_voluntarias")
+    @GetMapping("/meu_perfil/minhas_causas_voluntarias")
     public ResponseEntity<List<CausaRespostaDTO>> causasVoluntariando(@AuthenticationPrincipal UserDetails userDetails){
         String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
         return ResponseEntity.ok(causaService.causasVoluntariando(idUsuario));

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+import com.labweb.agrodoa_backend.service.AnuncioService;
 import com.labweb.agrodoa_backend.service.CausaService;
 
 @SpringBootApplication
@@ -19,9 +20,10 @@ public class AgrodoaBackendApplication {
 	}
 
 	@Bean
-    public CommandLineRunner run(CausaService causaService) {
+    public CommandLineRunner run(CausaService causaService, AnuncioService anuncioService) {
         return args -> {
             causaService.verificarPrazosEVoluntariosCausas();
+			anuncioService.verificarDatasAnuncios();
         };
     }
 }

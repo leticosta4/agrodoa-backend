@@ -1,5 +1,6 @@
 package com.labweb.agrodoa_backend.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +47,7 @@ public class AnuncioService {
     
 
     public List<AnuncioRespostaDTO> buscarAnunciosFiltro(AnuncioFiltroDTO dto){
+        verificarDatasAnuncios();
         Specification<Anuncio> spec = criarSpecification(dto);
                                                 
         return anuncioRepo.findAll(spec)
@@ -56,6 +58,7 @@ public class AnuncioService {
     
     
     public Optional<AnuncioRespostaDTO> buscarAnuncioPorId(String anuncioId){
+        verificarDatasAnuncios();
         return anuncioRepo.findById(anuncioId).map(AnuncioRespostaDTO::new);
     }
 
@@ -119,5 +122,14 @@ public class AnuncioService {
         
         anuncio.setStatus(StatusAnuncio.CANCELADO); //talvez colocar um novo status de cancelado
         anuncioRepo.save(anuncio);
+    }
+
+    public void verificarDatasAnuncios(){
+        for(Anuncio a: anuncioRepo.findAll()){
+            if(a.getDataExpiracao().isAfter(LocalDate.now())){
+                a.setStatus(StatusAnuncio.EXPIRADO);
+                anuncioRepo.save(a);
+            }
+        }
     }
 }
