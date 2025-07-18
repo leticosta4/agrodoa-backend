@@ -19,15 +19,4 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, String>, JpaSp
 
     // @Query(value = "SELECT * FROM anuncio WHERE data_expiracao = :dataExpiracao;", nativeQuery = true)
     // ArrayList<Anuncio> findByDataExpiracao(LocalDate dataExpiracao);
-
-
-    /*
-     * geral:
-     * anuncios disponiveis para negociacao >> vai ter que fazer verificação do status aq logo ou na função que chama o repo
-     * anuncios por filtro de preço  >>> acho que vai precisar fazer um join com produto
-     * 
-     * 
-     * fornecedor:
-     * anuncios em negociacao  >> esse vai precisar fazer um join com relacao_beneficiario
-     */
 }

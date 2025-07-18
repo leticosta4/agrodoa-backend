@@ -39,21 +39,20 @@ public class CausaService {
     @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
     @Autowired CloudinaryService cloudinary;
 
+    private Specification<Causa> criarSpecification(CausaFiltroDTO dto) {
+        return Specification
+            .where(CausaSpecification.filtrarPorNome(dto.getNome()))
+            .and(CausaSpecification.filtrarPorStatus(dto.getStatusEnum()));
+    }
+
     @Transactional(readOnly = true)
-    public List<CausaRespostaDTO> buscarComFiltros(String nome, StatusCausa statusCausa) {
-        Specification<Causa> spec = Specification.where(null);
+    public List<CausaRespostaDTO> buscarComFiltros(CausaFiltroDTO dto) {
+        Specification<Causa> spec = criarSpecification(dto);
 
-        if (nome != null && !nome.isEmpty()) {
-            spec = spec.and(CausaSpecification.filtrarPorNome(nome));
-        }
-
-        if (nome != null && !nome.isEmpty()) {
-            spec = spec.and(CausaSpecification.filtrarPorStatus(statusCausa));
-        }
-
-        List<Causa> causas = causaRepo.findAll(spec);
-
-        return causas.stream().map(CausaRespostaDTO::new).collect(Collectors.toList()); 
+        return causaRepo.findAll(spec)
+                        .stream()
+                        .map(CausaRespostaDTO::new)
+                        .toList();
     }
 
     @Transactional(readOnly = true)

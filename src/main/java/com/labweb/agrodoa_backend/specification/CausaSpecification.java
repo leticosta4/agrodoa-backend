@@ -17,13 +17,13 @@ public class CausaSpecification {
         };
     }
 
-    public static Specification<Causa> filtrarPorStatus(StatusCausa statusCausa) { //esse é o geral
+    public static Specification<Causa> filtrarPorStatus(StatusCausa status) { //esse é o geral
         return (root, query, cb) -> {
-            if (statusCausa == null || statusCausa.name().isEmpty()) {
+            if (status == null || status.name().isEmpty()) {
                 return cb.conjunction();
             }
             
-            return cb.like(cb.lower(root.get("status")), "%" + statusCausa.name().toLowerCase() + "%");
+            return cb.equal(root.get("status"), status.name());
         };
     }
 }   
