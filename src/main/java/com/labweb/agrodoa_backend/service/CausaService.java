@@ -1,7 +1,7 @@
 package com.labweb.agrodoa_backend.service;
 
 import com.labweb.agrodoa_backend.dto.causa.*;
-import com.labweb.agrodoa_backend.events.CausaCriadaEvent;
+import com.labweb.agrodoa_backend.events.CausaAbertaEvent;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -76,7 +76,6 @@ public class CausaService {
         novaCausa.setIdCausa(GeradorIdCustom.gerarIdComPrefixo("CAU", causaRepo, "idCausa"));
 
         Causa causaSalva = causaRepo.saveAndFlush(novaCausa);
-        eventPublisher.publishEvent(new CausaCriadaEvent(causaSalva));
 
         return causaSalva; 
     }
@@ -92,6 +91,7 @@ public class CausaService {
 
         possivelCausa.setStatus(StatusCausa.ABERTA);
         causaRepo.save(possivelCausa);
+        eventPublisher.publishEvent(new CausaAbertaEvent(possivelCausa));
     }
 
     @Transactional

@@ -54,7 +54,7 @@ public class CausaController {
         @RequestParam String nome,
         @RequestParam String descricao,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate prazo,
-        @RequestParam("nomeArquivoFoto") MultipartFile imagemFile,
+        @RequestParam("nomeArquivoFoto") MultipartFile nomeArquivoFoto,
         @AuthenticationPrincipal UserDetails userDetails) {
         String idConta = contaService.findIdByEmail(userDetails.getUsername());
         CausaDTO dto = new CausaDTO();
@@ -63,7 +63,7 @@ public class CausaController {
         dto.setDescricao(descricao);
         dto.setPrazo(prazo);
    
-        Causa causaSalva = causaService.criarCausa(dto, imagemFile, idConta);
+        Causa causaSalva = causaService.criarCausa(dto, nomeArquivoFoto, idConta);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
