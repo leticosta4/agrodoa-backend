@@ -175,6 +175,7 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
             Negociacao negociacao = evento.getNegociacao();
             Usuario interessado = negociacao.getRelacao().getBeneficiario(); // O destinatário é o beneficiário
             Anuncio anuncio = negociacao.getRelacao().getAnuncio();
+            Usuario anunciante = anuncio.getAnunciante(); 
 
             String destinatario = interessado.getEmail();
             String assunto = "Boas notícias! Sua proposta foi aceita!";
@@ -186,11 +187,19 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
 
                 Parabéns! Agora você pode entrar em contato com o anunciante para combinar os detalhes da entrega/retirada.
 
+                --- Informações de Contato do Fornecedor ---
+                Nome: %s
+                E-mail: %s
+                Telefone: %s
+
                 Atenciosamente,
                 Equipe Agrodoa.
                 """,
                 interessado.getNome(),
-                anuncio.getTitulo()
+                anuncio.getTitulo(),
+                anunciante.getNome(),
+                anunciante.getEmail(),
+                anunciante.getTelefone()
             );
             emailService.enviarEmail(destinatario, assunto, corpo);
             System.out.println("\n\nE-mail de ACEITAÇÃO de negociação enviado para: " + destinatario + "\n\n");
