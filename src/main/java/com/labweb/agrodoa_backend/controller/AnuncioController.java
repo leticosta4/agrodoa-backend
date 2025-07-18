@@ -25,12 +25,15 @@ import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioFiltroDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.dto.negociacao.NegociacaoRespostaDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoDTO;
 import com.labweb.agrodoa_backend.dto.produto.ProdutoRespostaDTO;
 import com.labweb.agrodoa_backend.model.Anuncio;
+import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.Produto;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.service.AnuncioService;
+import com.labweb.agrodoa_backend.service.NegociacaoService;
 import com.labweb.agrodoa_backend.service.ProdutoService;
 import com.labweb.agrodoa_backend.service.RelacaoBeneficiarioService;
 import com.labweb.agrodoa_backend.service.contas.ContaDetailsService;
@@ -48,6 +51,7 @@ public class AnuncioController {
     @Autowired private ContaDetailsService contaService;
     @Autowired private ProdutoService produtoService;
     @Autowired private RelacaoBeneficiarioService relBenefService;
+    @Autowired private NegociacaoService negociacaoService;
 
     @GetMapping
     public ResponseEntity<List<AnuncioRespostaDTO>> listarAnunciosFiltro(@ParameterObject @ModelAttribute AnuncioFiltroDTO filtro){
@@ -71,18 +75,23 @@ public class AnuncioController {
     @PostMapping("/{idAnuncio}/salvar")
     public ResponseEntity<RelacaoBeneficiarioDTO> salvarAnuncio(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
         String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
-        RelacaoBeneficiarioDTO salvou = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.SALVOU);
+        RelacaoBeneficiarioDTO salvou = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.SALVOU, 0);
 
        return ResponseEntity.ok(salvou);
     }
 
-    @PostMapping("/{idAnuncio}/iniciar_negociacao") //ainda falta desenvolver
-    public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @AuthenticationPrincipal UserDetails userDetails) {
-        String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
-        RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO);
+    //Movido para NegociacaoController
+    
+    // @PostMapping("/{idAnuncio}/iniciar_negociacao") //vai receber uma quantidade
+    // public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @Valid @RequestBody NegociacaoRespostaDTO negociacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
+    //     String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
 
-        return ResponseEntity.ok(negociacaoIniciada);
-    }
+    //     RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO, negociacaoDTO.getQuantidade());
+
+    //     // Negociacao respostaDTO = negociacaoService.iniciarNegociacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.);
+        
+    //     return ResponseEntity.ok(negociacaoIniciada);
+    // }
 
     // Metodos CRUD
     @PostMapping(value = "/criar_anuncio", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
