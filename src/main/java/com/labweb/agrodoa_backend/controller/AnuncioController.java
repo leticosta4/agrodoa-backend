@@ -77,19 +77,6 @@ public class AnuncioController {
        return ResponseEntity.ok(salvou);
     }
 
-    //Movido para NegociacaoController
-    
-    // @PostMapping("/{idAnuncio}/iniciar_negociacao") //vai receber uma quantidade
-    // public ResponseEntity<RelacaoBeneficiarioDTO> iniciarNegociacao(@PathVariable String idAnuncio, @Valid @RequestBody NegociacaoRespostaDTO negociacaoDTO, @AuthenticationPrincipal UserDetails userDetails) {
-    //     String idBeneficiario = contaService.findIdByEmail(userDetails.getUsername());
-
-    //     RelacaoBeneficiarioDTO negociacaoIniciada = relBenefService.criarRelacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.NEGOCIANDO, negociacaoDTO.getQuantidade());
-
-    //     // Negociacao respostaDTO = negociacaoService.iniciarNegociacao(idAnuncio, idBeneficiario, TipoRelacaoBenef.);
-        
-    //     return ResponseEntity.ok(negociacaoIniciada);
-    // }
-
     // Metodos CRUD
     @PostMapping(value = "/criar_anuncio", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AnuncioRespostaDTO> criarAnuncio(
@@ -99,7 +86,7 @@ public class AnuncioController {
         @RequestParam int entregaPeloFornecedor,
         @RequestParam String cidadeId,
         @RequestParam String produtoId,
-        @RequestParam(value = "imagem", required = false) MultipartFile imagem,
+        @RequestParam(value = "nomeArquivoFoto", required = false) MultipartFile nomeArquivoFoto,
         @AuthenticationPrincipal UserDetails userDetails
     ) {
         String idAnunciante = contaService.findIdByEmail(userDetails.getUsername());
@@ -112,7 +99,7 @@ public class AnuncioController {
         dto.setCidadeId(cidadeId);
         dto.setProdutoId(produtoId);
      
-        Anuncio anuncioSalvo = anuncioService.criarAnuncio(dto, idAnunciante, imagem);
+        Anuncio anuncioSalvo = anuncioService.criarAnuncio(dto, idAnunciante, nomeArquivoFoto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{idAnuncio}")
