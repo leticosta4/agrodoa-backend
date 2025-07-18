@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "requisicao")
+@Table(name = "requisicao_tipo_perfil")
 @Getter
 @Setter
 @NoArgsConstructor

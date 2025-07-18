@@ -141,12 +141,20 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `labweb_project`.`causa` (
   `idcausa` VARCHAR(7) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
-  `descricao` TEXT NOT NULL,
+  `descricao` TEXT(150) NOT NULL,
   `prazo` DATE NOT NULL,
   `nome_arquivo_foto` VARCHAR(60) NULL,
   `status_causa` VARCHAR(20) NOT NULL,
+  `meta_assinatura` BIGINT NOT NULL,
+  `conta_idconta` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idcausa`),
-  UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE)
+  UNIQUE INDEX `idcausa_UNIQUE` (`idcausa` ASC) VISIBLE,
+  INDEX `fk_causa_conta1_idx` (`conta_idconta` ASC) VISIBLE,
+  CONSTRAINT `fk_causa_conta1`
+    FOREIGN KEY (`conta_idconta`)
+    REFERENCES `labweb_project`.`conta` (`idconta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -285,9 +293,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `labweb_project`.`requisicao`
+-- Table `labweb_project`.`requisicao_tipo_perfil`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `labweb_project`.`requisicao` (
+CREATE TABLE IF NOT EXISTS `labweb_project`.`requisicao_tipo_perfil` (
    `idrequisicao` VARCHAR(7) NOT NULL,
   `usuario_conta_idconta` VARCHAR(7) NOT NULL,
   PRIMARY KEY (`idrequisicao`),

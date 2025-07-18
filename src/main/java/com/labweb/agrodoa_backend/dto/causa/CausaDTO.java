@@ -3,6 +3,7 @@ package com.labweb.agrodoa_backend.dto.causa;
 import java.time.LocalDate;
 
 import com.labweb.agrodoa_backend.model.Causa;
+import com.labweb.agrodoa_backend.model.contas.Conta;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,9 @@ public class CausaDTO {
 
     private String nomeArquivoFoto;
 
-    public Causa transformaParaObjeto(){
-        return new Causa(nome, descricao, prazo, nomeArquivoFoto);
+    private int metaAssinatura;
+
+    public Causa transformaParaObjeto(Conta contaCriadora){
+        return new Causa(nome, descricao, prazo, nomeArquivoFoto, metaAssinatura, contaCriadora);
     }
 }

@@ -1,5 +1,6 @@
 -- caso ja tenha criado as tabelas, rodar isso:
 
+--==================================== REFATORAÇÃO ====================================
 -- tirando algumas colunas de preço de algumas tabelas REFATORAÇÃO
 alter table anuncio drop column tipo_anuncio;
 alter table produto drop column preco_unidade;
@@ -8,6 +9,17 @@ alter table usuario_has_causa drop column valor_doado;
 alter table causa drop column valor_arrecadado;
 alter table causa drop column meta;
 
+
+-- tabela causa e requisicao:
+rename table requisicao to requisicao_tipo_perfil;
+drop table usuario_has_causa;
+drop table causa;
+--recrie as tabelas no create table e faça ps inserts de causa
+
+
+
+
+------==========================================================================================================================
 ALTER TABLE labweb_project.causa MODIFY COLUMN descricao TEXT;
 
 -- colunas de adm com varchar maior
