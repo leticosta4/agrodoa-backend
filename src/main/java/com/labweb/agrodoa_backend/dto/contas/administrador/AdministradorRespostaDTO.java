@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AdministradorRespostaDTO {
+    private String idAdm;
     private String nome;
     private String email;
     private String github;
     private String linkedin;
 
     public AdministradorRespostaDTO(Administrador adm){
+        this.idAdm = adm.getIdConta();
         this.nome = adm.getNome();
         this.email = adm.getEmail();
         this.github = adm.getGithub();

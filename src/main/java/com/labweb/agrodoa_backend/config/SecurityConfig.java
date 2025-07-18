@@ -56,7 +56,7 @@ public class SecurityConfig {
             ).permitAll()
 
             //endpoints adm
-            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias").hasRole("ADMINISTRADOR") //ok
+            .requestMatchers(HttpMethod.GET, "/usuarios", "/denuncias", "/administradores/*/meu_perfil").hasRole("ADMINISTRADOR") //ok
             .requestMatchers(HttpMethod.PATCH,
             "/denuncias/*/aprovar", //ok
                         "/denuncias/*/reprovar", //ok

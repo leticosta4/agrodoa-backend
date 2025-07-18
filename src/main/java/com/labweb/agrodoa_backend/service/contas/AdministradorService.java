@@ -9,6 +9,8 @@ import com.labweb.agrodoa_backend.dto.contas.administrador.AdministradorResposta
 import com.labweb.agrodoa_backend.model.contas.Administrador;
 import com.labweb.agrodoa_backend.repository.contas.AdministradorRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class AdministradorService {
     @Autowired private AdministradorRepository admRepo;
@@ -22,6 +24,13 @@ public class AdministradorService {
         }
 
         return adminsResposta;
+    }
+
+    public AdministradorRespostaDTO buscaAdmPorId(String idAdm){
+        Administrador adm = admRepo.findById(idAdm)
+        .orElseThrow(() -> new EntityNotFoundException("Administrador não encontrado com o ID: " + idAdm));
+    
+        return new AdministradorRespostaDTO(adm);
     }
 
 }  
