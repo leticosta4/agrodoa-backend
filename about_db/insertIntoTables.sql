@@ -114,6 +114,10 @@ INSERT INTO labweb_project.causa
 ('CAU0004', 'Saúde da Mulher', 'Campanha de exames preventivos gratuitos.', '2025-09-20', 'saude.jpg', 'ABERTA', 1200, 'CON0001'),
 ('CAU0005', 'Abrigo Animal', 'Construção de canis e gatis para animais resgatados.', '2025-08-31', 'abrigo.jpg', 'ABERTA', 600, 'CON0001');
 
+INSERT INTO labweb_project.causa 
+(idcausa, nome, descricao, prazo, nome_arquivo_foto, status_causa, meta_voluntarios, conta_idconta, data_criacao, quant_voluntarios) VALUES
+('CAU0006', 'Acabe com o capitalismo', 'Campanha para acabar com o capitalismo.', '2025-12-31', 'endcapitalism.jpg', 'AGUARDANDO', 1000, 'CON0004', '2025-07-18', 0);
+
 INSERT INTO motivo (idmotivo, nome) VALUES
 ('MOT0001', 'Desrespeito'),
 ('MOT0002', 'Propaganda enganosa'),

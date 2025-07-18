@@ -1,7 +1,9 @@
 package com.labweb.agrodoa_backend.service;
 
 import com.labweb.agrodoa_backend.dto.causa.*;
-import com.labweb.agrodoa_backend.events.CausaAbertaEvent;
+import com.labweb.agrodoa_backend.events.causa.CausaAbertaEvent;
+import com.labweb.agrodoa_backend.events.causa.CausaAprovadaEvent;
+import com.labweb.agrodoa_backend.events.causa.CausaRejeitadaEvent;
 import com.labweb.agrodoa_backend.model.Causa;
 import com.labweb.agrodoa_backend.model.contas.Conta;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -36,7 +38,7 @@ public class CausaService {
     @Autowired ContaRepository contaRepo;
     @Autowired UsuarioRepository userRepo;
     @Autowired VoluntariadoRepository voluntariadoRepo;
-    @Autowired ApplicationEventPublisher eventPublisher; //publicador de eventos proprio do spring - SUBJECT
+    @Autowired ApplicationEventPublisher eventPublisher;
     @Autowired CloudinaryService cloudinary;
 
     private Specification<Causa> criarSpecification(CausaFiltroDTO dto) {
@@ -84,12 +86,17 @@ public class CausaService {
         Causa possivelCausa = causaRepo.findByIdCausa(idCausa)
                 .orElseThrow(() -> new EntityNotFoundException("Causa não encontrada com o ID: " + idCausa));
 
+        if(possivelCausa.getStatus() != StatusCausa.AGUARDANDO){
+            throw new IllegalArgumentException("Essa causa já foi avaliada anteriormente!");
+        }
+
         if(!possivelCausa.getPrazo().isAfter(LocalDate.now())){
             throw new IllegalArgumentException("O prazo deve ser uma data futura.");
         } 
 
         possivelCausa.setStatus(StatusCausa.ABERTA);
         causaRepo.save(possivelCausa);
+        eventPublisher.publishEvent(new CausaAprovadaEvent(possivelCausa));
         eventPublisher.publishEvent(new CausaAbertaEvent(possivelCausa));
     }
 
@@ -100,6 +107,7 @@ public class CausaService {
 
         possivelCausa.setStatus(StatusCausa.REJEITADA);
         causaRepo.save(possivelCausa);
+        eventPublisher.publishEvent(new CausaRejeitadaEvent(possivelCausa));
     }
 
     @Transactional
@@ -162,7 +170,7 @@ public class CausaService {
 
     public void verificarPrazosEVoluntariosCausas(){
         for(Causa c: causaRepo.findAllByStatus(StatusCausa.ABERTA.name())){
-            if(c.getPrazo().isBefore(LocalDate.now())){
+            if(c.getPrazo().isBefore(LocalDate.now()) && c.getStatus() == StatusCausa.ABERTA){
                 c.setStatus(StatusCausa.CONCLUIDA);
                 causaRepo.save(c);
             }

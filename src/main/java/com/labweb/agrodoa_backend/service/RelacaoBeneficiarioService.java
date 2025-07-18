@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.labweb.agrodoa_backend.dto.RelacaoBeneficiarioDTO;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
+import com.labweb.agrodoa_backend.events.negociacao.NegociacaoIniciadaEvent;
 import com.labweb.agrodoa_backend.model.Anuncio;
 import com.labweb.agrodoa_backend.model.Negociacao;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
@@ -22,7 +23,6 @@ import com.labweb.agrodoa_backend.model.enums.StatusAnuncio;
 import com.labweb.agrodoa_backend.model.enums.StatusNegociacao;
 import com.labweb.agrodoa_backend.model.enums.TipoRelacaoBenef;
 import com.labweb.agrodoa_backend.model.relacoes.RelacaoBeneficiario;
-import com.labweb.agrodoa_backend.events.NegociacaoIniciadaEvent;
 import com.labweb.agrodoa_backend.repository.AnuncioRepository;
 import com.labweb.agrodoa_backend.repository.NegociacaoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;
