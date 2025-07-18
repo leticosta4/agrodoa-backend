@@ -16,6 +16,12 @@ drop table usuario_has_causa;
 drop table causa;
 --recrie as tabelas no create table e faça ps inserts de causa
 
+ALTER TABLE causa ADD COLUMN data_criacao DATE;
+UPDATE causa SET data_criacao = CURDATE();
+ALTER TABLE causa MODIFY COLUMN data_criacao DATE NOT NULL;
+
+alter table causa change nome_arquivo_foto nome_arquivo_foto varchar(60) not null;
+alter table causa change meta_assinatura meta_voluntarios bigint not null;
 
 
 
@@ -28,7 +34,7 @@ alter table administrador modify linkedin varchar(255);
 
 -- caso ja tenha criado algumas colunas com tabelas que armazenam só um caracter para indicar tipo, status, etc:
 -- estamos adaptando para string para lidar de forma mais facil com os enums
--- rodar:
+-- rodar:alter table causa add column data_criacao date not null;
 ALTER table anuncio MODIFY status VARCHAR(20) NOT NULL;
 ALTER table causa MODIFY status_causa VARCHAR(20) NOT NULL;
 ALTER table relacao_beneficiario MODIFY tipo_relacao_interessado VARCHAR(20) NOT NULL;

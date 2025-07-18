@@ -21,9 +21,9 @@ public class CausaDTO {
 
     private String nomeArquivoFoto;
 
-    private int metaAssinatura;
+    private int metaVoluntarios;
 
     public Causa transformaParaObjeto(Conta contaCriadora){
-        return new Causa(nome, descricao, prazo, nomeArquivoFoto, metaAssinatura, contaCriadora);
+        return new Causa(nome, descricao, prazo, nomeArquivoFoto, metaVoluntarios, contaCriadora);
     }
 }

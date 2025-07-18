@@ -17,11 +17,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.labweb.agrodoa_backend.config.JwtUtil;
 import com.labweb.agrodoa_backend.dto.anuncio.AnuncioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
+import com.labweb.agrodoa_backend.dto.causa.CausaRespostaDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioLoginDTO;
 import com.labweb.agrodoa_backend.dto.contas.usuario.UsuarioRespostaDTO;
 import com.labweb.agrodoa_backend.dto.denuncia.DenunciaRequestDTO;
 import com.labweb.agrodoa_backend.service.AvaliacaoService;
+import com.labweb.agrodoa_backend.service.CausaService;
 import com.labweb.agrodoa_backend.service.DenunciaService;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.model.enums.SituacaoUsuario;
@@ -43,16 +45,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
+
+    private final CausaService causaService;
     @Autowired private UsuarioService userService;
     @Autowired private ContaDetailsService contaService;
     @Autowired private DenunciaService denunciaService;
     @Autowired private RelacaoBeneficiarioService relacaoBenefService;
     @Autowired private JwtUtil jwt;
     @Autowired private AvaliacaoService avaliacaoService;
+
+    UsuarioController(CausaService causaService) {
+        this.causaService = causaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<UsuarioRespostaDTO>> listarUsuariosPorTipo(
@@ -169,7 +176,19 @@ public class UsuarioController {
         
         return ResponseEntity.ok(retorno);
     }
+
+    @GetMapping("/meu_perfil/causas_voluntarias")
+    public ResponseEntity<List<CausaRespostaDTO>> causasVoluntariando(@AuthenticationPrincipal UserDetails userDetails){
+        String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
+        return ResponseEntity.ok(causaService.causasVoluntariando(idUsuario));
+    }
+
+    @GetMapping("/meu_perfil/minhas_causas")
+    public ResponseEntity<List<CausaRespostaDTO>> minhasCausasCriadas(@AuthenticationPrincipal UserDetails userDetails){
+        String idUsuario = contaService.findIdByEmail(userDetails.getUsername());
+        return ResponseEntity.ok(causaService.minhasCausasCriadas(idUsuario));
+    }
+
     //reativar_conta >> se der tempo
     //bloquear conta usuario >> para os ADMs
-    //notificar usuario?
 }

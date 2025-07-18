@@ -44,25 +44,29 @@ public class Causa {
     @Column(name = "status_causa")
     private StatusCausa status;
 
-    @Column(name = "meta_assinatura")
-    private int metaAssinatura;
+    @Column(name = "meta_voluntarios")
+    private int metaVoluntarios;
 
-    private int assinaturasFeitas;
+    private int quantVoluntarios;
 
     @ManyToOne
     @JoinColumn(name = "conta_idconta")
     private Conta criador;
 
-    public Causa(String nome, String descricao, LocalDate prazo, String nomeArquivoFoto, int metaAssinatura, Conta criador) {
+    @Column(name = "data_criacao")
+    private LocalDate dataCriacao;
+
+    public Causa(String nome, String descricao, LocalDate prazo, String nomeArquivoFoto, int metaVoluntarios, Conta criador) {
         this.nome = nome;
         this.descricao = descricao;
         this.prazo = prazo;
         this.nomeArquivoFoto = nomeArquivoFoto;
-        this.metaAssinatura = metaAssinatura;
+        this.metaVoluntarios = metaVoluntarios;
         this.criador = criador;
 
         //valores padrao
-        this.assinaturasFeitas = 0;
+        this.quantVoluntarios = 0;
+        this.dataCriacao = LocalDate.now();
         this.status = (this.criador instanceof Usuario) ? StatusCausa.AGUARDANDO : StatusCausa.ABERTA;
 
     }

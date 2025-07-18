@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.labweb.agrodoa_backend.dto.avaliacao.AvaliacaoRequestDTO;
 import com.labweb.agrodoa_backend.model.Avaliacao;
-import com.labweb.agrodoa_backend.model.Denuncia;
 import com.labweb.agrodoa_backend.model.contas.Usuario;
 import com.labweb.agrodoa_backend.repository.AvaliacaoRepository;
 import com.labweb.agrodoa_backend.repository.contas.UsuarioRepository;

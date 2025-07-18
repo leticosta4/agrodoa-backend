@@ -107,7 +107,7 @@ INSERT INTO `labweb_project`.`negociacao`
 ('NEG0003', 1, 'ANU0008', 'CON0004', 'FINALIZADA');
 
 INSERT INTO labweb_project.causa 
-(idcausa, nome, descricao, prazo, nome_arquivo_foto, status_causa, meta_assinatura, conta_idconta) VALUES
+(idcausa, nome, descricao, prazo, nome_arquivo_foto, status_causa, meta_voluntarios, conta_idconta) VALUES
 ('CAU0001', 'Combate à Fome', 'Campanha para arrecadação de alimentos.', '2025-12-31', 'fome.jpg', 'ABERTA', 1000, 'CON0001'),
 ('CAU0002', 'Educação para Todos', 'Financiamento de materiais escolares.', '2025-11-30', 'educacao.jpg', 'ABERTA', 800, 'CON0001'),
 ('CAU0003', 'Meio Ambiente', 'Plantio de árvores em áreas urbanas.', '2025-05-15', 'meioambiente.jpg', 'CONCLUIDA', 500, 'CON0001'),

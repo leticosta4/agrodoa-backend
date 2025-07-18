@@ -42,7 +42,7 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                 "Nome da Causa: %s\n" +
                 "Descrição: %s\n" +
                 "Prazo final para se participar e contribuir: %s\n" +
-                "Meta de assinaturas: %d\n\n" +
+                "Meta de voluntários: %d\n\n" +
                 "Sua ajuda pode fazer a diferença! Acesse nosso site para saber mais.\n\n" +
                 "Atenciosamente,\nEquipe Agrodoa.";
 
@@ -61,7 +61,7 @@ public class NotificacaoListener { //depois remodelar provavelmente ja q vão te
                         causaCriada.getNome(),
                         causaCriada.getDescricao(),
                         causaCriada.getPrazo().format(FORMATADOR_DATA),
-                        causaCriada.getMetaAssinatura()
+                        causaCriada.getMetaVoluntarios()
                 );
 
 
