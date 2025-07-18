@@ -116,7 +116,7 @@ public class CausaService {
 
         Voluntariado novoVoluntariado = new Voluntariado(voluntario, causaInteresse);
         voluntariadoRepo.save(novoVoluntariado);
-
+        verificarPrazosEVoluntariosCausas();
         causaRepo.save(causaInteresse);
     }
 
@@ -169,6 +169,7 @@ public class CausaService {
             }
 
             c.setQuantVoluntarios(voluntariadoRepo.findAllByCausa(c.getIdCausa()).size());
+            causaRepo.save(c);
         }
     }
 }
